@@ -299,9 +299,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					        <?php }?>
 					        
-					        <td><?php echo $value['created_at'];?></td>
-					        
 					        <td><?php echo $value['added_by'];?></td>
+					        
+					        <td><?php echo $value['created_at'];?></td>
 
 					      </tr>
 
