@@ -34,7 +34,7 @@
 
 			        	$_SESSION['userlevel'] = $row['userlevel'];
 
-			        	header("Location: dashboard.php");
+			        	header("Location: users.php");
 
 	            	}
 	         	
@@ -58,7 +58,7 @@
 
 		if(isset($_SESSION['userid'])){
 
-			header("Location: dashboard.php");
+			header("Location: users.php");
 
 		}
 
@@ -107,11 +107,21 @@
 	    			
 	    		<ul class="nav navbar-nav">
 	      				
-	    			<li class="active"><a href="#">Home</a></li>
+	    			<li class="active"><a href="login.php">Home</a></li>
 	      				
-	    			<li><a href="#">Page 1</a></li>
+	      			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+	    			<li><a href="users.php">Users</a></li>
+
+	    			<?php }?>
 	      				
-	    			<li><a href="#">Page 2</a></li>
+	    			<li><a href="2d-betform.php">2D</a></li>
+	    			
+	    			<li><a href="3d-betform.php">3D</a></li>
+	    			
+	    			<li><a href="#">Results</a></li>
+	    			
+	    			<li><a href="#">Reports</a></li>
 	    			
 	    		</ul>
 	    			
@@ -147,7 +157,7 @@
 
 			<ul>
 
-				<li>Users List/li>
+				<li>Users List</li>
 				<li>Add Users on different levels</li>
 				
 

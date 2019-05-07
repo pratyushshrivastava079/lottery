@@ -19,6 +19,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 			        	// $_SESSION['userid'] = $row['id'];
 
 			        	// print_r($row);
+						header("Location: users.php");
 
 	            
 	            	}

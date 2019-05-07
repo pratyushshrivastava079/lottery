@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}else{
 
-		header("Location: login.php");
+		header("Location: 2d-betform.php");
 
 	}
 
@@ -80,17 +80,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     			
 	    		<div class="navbar-header">
 	      				
-	    			<a class="navbar-brand" href="#">Lottery System</a>
+	    			<a class="navbar-brand" href="login.php">Lottery System</a>
 	    			
 	    		</div>
 	    			
 	    		<ul class="nav navbar-nav">
 	      				
-	    			<li class="active"><a href="#">Home</a></li>
+	    			<li class="active"><a href="login.php">Home</a></li>
+	      			
+	      			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+	    			<li><a href="users.php">Users</a></li>
+
+	    			<?php }?>
 	      				
-	    			<li><a href="#">About Us</a></li>
-	      				
-	    			<li><a href="#">Contact Us</a></li>
+	    			<li><a href="2d-betform.php">2D</a></li>
+	    			
+	    			<li><a href="3d-betform.php">3D</a></li>
+	    			
+	    			<li><a href="#">Results</a></li>
+	    			
+	    			<li><a href="#">Reports</a></li>
 	    			
 	    		</ul>
 	    			
@@ -118,34 +128,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 		<section>			
 
-			<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 sidebar">
-				
-				<ul class="nav nav-sidebar">
-					
-					<li><a href="dashboard.php">Dashboard</a></li>
-
-					<li><a href="add-users.php">Add Users</a></li>
-
-					<li><a href="users.php">Users</a>
-						<ul>							
-
-							<li><a href="users-a1.php">Level A1</a></li>
-							<li><a href="users-a2.php">Level A2</a></li>
-							<li><a href="users-a3.php">Level A3</a></li>
-
-						</ul>
-
-					</li>
-
-					<li><a href="2d-betform.php">2D Betform</a></li>
-
-					<li><a href="3d-betform.php">3D Betform</a></li>
-
-				</ul>
-
-			</div>
-
-			<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 				<?php if(isset($error['username'])){?>
 
