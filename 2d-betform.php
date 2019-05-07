@@ -61,7 +61,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  	
 	  	.form-group{
 
-	  			width: 36%;
+	  			width: 30%;
 	  			display: inline-block!important;
 	  			margin-right: 1%;
 	  		}
@@ -163,25 +163,25 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			                <div class="form-group">
 			                
-			                  	<label for="2d">2D:</label>
+			                  	<!-- <label for="2d">2D:</label> -->
 			                
-			                  	<input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="Only 2 digit number between 00-99 allowed">
+			                  	<input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value">
 			                
 			                </div>
 
 			                <div class="form-group">
 		                
-			                  	<label for="usd">USD:</label>
+			                  	<!-- <label for="usd">USD:</label> -->
 			                
-			                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) ">
+			                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD">
 		                
 		                	</div>
 
 		                	<div class="form-group">
 		                
-		                  		<label for="khr">KHR:</label>
+		                  		<!-- <label for="khr">KHR:</label> -->
 		                
-		                  		<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )">
+		                  		<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR">
 		                
 		                	</div>
 
@@ -209,7 +209,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]">H</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]">I</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]">F</label>
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
 

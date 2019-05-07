@@ -57,6 +57,24 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 
+	  <style type="text/css">
+	  	
+	  	.form-group{
+
+	  			width: 30%;
+	  			display: inline-block!important;
+	  			margin-right: 1%;
+	  		}
+
+	  		.pclass{
+
+	  			width: 20%;
+	  			display: inline-block!important;
+	  		}
+
+	  </style>
+
+
 </head>
 <body>
 
@@ -146,25 +164,25 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
                 		<div class="form-group">
                 
-                  			<label for="3d">3D:</label>
+                  			<!-- <label for="3d">3D:</label> -->
                 
-                  			<input type="text" id="3d1" class="form-control 3d" name="txt3d[]" placeholder="Only 3 digit number between 101-999 allowed">
+                  			<input type="text" id="3d1" class="form-control 3d" name="txt3d[]" placeholder="3D value">
                 
                 		</div>
 
 		                 <div class="form-group">
 		                
-		                  	<label for="usd">USD:</label>
+		                  	<!-- <label for="usd">USD:</label> -->
 		                
-		                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) ">
+		                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD">
 		                
 		                </div>
 
 		                <div class="form-group">
                 
-		                  	<label for="khr">KHR:</label>
+		                  	<!-- <label for="khr">KHR:</label> -->
 		                
-		                  	<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )">
+		                  	<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR">
 		                
 		                </div>
 
