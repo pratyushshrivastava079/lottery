@@ -39,7 +39,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 <html>
 <head>
 
-	<title>Logout | Lottery System</title>
+	<title>2D Betform | Lottery System</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -71,7 +71,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  			width: 20%;
 	  			display: inline-block!important;
 	  		}
-	  		
+
 	  </style>
 
 </head>
@@ -101,7 +101,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userStage'] == "A1"){?>
+		      			<?php if($_SESSION['userStage'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 		    			

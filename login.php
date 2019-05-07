@@ -32,6 +32,8 @@
 	            	
 			        	$_SESSION['userid'] = $row['id'];
 
+			        	$_SESSION['username'] = $row['username'];
+
 			        	$_SESSION['userlevel'] = $row['userlevel'];
 
 			        	header("Location: users.php");

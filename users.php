@@ -12,9 +12,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$users = array();
 
-	if(isset($_SESSION['userid']) && $_SESSION['userlevel'] == 'A1'){
+	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == "A2")){
 
 		$id = $_SESSION['userid'];
+
+		$level = $_SESSION['userlevel'];
+	
+		$username = $_SESSION['username'];
+
+		if( $_SESSION['userlevel'] == "A2"){
+
+			$sql = "SELECT * FROM `users` WHERE `userlevel` = 'A3' AND `added_by` = '$username'";
+		    
+		    $result = mysqli_query($conn, $sql);
+
+		        if (mysqli_num_rows($result) > 0) {
+
+	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$users[] = $row;
+
+			        	// print_r($row);
+
+	            	}
+
+	            }		
+
+		}elseif($_SESSION['userlevel'] == "A1"){
 
 		$sql = "SELECT * FROM `users`";
 		        
@@ -32,6 +57,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            	}
 
 	            }
+
+	        }
 
 	}else{
 
@@ -97,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1"){?>
+		      			<?php if($_SESSION['userlevel'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 

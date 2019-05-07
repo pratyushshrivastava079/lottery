@@ -39,7 +39,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 <html>
 <head>
 
-	<title>Logout | Lottery System</title>
+	<title>3D Betform | Lottery System</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -84,7 +84,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1"){?>
+		      			<?php if($_SESSION['userStage'] == "A1" || $_SESSION['userStage'] == "A2"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 
@@ -138,11 +138,11 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 				
 				<form action="3d-betform.php" method="POST" id="3dform">
               
-            		<input type="hidden" id="lastlevel" value="1" />
+            		<input type="hidden" id="lastStage" value="1" />
 
               		<div class="first-line">
 
-                		<div class="card-header"><h3 id="level" data-level="1">Level 1</h3></div>
+                		<div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
                 		<div class="form-group">
                 
@@ -200,7 +200,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]">H</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]">I</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]">F</label>
 
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
 
@@ -210,9 +210,13 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 		            <div class="checkbox lower">
                 
-		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="l19" class="checkLevel" name="level_checkbox[]">L 19</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="l19" class="checkStage" name="Stage_checkbox[]">L 19</label>
 		                
-		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="l22" class="checkLevel" name="level_checkbox[]">L 22</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l20" value="l20" class="checkStage" name="Stage_checkbox[]">L 20</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" id="l21" value="l21" class="checkStage" name="Stage_checkbox[]">L 21</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="l22" class="checkStage" name="Stage_checkbox[]">L 22</label>
 		                
 		            </div>
 

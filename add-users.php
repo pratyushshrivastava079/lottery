@@ -42,23 +42,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	if($fullname == ""){
+	// if($fullname == ""){
 
-		$error['fullname'] = "Fullname cannot be empty.";
+	// 	$error['fullname'] = "Fullname cannot be empty.";
 
-	}
+	// }
 
-	if($phone == ""){
+	// if($phone == ""){
 
-		$error['phone'] = "Phone cannot be empty.";
+	// 	$error['phone'] = "Phone cannot be empty.";
 
-	}
+	// }
 
-	if($address == ""){
+	// if($address == ""){
 
-		$error['address'] = "Address cannot be empty.";
+	// 	$error['address'] = "Address cannot be empty.";
 
-	}
+	// }
 
 	if($userpercent == ""){
 
@@ -66,9 +66,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	if( $userlevel == "A1" || $userlevel == "A2"){
+	if( $userlevel == "A1" || $userlevel == "A2" || $userlevel == "A3"){
 
-			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != "" && $userpercent != ""){
+			if($username != "" && $password != "" && $userlevel != "" && $userpercent != ""){
 
 				$addedby = $_SESSION['userid'];
 
@@ -123,17 +123,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			    }
 			}
 
-		}elseif($userlevel == 'A3'){
+		}elseif($userlevel == 'A4'){
 
 			if( $balanceUSD == "" || $balanceKHR == ""){
 
-				$error['error'] = "Either BalanceUSD or BalanceKHR cannot be 0 for level 3";
+				$error['error'] = "Either BalanceUSD or BalanceKHR cannot be 0 for level 4";
 			
 			}else{
 
-				if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != "" && $userpercent != ""){
-
-					$userpercent = "";
+				if($username != "" && $password != "" && $userlevel != "" && $userpercent != ""){
 
 					$addedby = $_SESSION['userid'];
 
@@ -194,7 +192,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	if(isset($_SESSION['userid']) && $_SESSION['userlevel'] == 'A1'){
+	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == 'A2') ){
 
 		$id = $_SESSION['userid'];
 
@@ -290,7 +288,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1"){?>
+		      			<?php if($_SESSION['userlevel'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 
@@ -447,14 +445,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			    		<!-- <label for="pwd">User Level:</label> -->
 			    	
 			    		<select class="form-control" id="userlevel" name="userlevel">
+
+			    			<?php if($_SESSION['userlevel'] == "A1"){?>
 					    
-					    	<option value="">--- User Level ---</option>
-					    
-					    	<option value="A1">A1</option>
-					    
-					    	<option value="A2">A2</option>
-					    
-					    	<option value="A3">A3</option>
+						    	<option value="">--- User Level ---</option>
+						    
+						    	<option value="A1">A1</option>
+						    
+						    	<option value="A2">A2</option>
+						    
+						    	<option value="A3">A3</option>
+						    	
+						    	<option value="A4">A4</option>
+
+					    	<?php }elseif($_SESSION['userlevel'] == "A2"){?>
+						    	
+						    	<option value="">--- User Level ---</option>
+						    
+						    	<option value="A3">A3</option>
+						    	
+					    	<?php }?>
 					   	
 					  	</select>
 			  		
