@@ -80,7 +80,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 					
 				<div class="collapse navbar-collapse" id="myNavbar">
 
-		    		<ul class="nav navbar-nav">
+		    		<ul class="nav navbar-nav navbar-right">
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
