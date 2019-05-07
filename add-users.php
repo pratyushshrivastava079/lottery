@@ -162,6 +162,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 
+	<style type="text/css">
+		
+			.form-group{
+
+	  			width: 36%;
+	  			display: inline-block!important;
+	  			margin-right: 1%;
+	  		}
+
+	  		.pclass{
+
+	  			width: 72%;
+	  			display: inline-block!important;
+	  		}
+
+	</style>  
 </head>
 <body>
 
@@ -313,25 +329,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				<form action="add-users.php" method="POST">
 		  		
-			  		<div class="form-group">
+			  		<div class="forms-group">
 			    	
-			    		<label for="username">Username:</label>
-			    	
-			    		<input type="text" class="form-control" id="username" name="username">
-			  		
-			  		</div>
-		  		
-			  		<div class="form-group">
-			    	
-			    		<label for="pwd">Password:</label>
-			    	
-			    		<input type="password" class="form-control" id="pwd" name="password">
-			  		
-			  		</div>
-
-			  		<div class="form-group">
-			    	
-			    		<label for="addedby">Added By:</label>
+			    		<label for="addedby">RefUID:</label>
 			    		
 			    		<?php if(isset($_SESSION['userdetails'])){?>
 			    		
@@ -341,14 +341,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			  		
 			  		</div>
 
+			  		<div class="form-group">
+			    	
+			    		<!-- <label for="username">Username:</label> -->
+			    	
+			    		<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+			  		
+			  		</div>
+		  		
+			  		<div class="form-group">
+			    	
+			    		<!-- <label for="pwd">Password:</label> -->
+			    	
+			    		<input type="password" class="form-control" id="pwd" name="password" placeholder="Password">
+			  		
+			  		</div>
 
 			  		<div class="form-group">
 			    	
-			    		<label for="pwd">User Level:</label>
+			    		<!-- <label for="pwd">User Level:</label> -->
 			    	
 			    		<select class="form-control" id="userlevel" name="userlevel">
 					    
-					    	<option value="">--- Choose User Level ---</option>
+					    	<option value="">--- User Level ---</option>
 					    
 					    	<option value="A1">A1</option>
 					    
@@ -362,25 +377,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			  		<div class="form-group">
 			    	
-			    		<label for="fullname">Full Name:</label>
+			    		<!-- <label for="fullname">Full Name:</label> -->
 			    	
-			    		<input type="text" class="form-control" id="fullname" name="fullname">
+			    		<input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname">
 			  		
 			  		</div>
 
 					<div class="form-group">
 			    	
-			    		<label for="phone">Phone:</label>
+			    		<!-- <label for="phone">Phone:</label> -->
 			    	
-			    		<input type="text" class="form-control" id="phone" name="phone">
+			    		<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
 			  		
 			  		</div>
 
 			  		<div class="form-group">
 			    	
-			    		<label for="address">Address:</label>
+			    		<!-- <label for="address">Address:</label> -->
 			    	
-			    		<input type="text" class="form-control" id="address" name="address">
+			    		<input type="text" class="form-control" id="address" name="address" placeholder="Address">
 			  		
 			  		</div>			  		
 		  		
@@ -390,7 +405,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			  		
 			  		</div> -->
 			  		
-			  		<button type="submit" class="btn btn-default">Submit</button>
+			  		<p class="text-center pclass"><button type="submit" class="btn btn-default">Submit</button></p>
 			
 				</form>
 
