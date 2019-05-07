@@ -97,7 +97,7 @@
  			
  			.form-group{
 
-	  			width: 38%;
+	  			width: 36%;
 	  			display: inline-block!important;
 	  			margin-right: 1%;
 	  		}
