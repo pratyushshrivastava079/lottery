@@ -173,33 +173,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     			
 	    		<div class="navbar-header">
 	      				
-	    			<a class="navbar-brand" href="#">Lottery System</a>
+	    			<a class="navbar-brand" href="login.php">Lottery System</a>
 	    			
+	    			 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+				
 	    		</div>
-	    			
-	    		<ul class="nav navbar-nav">
-	      				
-	    			<li class="active"><a href="#">Home</a></li>
-	      				
-	    			<li><a href="#">About Us</a></li>
-	      				
-	    			<li><a href="#">Contact Us</a></li>
-	    			
-	    		</ul>
-	    			
-	    		<ul class="nav navbar-nav navbar-right">
-	      				
-	      			<?php if(isset($_SESSION['userid'])){?>
-	      				
-		      			<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-	      			
-	      			<?php }else{?>
+					
+				<div class="collapse navbar-collapse" id="myNavbar">
 
-		      			<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		    		<ul class="nav navbar-nav navbar-right">
+		      				
+		    			<li class="active"><a href="login.php">Home</a></li>
+		      			
+		      			<?php if($_SESSION['userlevel'] == "A1"){?>
 
-	      			<?php }?>
+		    			<li><a href="users.php">Users</a></li>
+
+		    			<li><a href="add-users.php">Add Users</a></li>
+
+		    			<?php }?>
+		      				
+		    			<li><a href="2d-betform.php">2D</a></li>
+		    			
+		    			<li><a href="3d-betform.php">3D</a></li>
+		    			
+		    			<li><a href="#">Results</a></li>
+		    			
+		    			<li><a href="#">Reports</a></li>
+
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+		      			
+		      			<?php }else{?>
+
+			      			<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+		      			<?php }?>
 	    			
-	    		</ul>
+		    		</ul>
+
+		    	</div>
 		  	
 		  	</div>
 
