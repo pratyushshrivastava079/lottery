@@ -242,6 +242,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					        
 					        <th>Address</th>
 					        
+					        <th>Balance USD</th>
+
+					        <th>Balance KHR</th>
+					        
 					        <th>Added On</th>
 					  
 					      </tr>
@@ -258,7 +262,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					      
 					        <td><?php echo $value['userlevel'];?></td>
 					        
+					        <?php if($value['userpercent'] == NULL){?>
+
+					        <td>NULL</td>
+
+					        <?php }else{?>
+
 					        <td><?php echo $value['userpercent'];?></td>
+
+					        <?php }?>
+					        
 
 					        <td><?php echo $value['fullname'];?></td>
 
@@ -266,12 +279,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					        <td><?php echo $value['address'];?></td>
 
-					        <td><?php echo $value['created_at'];?></td>
-					        
+					        <?php if($value['balanceUSD'] == NULL){?>
+
+					        <td>NULL</td>
+
+					        <?php }else{?>
+
 					        <td><?php echo $value['balanceUSD'];?></td>
+
+					        <?php }?>
 					        
+					        <?php if($value['balanceKHR'] == NULL){?>
+
+					        <td>NULL</td>
+
+					        <?php }else{?>
+
 					        <td><?php echo $value['balanceKHR'];?></td>
-					      
+
+					        <?php }?>
+					        
+					        <td><?php echo $value['created_at'];?></td>
+
 					      </tr>
 
 

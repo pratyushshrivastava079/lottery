@@ -62,8 +62,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
 
-				$userpercent = "";
-
 				$addedby = $_SESSION['userid'];
 
 				$password = md5($password);
@@ -94,13 +92,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			    	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
 
+
+			    	die($query);
+
 			        if ($conn->query($query) === TRUE) {
 							
 						$success['success'] = "User created successfully.";
 							
 					} else {
 								
-						$error['error'] = "Unable to create user.";
+						$error['error'] = "Unable to created user.";
 							
 					}
 
@@ -155,7 +156,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 						} else {
 									
-							$error['error'] = "Unable to create user.";
+							$error['error'] = "Unable to creates user.";
 								
 						}
 
