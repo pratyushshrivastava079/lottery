@@ -191,18 +191,6 @@
 
 			<?php }?>
 
-			<p><strong>You can check below things: 
-
-			<ul>
-
-				<li>Users List</li>
-				<li>Add Users on different levels</li>
-				
-
-			</ul></strong></p>
-
-			<p><strong>Note: </strong>Test credentials: username - <strong>admin</strong> password - <strong>admin</strong>. Try with other credentials also.</p>
-
 			<form action="login.php" method="POST">
 		  		
 		  		<div class="form-group">
