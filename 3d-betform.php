@@ -134,33 +134,89 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				
-				<form action="login.php" method="POST">
-		  		
-			  		<div class="form-group">
-			    	
-			    		<label for="username">Username:</label>
-			    	
-			    		<input type="text" class="form-control" id="username" name="username">
-			  		
-			  		</div>
-		  		
-			  		<div class="form-group">
-			    	
-			    		<label for="pwd">Password:</label>
-			    	
-			    		<input type="password" class="form-control" id="pwd" name="password">
-			  		
-			  		</div>
-		  		
-			  		<!-- <div class="checkbox">
-			    	
-			    		<label><input type="checkbox"> Remember me</label>
-			  		
-			  		</div> -->
-			  		
-			  		<button type="submit" class="btn btn-default">Submit</button>
-			
-				</form>
+				<form action="3d-betform.php" method="POST" id="3dform">
+              
+            		<input type="hidden" id="lastlevel" value="1" />
+
+              		<div class="first-line">
+
+                		<div class="card-header"><h3 id="level" data-level="1">Level 1</h3></div>
+
+                		<div class="form-group">
+                
+                  			<label for="3d">3D:</label>
+                
+                  			<input type="text" id="3d1" class="form-control 3d" name="txt3d[]" placeholder="Only 3 digit number between 101-999 allowed">
+                
+                		</div>
+
+		                 <div class="form-group">
+		                
+		                  	<label for="usd">USD:</label>
+		                
+		                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) ">
+		                
+		                </div>
+
+		                <div class="form-group">
+                
+		                  	<label for="khr">KHR:</label>
+		                
+		                  	<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )">
+		                
+		                </div>
+
+		            </div>
+
+		            <div class="radio">
+
+		            	<label class="radio-inline"><input type="radio" name="optradio" value="5OD">5 X</label>
+		              
+		                <label class="radio-inline"><input type="radio" name="optradio" value="5L">5 L</label>
+		              
+		                <label class="radio-inline"><input type="radio" name="optradio" value="5C">5 C</label>
+
+		                <label class="radio-inline"><input type="radio" name="optradio" value="5R">5 R</label>
+
+		                <label class="radio-inline"><input type="radio" name="optradio" value="10L">10 L</label>
+
+		                <label class="radio-inline"><input type="radio" name="optradio" value="10C">10 C</label>
+
+		                <label class="radio-inline"><input type="radio" name="optradio" value="10R">10 R</label>
+
+		            </div>
+
+ 		            <div class="checkbox upper">
+ 	               
+    		            <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]">A</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]">B</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]">C</label>
+		
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]">D</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]">H</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]">I</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
+
+		            </div>
+
+			            <input type="hidden" value="" id="checkbox-val">
+
+		            <div class="checkbox lower">
+                
+		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="l19" class="checkLevel" name="level_checkbox[]">L 19</label>
+		                
+		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="l22" class="checkLevel" name="level_checkbox[]">L 22</label>
+		                
+		            </div>
+
+              		<button type="submit" class="btn btn-default">Submit</button>
+            
+           		</form>            
 
 			</div>
 
