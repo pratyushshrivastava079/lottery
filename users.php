@@ -28,9 +28,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			        	$users[] = $row;
 
 			        	// print_r($row);
-			        	
-	            	}
 
+	            	}
 
 	            }
 
@@ -301,6 +300,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					        <?php }?>
 					        
 					        <td><?php echo $value['created_at'];?></td>
+					        
+					        <td><?php echo $value['added_by'];?></td>
 
 					      </tr>
 

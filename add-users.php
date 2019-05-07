@@ -12,6 +12,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$userlevel = mysqli_real_escape_string( $conn, $_POST['userlevel']);
 
+	$userpercent = mysqli_real_escape_string( $conn, $_POST['userpercent']);
+
 	$fullname = mysqli_real_escape_string( $conn, $_POST['fullname']);
 
 	$phone = mysqli_real_escape_string( $conn, $_POST['phone']);
@@ -58,27 +60,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
+	if($userpercent == ""){
+
+		$error['address'] = "Userpercent cannot be empty.";
+
+	}
+
 	if( $userlevel == "A1" || $userlevel == "A2"){
 
-			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
+			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != "" && $userpercent != ""){
 
 				$addedby = $_SESSION['userid'];
 
 				$password = md5($password);
-
-				if($userlevel == 'A1'){
-
-					$userpercent = "";
-				
-				}elseif($userlevel == "A2"){
-
-					$userpercent = "70%";
-					
-				}elseif($userlevel == "A3"){
-
-					$userpercent = "72%";
-
-				}
 
 				$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
 				        
@@ -137,27 +131,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			
 			}else{
 
-				if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
+				if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != "" && $userpercent != ""){
 
 					$userpercent = "";
 
 					$addedby = $_SESSION['userid'];
 
 					$password = md5($password);
-
-					if($userlevel == 'A1'){
-
-						$userpercent = "";
-					
-					}elseif($userlevel == "A2"){
-
-						$userpercent = "70%";
-						
-					}elseif($userlevel == "A3"){
-
-						$userpercent = "72%";
-
-					}
 
 					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
 				        
@@ -485,6 +465,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			    		<!-- <label for="fullname">Full Name:</label> -->
 			    	
 			    		<input type="text" class="form-control" id="fullname" name="fullname" placeholder="Fullname">
+			  		
+			  		</div>
+
+			  		<div class="form-group">
+			    	
+			    		<!-- <label for="fullname">Full Name:</label> -->
+			    	
+			    		<input type="text" class="form-control" id="userpercent" name="userpercent" placeholder="Userpercent">
 			  		
 			  		</div>
 
