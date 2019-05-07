@@ -123,6 +123,8 @@
 
 		    			<li><a href="users.php">Users</a></li>
 
+		    			<li><a href="add-users.php">Add Users</a></li>
+
 		    			<?php }?>
 		      				
 		    			<li><a href="2d-betform.php">2D</a></li>
