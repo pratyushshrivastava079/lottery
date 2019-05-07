@@ -90,7 +90,21 @@
 	  src="https://code.jquery.com/jquery-3.4.1.min.js"
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
- 
+ 	
+	  <style type="text/css">
+	  	
+	  	@media only screen and (max-width: 600px) {
+ 			
+ 			.form-group, .pclass{
+
+	  			width: 60%;
+	  		}
+		
+		}
+	  	
+
+	  </style>
+
 </head>
 
 <body>
@@ -183,21 +197,21 @@
 
 			<form action="login.php" method="POST">
 		  		
-		  		<div class="form-group">
+		  		<!-- <div class="form-group"> -->
 		    	
-		    		<label for="username">Username:</label>
+		    		<!-- <label for="username">Username:</label> -->
 		    	
-		    		<input type="text" class="form-control" id="username" name="username">
+		    		<input type="text" class="form-control" id="username" name="username" placeholder="Username">
 		  		
-		  		</div>
+		  		<!-- </div> -->
 		  		
-		  		<div class="form-group">
+		  		<!-- <div class="form-group"> -->
 		    	
-		    		<label for="pwd">Password:</label>
+		    		<!-- <label for="pwd">Password:</label> -->
 		    	
-		    		<input type="password" class="form-control" id="pwd" name="password">
+		    		<input type="password" class="form-control" id="pwd" name="password" placeholder="password">
 		  		
-		  		</div>
+		  		<!-- </div> -->
 		  		
 		  		<!-- <div class="checkbox">
 		    	

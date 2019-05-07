@@ -72,6 +72,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  crossorigin="anonymous"></script>
 
 </head>
+
 <body>
 
 	<header>		
