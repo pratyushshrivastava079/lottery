@@ -267,6 +267,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					        <td><?php echo $value['address'];?></td>
 
 					        <td><?php echo $value['created_at'];?></td>
+					        
+					        <td><?php echo $value['balanceUSD'];?></td>
+					        
+					        <td><?php echo $value['balanceKHR'];?></td>
 					      
 					      </tr>
 

@@ -17,6 +17,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$phone = mysqli_real_escape_string( $conn, $_POST['phone']);
 
 	$address = mysqli_real_escape_string( $conn, $_POST['address']);
+	
+	$balanceUSD = mysqli_real_escape_string( $conn, $_POST['balanceUSD']);
+	
+	$balanceKHR = mysqli_real_escape_string( $conn, $_POST['balanceKHR']);
 
 	if($username == ""){
 
@@ -54,52 +58,62 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
+	if( $userlevel == "A3"){
 
-		$userpercent = "";
+		if($balanceUSD == "" || $balanceKHR == ""){
 
-		$addedby = $_SESSION['userid'];
+			$error['error'] = "Either Balance USD or Balance KHR cannot be 0 for A3 user level ";
 
-		$password = md5($password);
+		}else{
 
-		if($userlevel == 'A1'){
+			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
 
-			$userpercent = "";
-		
-		}elseif($userlevel == "A2"){
+				$userpercent = "";
 
-			$userpercent = "70%";
-			
-		}elseif($userlevel == "A3"){
+				$addedby = $_SESSION['userid'];
 
-			$userpercent = "72%";
+				$password = md5($password);
 
+				if($userlevel == 'A1'){
+
+					$userpercent = "";
+				
+				}elseif($userlevel == "A2"){
+
+					$userpercent = "70%";
+					
+				}elseif($userlevel == "A3"){
+
+					$userpercent = "72%";
+
+				}
+
+				$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+				        
+				    $result = mysqli_query($conn, $sql);
+
+				        if (mysqli_num_rows($result) > 0) {
+
+				        	$error['error'] = "Username already exists in database.";
+
+			            }else{
+
+			            	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
+
+			            	if ($conn->query($query) === TRUE) {
+							
+							    $success['success'] = "User created successfully.";
+							
+							} else {
+								
+							    $error['error'] = "Unable to create user.";
+							
+							}
+
+			            }
+			}
 		}
 
-		$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
-		        
-		    $result = mysqli_query($conn, $sql);
-
-		        if (mysqli_num_rows($result) > 0) {
-
-		        	$error['error'] = "Username already exists in database.";
-
-	            }else{
-
-	            	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby' )";
-
-	            	if ($conn->query($query) === TRUE) {
-					
-					    $success['success'] = "User created successfully.";
-					
-					} else {
-						
-					    $error['error'] = "Unable to create user.";
-					
-					}
-
-	            }
-	
 	}
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -144,7 +158,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <html>
 <head>
 
-	<title>Logout | Lottery System</title>
+	<title>Add Users | Lottery System</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -391,6 +405,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			    		<!-- <label for="address">Address:</label> -->
 			    	
 			    		<input type="text" class="form-control" id="address" name="address" placeholder="Address">
+			  		
+			  		</div>
+
+			  		<div class="form-group">
+			    	
+			    		<!-- <label for="address">Address:</label> -->
+			    	
+			    		<input type="text" class="form-control" id="balanceUSD" name="balanceUSD" placeholder="Balance USD">
+			  		
+			  		</div>
+
+			  		<div class="form-group">
+			    	
+			    		<!-- <label for="address">Address:</label> -->
+			    	
+			    		<input type="text" class="form-control" id="balanceKHR" name="balanceKHR" placeholder="Balance KHR">
 			  		
 			  		</div>			  		
 		  		
