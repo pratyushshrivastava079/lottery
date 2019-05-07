@@ -221,59 +221,63 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				<h2>Total Users</h2>
 				  
 				<p>The table shows the list of all the users in the system.</p>            
-				  
-				<table class="table table-striped table-responsive">
-				  
-				    <thead>
-				  
-				      <tr>
-				  
-				        <th>Username</th>
-				  
-				        <th>User Level</th>
-				  
-				        <th>User Percent</th>
-				        
-				        <th>Full Name</th>
-				        
-				        <th>Phone</th>
-				        
-				        <th>Address</th>
-				        
-				        <th>Added On</th>
-				  
-				      </tr>
-				  
-				    </thead>
-				  
-				    <tbody>
+				 
+				<div class="table-responsive">
+				 
+					<table class="table table-striped">
+					  
+					    <thead>
+					  
+					      <tr>
+					  
+					        <th>Username</th>
+					  
+					        <th>User Level</th>
+					  
+					        <th>User Percent</th>
+					        
+					        <th>Full Name</th>
+					        
+					        <th>Phone</th>
+					        
+					        <th>Address</th>
+					        
+					        <th>Added On</th>
+					  
+					      </tr>
+					  
+					    </thead>
+					  
+					    <tbody>
 
-				    <?php foreach ($users as $key => $value) {?>
+					    <?php foreach ($users as $key => $value) {?>
 
-				      <tr>
-				      
-				        <td><?php echo $value['username'];?></td>
-				      
-				        <td><?php echo $value['userlevel'];?></td>
-				        
-				        <td><?php echo $value['userpercent'];?></td>
+					      <tr>
+					      
+					        <td><?php echo $value['username'];?></td>
+					      
+					        <td><?php echo $value['userlevel'];?></td>
+					        
+					        <td><?php echo $value['userpercent'];?></td>
 
-				        <td><?php echo $value['fullname'];?></td>
+					        <td><?php echo $value['fullname'];?></td>
 
-				        <td><?php echo $value['phone'];?></td>
+					        <td><?php echo $value['phone'];?></td>
 
-				        <td><?php echo $value['address'];?></td>
+					        <td><?php echo $value['address'];?></td>
 
-				        <td><?php echo $value['created_at'];?></td>
-				      
-				      </tr>
+					        <td><?php echo $value['created_at'];?></td>
+					      
+					      </tr>
 
 
-				    <?php }?>  
+					    <?php }?>  
 
-				    </tbody>
-				
-				</table>
+					    </tbody>
+					
+					</table>
+
+				</div>
 			
 			</div>
 
