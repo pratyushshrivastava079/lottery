@@ -222,7 +222,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				  
 				<p>The table shows the list of all the users in the system.</p>            
 				  
-				<table class="table table-striped">
+				<table class="table table-striped table-responsive">
 				  
 				    <thead>
 				  
