@@ -220,9 +220,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					<li><a href="users.php">Users</a>
 						<ul>
 							
-							<li><a href="add-a1-users.php">Level A1</a></li>
-							<li><a href="add-a2-users.php">Level A2</a></li>
-							<li><a href="add-a3-users.php">Level A3</a></li>
+							<li><a href="users-a1.php">Level A1</a></li>
+							<li><a href="users-a2.php">Level A2</a></li>
+							<li><a href="users-a3.php">Level A3</a></li>
 
 						</ul>
 
