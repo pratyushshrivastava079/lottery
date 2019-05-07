@@ -219,11 +219,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			</div>
 
-			<?php }?>						
-				
-				<h2>Total Users</h2>
-				  
-				<p>The table shows the list of all the users in the system.</p>            
+			<?php }?>						           
 				 
 				<div class="table-responsive">
 				 
@@ -233,13 +229,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					      <tr>
 					  
-					        <th>Username</th>
+					        <th>User</th>
 					  
-					        <th>User Level</th>
+					        <th>Level</th>
 					  
-					        <th>User Percent</th>
+					        <th>Percent</th>
 					        
-					        <th>Full Name</th>
+					        <th>Fullname</th>
 					        
 					        <th>Phone</th>
 					        
