@@ -339,7 +339,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					    <?php }}else{?>
 
-					    	<tr><td></td><td></td><td></td><td></td><td></td><td>No Results Found</td><td></td><td></td><td></td><td></td></tr>
+					    	<tr><td></td><td>No Results Found</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 
 					    <?php }?>  
 
