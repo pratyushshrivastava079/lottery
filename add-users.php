@@ -166,16 +166,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 			.form-group{
 
-	  			width: 36%;
+	  			width: 48%;
 	  			display: inline-block!important;
 	  			margin-right: 1%;
 	  		}
 
-	  		.pclass{
-
-	  			width: 72%;
-	  			display: inline-block!important;
-	  		}
 
 	</style>  
 </head>
