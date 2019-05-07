@@ -93,14 +93,22 @@
  	
 	  <style type="text/css">
 	  	
-	  	@media only screen and (max-width: 600px) {
+	  	/*@media only screen and (max-width: 600px) {*/
  			
- 			.form-group, .pclass{
+ 			.form-group{
 
-	  			width: 60%;
+	  			width: 38%;
+	  			display: inline-block!important;
+	  			margin-right: 1%;
+	  		}
+
+	  		.pclass{
+
+	  			width: 20%;
+	  			display: inline-block!important;
 	  		}
 		
-		}
+		/*}*/
 	  	
 
 	  </style>
@@ -197,21 +205,21 @@
 
 			<form action="login.php" method="POST">
 		  		
-		  		<!-- <div class="form-group"> -->
+		  		<div class="form-group">
 		    	
 		    		<!-- <label for="username">Username:</label> -->
 		    	
 		    		<input type="text" class="form-control" id="username" name="username" placeholder="Username">
 		  		
-		  		<!-- </div> -->
+		  		</div>
 		  		
-		  		<!-- <div class="form-group"> -->
+		  		<div class="form-group">
 		    	
 		    		<!-- <label for="pwd">Password:</label> -->
 		    	
 		    		<input type="password" class="form-control" id="pwd" name="password" placeholder="password">
 		  		
-		  		<!-- </div> -->
+		  		</div>
 		  		
 		  		<!-- <div class="checkbox">
 		    	
@@ -219,7 +227,7 @@
 		  		
 		  		</div> -->
 		  		
-		  		<button type="submit" class="btn btn-default">Submit</button>
+		  		<p class=" pclass"><button type="submit" class="btn btn-default">Submit</button></p>
 			
 			</form>
 
