@@ -32,6 +32,8 @@
 	            	
 			        	$_SESSION['userid'] = $row['id'];
 
+			        	$_SESSION['userlevel'] = $row['userlevel'];
+
 			        	header("Location: dashboard.php");
 
 	            	}
@@ -90,7 +92,7 @@
 </head>
 
 <body>
-	
+
 	<header>		
 			
 		<nav class="navbar navbar-default">

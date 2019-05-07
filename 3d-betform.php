@@ -142,6 +142,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 
 					<?php }?>
+
 					<li><a href="2d-betform.php">2D Betform</a></li>
 
 					<li><a href="3d-betform.php">3D Betform</a></li>

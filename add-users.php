@@ -104,7 +104,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	if(isset($_SESSION['userid'])){
+	if(isset($_SESSION['userid']) && $_SESSION['userlevel'] == 'A1'){
 
 		$id = $_SESSION['userid'];
 
@@ -213,10 +213,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				<ul class="nav nav-sidebar">
 					
-					<li>Dashboard</li>
-					<li>Users</li>
-					<li>2D Betform</li>
-					<li>3D Betform</li>
+					<li><a href="dashboard.php">Dashboard</a>
+
+					<li><a href="add-users.php">Add Users</a></li>
+					
+					<li><a href="users.php">Users</a>
+						<ul>
+							
+							<li><a href="add-a1-users.php">Level A1</a></li>
+							<li><a href="add-a2-users.php">Level A2</a></li>
+							<li><a href="add-a3-users.php">Level A3</a></li>
+
+						</ul>
+
+					</li>
+
+					<li><a href="2d-betform.php">2D Betform</a></li>
+
+					<li><a href="3d-betform.php">3D Betform</a></li>
 
 				</ul>
 
