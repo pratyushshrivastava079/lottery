@@ -58,13 +58,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	if( $userlevel == "A3"){
-
-		if($balanceUSD == "" || $balanceKHR == ""){
-
-			$error['error'] = "Either Balance USD or Balance KHR cannot be 0 for A3 user level ";
-
-		}else{
+	if( $userlevel == "A1" || $userlevel == "A2"){
 
 			if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
 
@@ -90,31 +84,87 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
 				        
-				    $result = mysqli_query($conn, $sql);
+				$result = mysqli_query($conn, $sql);
 
-				        if (mysqli_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) > 0) {
 
-				        	$error['error'] = "Username already exists in database.";
+					$error['error'] = "Username already exists in database.";
 
-			            }else{
+			    }else{
 
-			            	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
+			    	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
 
-			            	if ($conn->query($query) === TRUE) {
+			        if ($conn->query($query) === TRUE) {
 							
-							    $success['success'] = "User created successfully.";
+						$success['success'] = "User created successfully.";
 							
-							} else {
+					} else {
 								
-							    $error['error'] = "Unable to create user.";
+						$error['error'] = "Unable to create user.";
 							
-							}
+					}
 
-			            }
+			    }
 			}
-		}
 
-	}
+		}elseif($userlevel == 'A3'){
+
+			if( $balanceUSD == "" || $balanceKHR == ""){
+
+				$error['error'] = "Either BalanceUSD or BalanceKHR cannot be 0 for level 3";
+			
+			}else{
+
+				if($username != "" && $password != "" && $userlevel != "" && $fullname != "" && $phone != "" && $address != ""){
+
+					$userpercent = "";
+
+					$addedby = $_SESSION['userid'];
+
+					$password = md5($password);
+
+					if($userlevel == 'A1'){
+
+						$userpercent = "";
+					
+					}elseif($userlevel == "A2"){
+
+						$userpercent = "70%";
+						
+					}elseif($userlevel == "A3"){
+
+						$userpercent = "72%";
+
+					}
+
+					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+					        
+					$result = mysqli_query($conn, $sql);
+
+					if (mysqli_num_rows($result) > 0) {
+
+						$error['error'] = "Username already exists in database.";
+
+				    }else{
+
+				    	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
+
+				        if ($conn->query($query) === TRUE) {
+								
+							$success['success'] = "User created successfully.";
+								
+						} else {
+									
+							$error['error'] = "Unable to create user.";
+								
+						}
+
+				    }
+
+				}
+			}
+
+		}
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 

@@ -57,6 +57,23 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 
+	  <style type="text/css">
+	  	
+	  	.form-group{
+
+	  			width: 36%;
+	  			display: inline-block!important;
+	  			margin-right: 1%;
+	  		}
+
+	  		.pclass{
+
+	  			width: 20%;
+	  			display: inline-block!important;
+	  		}
+	  		
+	  </style>
+
 </head>
 <body>
 
@@ -84,9 +101,11 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1"){?>
+		      			<?php if($_SESSION['userStage'] == "A1"){?>
 
 		    			<li><a href="users.php">Users</a></li>
+		    			
+		    			<li><a href="add-users.php">Add Users</a></li>
 
 		    			<?php }?>
 		      				
@@ -136,11 +155,11 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 				
 				<form action="2d-betform.php" method="POST">
 	              
-	              	<input type="hidden" id="lastlevel" value="1" />
+	              	<input type="hidden" id="lastStage" value="1" />
 
 	              	<div class="first-line">
 
-		                <div class="card-header"><h3 id="level" data-level="1">Level 1</h3></div>
+		                <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
 			                <div class="form-group">
 			                
@@ -200,9 +219,9 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 	              		<div class="checkbox">
 	                
-			                <label class="checkbox-inline"><input type="checkbox" id="l23" value="l23" class="checkLevel" name="level_checkbox[]">L 23</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="l23" value="l23" class="checkStage" name="Stage_checkbox[]">L 23</label>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" id="l29" value="l29" class="checkLevel" name="level_checkbox[]">L 29</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="l29" value="l29" class="checkStage" name="Stage_checkbox[]">L 29</label>
 			                
 			            </div>
 
