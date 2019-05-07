@@ -28,8 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			        	$users[] = $row;
 
 			        	// print_r($row);
-
-	            
+			        	
 	            	}
 
 
@@ -53,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <html>
 <head>
 
-	<title>Logout | Lottery System</title>
+	<title>Users | Lottery System</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -246,6 +245,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					        <th>Balance KHR</th>
 					        
+					        <th>Added By</th>
+
 					        <th>Added On</th>
 					  
 					      </tr>

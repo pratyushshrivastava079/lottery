@@ -90,19 +90,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			    }else{
 
-			    	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
+			    	$id = $_SESSION['userid'];
 
+			    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+					
+					$result = mysqli_query($conn, $sql);
 
-			    	die($query);
+					if (mysqli_num_rows($result) > 0) {
 
-			        if ($conn->query($query) === TRUE) {
+						while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        		$users[] = $row;
+
+	            		}
+
+	            		$addedby = $users[0];
+
+	            		$added_by = $addedby['username'];
+
+						$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+
+						if ($conn->query($query) === TRUE) {
 							
 						$success['success'] = "User created successfully.";
 							
-					} else {
+						} else {
+									
+							$error['error'] = "Unable to created user.";
 								
-						$error['error'] = "Unable to created user.";
-							
+						}
+
+					}else{
+
+						$error['error'] = "Error fetching addedby user details.";
+
 					}
 
 			    }
@@ -139,26 +160,50 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					}
 
 					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
-					        
+				        
+				$result = mysqli_query($conn, $sql);
+
+				if (mysqli_num_rows($result) > 0) {
+
+					$error['error'] = "Username already exists in database.";
+
+			    }else{
+
+			    	$id = $_SESSION['userid'];
+
+			    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+					
 					$result = mysqli_query($conn, $sql);
 
 					if (mysqli_num_rows($result) > 0) {
 
-						$error['error'] = "Username already exists in database.";
+						while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        		$users[] = $row;
 
-				    }else{
+	            		}
 
-				    	$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$addedby', '$balanceUSD', '$balanceKHR' )";
+	            		$addedby = $users[0];
 
-				        if ($conn->query($query) === TRUE) {
-								
-							$success['success'] = "User created successfully.";
-								
+	            		$added_by = $addedby['username'];
+
+						$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+
+						if ($conn->query($query) === TRUE) {
+							
+						$success['success'] = "User created successfully.";
+							
 						} else {
 									
-							$error['error'] = "Unable to creates user.";
+							$error['error'] = "Unable to created user.";
 								
 						}
+
+					}else{
+
+						$error['error'] = "Error fetching addedby user details.";
+
+					}
 
 				    }
 
