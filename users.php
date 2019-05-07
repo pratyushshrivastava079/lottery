@@ -281,7 +281,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					    <tbody>
 
-					    <?php foreach ($users as $key => $value) {?>
+					    <?php 
+
+					    if(!empty($users)){
+
+					    foreach ($users as $key => $value) {?>
 
 					      <tr>
 					      
@@ -332,6 +336,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					      </tr>
 
+
+					    <?php }}else{?>
+
+					    	<tr><td></td><td></td><td></td><td></td><td></td><td>No Results Found</td><td></td><td></td><td></td><td></td></tr>
 
 					    <?php }?>  
 
