@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$users = array();
 
-	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == "A2")){
+	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1')){
 
 		$id = $_SESSION['userid'];
 
@@ -124,7 +124,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
+		      			<?php if($_SESSION['userlevel'] == "A1"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 

@@ -72,6 +72,13 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  			display: inline-block!important;
 	  		}
 
+	  		.first-line{
+
+	  			border: 1px solid #d2d2d2;
+	  			padding: 2%;
+	  			border-radius: 5px; 
+	  		}
+
 	  </style>
 
 </head>
@@ -101,7 +108,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userStage'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
+		      			<?php if($_SESSION['userStage'] == "A1"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 		    			
@@ -161,6 +168,10 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 		                <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
+			                  	<!-- <label for="2d">2D:</label> -->
+			                
+			                  	<button class="btn btn-primary">+</button>
+			                
 			                <div class="form-group">
 			                
 			                  	<!-- <label for="2d">2D:</label> -->
@@ -221,11 +232,15 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	                
 			                <label class="checkbox-inline"><input type="checkbox" id="l23" value="l23" class="checkStage" name="Stage_checkbox[]">L 23</label>
 			                
+			                <label class="checkbox-inline"><input type="checkbox" id="l25" value="l25" class="checkStage" name="Stage_checkbox[]">L 25</label>
+
+			                <label class="checkbox-inline"><input type="checkbox" id="l27" value="l27" class="checkStage" name="Stage_checkbox[]">L 27</label>
+			                
 			                <label class="checkbox-inline"><input type="checkbox" id="l29" value="l29" class="checkStage" name="Stage_checkbox[]">L 29</label>
 			                
 			            </div>
 
-			            <button type="submit" class="btn btn-default">Submit</button>
+			            <button type="submit" class="btn btn-primary">Submit</button>
 	            
 	            	</div>
 

@@ -102,7 +102,7 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userStage'] == "A1" || $_SESSION['userStage'] == "A2"){?>
+		      			<?php if($_SESSION['userStage'] == "A1"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 

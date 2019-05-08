@@ -6,6 +6,8 @@ include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+	$refUID = mysqli_real_escape_string( $conn, $_POST['refUID']);
+
 	$username = mysqli_real_escape_string( $conn, $_POST['username']);
 
 	$password = mysqli_real_escape_string( $conn, $_POST['password']);
@@ -23,6 +25,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$balanceUSD = mysqli_real_escape_string( $conn, $_POST['balanceUSD']);
 	
 	$balanceKHR = mysqli_real_escape_string( $conn, $_POST['balanceKHR']);
+
+	if($refUID == ""){
+
+		$error['refUID'] = "RefUID cannot be empty.";
+	
+	}
 
 	if($username == ""){
 
@@ -68,58 +76,67 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	if( $userlevel == "A1" || $userlevel == "A2" || $userlevel == "A3"){
 
-			if($username != "" && $password != "" && $userlevel != "" && $userpercent != ""){
+			if($username != "" && $password != "" && $userlevel != "" && $userpercent != "" && $refUID != ""){
 
-				$addedby = $_SESSION['userid'];
+				$added_by = $refUID;
 
 				$password = md5($password);
 
-				$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+				$sql = "SELECT * FROM `users` WHERE `username` = '$refUID'";
 				        
 				$result = mysqli_query($conn, $sql);
 
 				if (mysqli_num_rows($result) > 0) {
 
-					$error['error'] = "Username already exists in database.";
-
-			    }else{
-
-			    	$id = $_SESSION['userid'];
-
-			    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-					
+					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+					        
 					$result = mysqli_query($conn, $sql);
 
 					if (mysqli_num_rows($result) > 0) {
 
-						while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        		$users[] = $row;
+						$error['error'] = "Username already exists in database.";
 
-	            		}
+				    }else{
 
-	            		$addedby = $users[0];
+				    	$id = $_SESSION['userid'];
 
-	            		$added_by = $addedby['username'];
+				    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+						
+						$result = mysqli_query($conn, $sql);
 
-						$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+						if (mysqli_num_rows($result) > 0) {
 
-						if ($conn->query($query) === TRUE) {
-							
-						$success['success'] = "User created successfully.";
-							
-						} else {
-									
-							$error['error'] = "Unable to created user.";
+							while($row = mysqli_fetch_assoc($result)) {
+		            	
+				        		$users[] = $row;
+
+		            		}
+
+							$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+
+							if ($conn->query($query) === TRUE) {
 								
+							$success['success'] = "User created successfully.";
+								
+							} else {
+										
+								$error['error'] = "Unable to created user.";
+									
+							}
+
+						}else{
+
+							$error['error'] = "Error fetching addedby user details.";
+
 						}
 
-					}else{
-
-						$error['error'] = "Error fetching addedby user details.";
 
 					}
 
+			    }else{
+
+					$error['error'] = "RefUID does not exist in database. Please enter a valid RefUID username.";
+			    	
 			    }
 			}
 
@@ -133,57 +150,69 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				if($username != "" && $password != "" && $userlevel != "" && $userpercent != ""){
 
-					$addedby = $_SESSION['userid'];
+				$added_by = $refUID;
 
-					$password = md5($password);
+				$password = md5($password);
 
-					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+				$sql = "SELECT * FROM `users` WHERE `username` = '$refUID'";
 				        
 				$result = mysqli_query($conn, $sql);
 
 				if (mysqli_num_rows($result) > 0) {
 
-					$error['error'] = "Username already exists in database.";
-
-			    }else{
-
-			    	$id = $_SESSION['userid'];
-
-			    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-					
+					$sql = "SELECT * FROM `users` WHERE `username` = '$username'";
+				        
 					$result = mysqli_query($conn, $sql);
 
 					if (mysqli_num_rows($result) > 0) {
 
-						while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        		$users[] = $row;
+						$error['error'] = "Username already exists in database.";
 
-	            		}
+				    }else{
 
-	            		$addedby = $users[0];
+				    	$id = $_SESSION['userid'];
 
-	            		$added_by = $addedby['username'];
+				    	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+						
+						$result = mysqli_query($conn, $sql);
 
-						$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+						if (mysqli_num_rows($result) > 0) {
 
-						if ($conn->query($query) === TRUE) {
-							
-						$success['success'] = "User created successfully.";
-							
-						} else {
-									
-							$error['error'] = "Unable to created user.";
+							while($row = mysqli_fetch_assoc($result)) {
+		            	
+				        		$users[] = $row;
+
+		            		}
+
+		            		$addedby = $users[0];
+
+		            		$added_by = $addedby['username'];
+
+							$query= "INSERT INTO users( username, password, userlevel, userpercent, fullname, phone, address, added_by, balanceUSD, balanceKHR) VALUES( '$username', '$password', '$userlevel', '$userpercent', '$fullname', '$phone', '$address', '$added_by', '$balanceUSD', '$balanceKHR' )";
+
+							if ($conn->query($query) === TRUE) {
 								
+							$success['success'] = "User created successfully.";
+								
+							} else {
+										
+								$error['error'] = "Unable to created user.";
+									
+							}
+
+						}else{
+
+							$error['error'] = "Error fetching addedby user details.";
+
 						}
 
-					}else{
+					    }
 
-						$error['error'] = "Error fetching addedby user details.";
+				}else{
 
-					}
-
-				    }
+					$error['error'] = "RefUID does not exist in database. Please enter a valid RefUID username.";
+					
+				}
 
 				}
 			}
@@ -192,7 +221,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == 'A2') ){
+	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1') ){
 
 		$id = $_SESSION['userid'];
 
@@ -288,7 +317,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		      				
 		    			<li class="active"><a href="login.php">Home</a></li>
 		      			
-		      			<?php if($_SESSION['userlevel'] == "A1" || $_SESSION['userlevel'] == "A2"){?>
+		      			<?php if($_SESSION['userlevel'] == "A1"){?>
 
 		    			<li><a href="users.php">Users</a></li>
 
@@ -330,7 +359,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<?php if(isset($error['username'])){?>
+			<?php if(isset($error['refUID'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['refUID'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($error['username'])){?>
 
 			<div class="alert alert-danger">
 					
@@ -412,13 +451,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				<form action="add-users.php" method="POST">
 		  		
-			  		<div class="forms-group">
+			  		<div class="form-group">
 			    	
-			    		<label for="addedby">RefUID:</label>
+			    		<!-- <label for="addedby">RefUID:</label> -->
 			    		
 			    		<?php if(isset($_SESSION['userdetails'])){?>
 			    		
-			    		<span><strong><?php echo $_SESSION['userdetails']['username'];?></strong></span>
+			    		<input type="text" class="form-control" name="refUID" placeholder="RefUID" />
 
 			    		<?php }?>
 			  		
