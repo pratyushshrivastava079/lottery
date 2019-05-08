@@ -126,6 +126,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	
 	 	}
 
+	 	.row.text-center{
+	 		padding: 10px 0px
+	 	}
+
 	 </style>
 
 </head>
@@ -269,6 +273,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="#">Reports</a></span>
+		    			
+		    			<span> | </span>
 
 		      			<?php if(isset($_SESSION['userid'])){?>
 		      				

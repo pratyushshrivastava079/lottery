@@ -79,6 +79,38 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	  			border-radius: 5px; 
 	  		}
 
+	  		.navbar-nav{
+
+	 		width: 100%!important;
+	 		/*text-align: center;*/
+	 	}
+
+	 	.navbar-header{
+
+	 		width: 30%;
+	 		display: inline-block;
+	 	}
+
+	 	.caps{
+
+	 		display: inline-block!important;
+	 		width: 68%;
+	 		text-align: center;
+	 	}
+
+	 	.navbars-brand, .navbar-header{
+
+		    height: 50px;
+		    padding: 15px 15px;
+		    font-size: 18px;
+		    line-height: 20px;
+	 	
+	 	}
+
+	 	.row.text-center{
+	 		padding: 10px 0px
+	 	}
+
 	  </style>
 
 </head>
@@ -92,49 +124,13 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
     			
 	    		<div class="navbar-header">
 	      				
-	    			<a class="navbar-brand" href="login.php">Lottery System</a>
-	    			
-	    			 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+	    			<a class="navbars-brand" href="login.php">Home</a>
 				
 	    		</div>
 					
-				<div class="collapse navbar-collapse" id="myNavbar">
+				<div class="caps navbars-brand">
 
-		    		<ul class="nav navbar-nav navbar-right">
-		      				
-		    			<li class="active"><a href="login.php">Home</a></li>
-		      			
-		      			<?php if($_SESSION['userStage'] == "A1"){?>
-
-		    			<li><a href="users.php">Users</a></li>
-		    			
-		    			<li><a href="add-users.php">Add Users</a></li>
-
-		    			<?php }?>
-		      				
-		    			<li><a href="2d-betform.php">2D</a></li>
-		    			
-		    			<li><a href="3d-betform.php">3D</a></li>
-		    			
-		    			<li><a href="#">Results</a></li>
-		    			
-		    			<li><a href="#">Reports</a></li>
-
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-		      			
-		      			<?php }else{?>
-
-			      			<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-
-		      			<?php }?>
-	    			
-		    		</ul>
+					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
 
 		    	</div>
 		  	
@@ -157,6 +153,48 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 			</div>
 
 			<?php }?>
+
+			<div class="row text-center">
+
+		      			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    			<span><a href="users.php">Users</a></span>
+
+		    			<span> | </span>
+
+		    			<span><a href="add-users.php">Add Users</a></span>
+
+		    			<?php }?>
+		      				
+		    			<span> | </span>
+
+		    			<span><a href="2d-betform.php">2D</a></span>
+
+		    			<span> | </span>
+		    			
+		    			<span><a href="3d-betform.php">3D</a></span>
+		    			
+		    			<span> | </span>
+		    			
+		    			<span><a href="#">Results</a></span>
+		    			
+		    			<span> | </span>
+
+		    			<span><a href="#">Reports</a></span>
+		    			
+		    			<span> | </span>
+
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
+		      			
+		      			<?php }else{?>
+
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+
+		      			<?php }?>
+	    			
+		    	</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				
