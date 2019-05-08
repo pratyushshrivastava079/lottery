@@ -148,7 +148,9 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			<?php }?>
 
-			<div class="row text-center">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				
+				<div class="row text-center">
 
 		      			<?php if($_SESSION['userlevel'] == "A1"){?>
 
@@ -190,8 +192,6 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	    			
 		    	</div>
 
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				
 				<form action="3d-betform.php" method="POST" id="3dform">
               
             		<input type="hidden" id="lastStage" value="1" />
