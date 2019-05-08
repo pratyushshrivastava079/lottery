@@ -104,11 +104,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 		/*text-align: center;*/
 	 	}
 
+	 	.navbar-header{
+
+	 		width: 30%;
+	 		display: inline-block;
+	 	}
+
 	 	.caps{
 
 	 		display: inline-block!important;
-	 		width: 90%;
+	 		width: 68%;
 	 		text-align: center;
+	 	}
+
+	 	.navbars-brand, .navbar-header{
+
+		    height: 50px;
+		    padding: 15px 15px;
+		    font-size: 18px;
+		    line-height: 20px;
+	 	
 	 	}
 
 	 </style>
@@ -125,17 +140,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     			
 	    		<div class="navbar-header">
 	      				
-	    			<a class="navbar-brand" href="login.php">Home</a>
-	    			
-	    			 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+	    			<a class="navbars-brand" href="login.php">Home</a>
 				
 	    		</div>
 					
-				<div class="caps navbar-brand" id="myNavbar">
+				<div class="caps navbars-brand">
 
 					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
 
@@ -233,41 +242,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			<?php }?>						           
 
-				<div class="row text-centre">
+				<div class="row text-center">
 
-					<ul class="nav navbar-nav">
-		      				
-		    			<li class="active"><a href="login.php">Home</a></li>
-		      			
 		      			<?php if($_SESSION['userlevel'] == "A1"){?>
 
-		    			<li><a href="users.php">Users</a></li>
+		    			<span><a href="users.php">Users</a></span>
 
-		    			<li><a href="add-users.php">Add Users</a></li>
+		    			<span> | </span>
+
+		    			<span><a href="add-users.php">Add Users</a></span>
 
 		    			<?php }?>
 		      				
+		    			<span> | </span>
 
-		    			<li><a href="2d-betform.php">2D</a></li>
+		    			<span><a href="2d-betform.php">2D</a></span>
+
+		    			<span> | </span>
 		    			
-		    			<li><a href="3d-betform.php">3D</a></li>
+		    			<span><a href="3d-betform.php">3D</a></span>
 		    			
-		    			<li><a href="#">Results</a></li>
+		    			<span> | </span>
 		    			
-		    			<li><a href="#">Reports</a></li>
+		    			<span><a href="#">Results</a></span>
+		    			
+		    			<span> | </span>
+
+		    			<span><a href="#">Reports</a></span>
 
 		      			<?php if(isset($_SESSION['userid'])){?>
 		      				
-			      			<li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
 		      			
 		      			<?php }else{?>
 
-			      			<li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
 
 		      			<?php }?>
 	    			
-		    		</ul>
-
 		    	</div>
 				 
 				<div class="table-responsive">
