@@ -118,15 +118,21 @@
 
 	 	.navbar-header{
 
-	 		width: 30%;
+	 		width: 33%;
 	 		display: inline-block;
+	 		text-align: center;
+	 	}
+
+	 	.logsin{
+
+	 		text-align: right!important;
 	 	}
 
 	 	.caps{
 
-	 		display: inline-block!important;
-	 		width: 68%;
-	 		text-align: center;
+	 		/*display: inline-block!important;*/
+	 		/*width: 68%;*/
+	 		/*text-align: center;*/
 	 	}
 
 	 	.navbars-brand, .navbar-header{
@@ -161,9 +167,15 @@
 				
 	    		</div>
 					
-				<div class="caps navbars-brand">
+				<div class="caps navbar-header">
 
 					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+
+		    	</div>
+
+		    	<div class="navbar-header logsin">
+		    		
+					<span>Login</span>
 
 		    	</div>
 		  	
@@ -189,11 +201,19 @@
 		      				
 		    			<span> | </span>
 
-		    			<span><a href="2d-betform.php">2D</a></span>
+		    			<span><a href="2d1-betform.php">2D S1</a></span>
+		    		
+		    			<span> | </span>
+		    		
+		    			<span><a href="2d2-betform.php">2D S2</a></span>
 
 		    			<span> | </span>
 		    			
-		    			<span><a href="3d-betform.php">3D</a></span>
+		    			<span><a href="3d1-betform.php">3D S1</a></span>
+		    		
+		    			<span> | </span>
+
+		    			<span><a href="3d2-betform.php">3D S2</a></span>
 		    			
 		    			<span> | </span>
 		    			

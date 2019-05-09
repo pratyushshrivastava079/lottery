@@ -164,11 +164,19 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      				
 		    			<span> | </span>
 
-		    			<span><a href="2d-betform.php">2D</a></span>
+		    			<span><a href="2d1-betform.php">2D S1</a></span>
+		    		
+		    			<span> | </span>
+		    		
+		    			<span><a href="2d2-betform.php">2D S2</a></span>
 
 		    			<span> | </span>
 		    			
-		    			<span><a href="3d-betform.php">3D</a></span>
+		    			<span><a href="3d1-betform.php">3D S1</a></span>
+		    		
+		    			<span> | </span>
+
+		    			<span><a href="3d2-betform.php">3D S2</a></span>
 		    			
 		    			<span> | </span>
 		    			
