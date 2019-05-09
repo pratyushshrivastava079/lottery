@@ -4,33 +4,343 @@ session_start();
 
 include('database.php');
 
-if(isset($_SESSION['userid'])){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-$id = $_SESSION['userid'];
+	$counttxt2d = count($_POST['txt2d']);
 
-$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-		        
-		        $result = mysqli_query($conn, $sql);
+	$countusd = count($_POST['usd']);
 
-		        if (mysqli_num_rows($result) > 0) {
+	$countkhr = count($_POST['khr']);
 
-	            	while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        	// $_SESSION['userid'] = $row['id'];
+	// checks if one row or more than one row of a form has been posted //
 
-			        	// print_r($row);
+	if($counttxt2d == 1 && $countkhr == 1 || $countusd == 1 ){
 
-	            
-	            	}
+		$txt2d = mysqli_real_escape_string( $conn, $_POST['txt2d'][0] );
+	
+		$usd = mysqli_real_escape_string( $conn, $_POST['usd'][0] );
+	
+		$khr = mysqli_real_escape_string( $conn, $_POST['khr'][0] );
+
+		$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+		$countcheck = count($_POST['checkbox']);
+		
+		$stagecheck = count($_POST['Stage_checkbox']);
 
 
-	            }
+		if($txt2d == ""){
 
-}else{
+			$error['txt2d'] = "txt2d value cannot be empty"; 
+		}
 
-	header("Location: login.php");
+		if($txt2d != "" && ( $usd != "" || $khr != "")){
+
+			if($countcheck == 0 && $stagecheck == 0){
+
+				$error['checkbox'] = "Please select at least one of the checkbox";
+
+			}elseif($countcheck > 0 || $stagecheck > 0){
+
+				if( $countcheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+				}elseif($stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+				}elseif($countcheck > 1){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+					}
+
+				}
+
+				// if some exception occurs about minimum and maximum value for txt2d value then validation should be put here. //
+
+				$userid = $_SESSION['userid'];
+
+				$order_id = uniqid();
+
+				if(is_array($checkboxlevel)){
+
+					$checkboxlevel = implode(',', $checkboxlevel);
+					
+				}
+
+				if($usd == ""){
+
+					$usd = 0;
+				
+				}elseif($khr == ""){
+
+					$khr = 0;
+
+				}
+
+				// var_dump($radio);
+
+				$newtxt2d = array();
+				
+				$incrementval = 0;
+
+				if($radio == '5OD'){
+
+					for($i = 0 ; $i < 5 ; $i++){
+
+						$newtxt2d[$i] = $txt2d + 2;
+
+						$txt2d = $newtxt2d[$i]; 
+						
+						$incrementval = 5; 
+					}
+
+				}elseif($radio == '5S'){
+
+					for($i = 0 ; $i < 5 ; $i++){
+
+						$newtxt2d[$i] = $txt2d + 1;
+
+						$txt2d = $newtxt2d[$i]; 
+
+						$incrementval = 5; 
+					}
+
+				}elseif($radio == '10S'){
+
+					for($i = 0 ; $i < 10 ; $i++){
+
+						$newtxt2d[$i] = $txt2d + 1;
+
+						$txt2d = $newtxt2d[$i]; 
+
+						$incrementval = 10; 
+
+					}
+
+				}
+
+
+				$arrayid = array();
+
+
+				for($j = 0; $j < $incrementval; $j++){
+
+					$users[$j] = array(
+
+
+						'user_id' => $userid,
+
+						'order_id' => $order_id,
+
+						'2dtxt' => $newtxt2d[$j],
+
+						'usd' => $usd,
+
+						'khr' => $khr,
+
+						'radiobox' => $radio,
+
+						'checklevel' => $checkboxlevel 
+
+					);
+
+					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel' )";
+					// print_r($query);
+					$order = array();
+
+					if ($conn->query($query) === TRUE) {
+
+						$last_id = mysqli_insert_id($conn);
+
+						$arrayid[$j] = $last_id; 
+
+						// $sql = "SELECT * FROM `2dbetform` WHERE `id` = '$last_id'";
+				    	
+					 //    $result = mysqli_query($conn, $sql);
+
+					 //        if (mysqli_num_rows($result) > 0) {
+
+				  //           	while($row = mysqli_fetch_assoc($result)) {
+				            	
+						//         	$order[] = $row;
+
+				  //           	}
+				
+								// $success['success'] = "Bet placed successfully.";
+
+				    //         }else{
+
+								// $error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				    //         }
+										
+
+					} else {
+												
+						$error['error'] = "Unable to place bet.";
+											
+					}
+
+
+				}
+
+				$countarrayid = count($arrayid);
+
+				if($countarrayid == 5 || $countarrayid == 10){
+
+					for($k = 0 ; $k < $countarrayid ; $k++){
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+				
+							$success['success'] = "Bet placed successfully.";
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+					}
+				}			
+			}
+
+		
+		}else{
+
+			$error['usdandkhrerror'] = "Either usd or khr must have a value."; 
+		}
+
+	}else{
+
+		// echo $counttxt2d;
+
+		// echo $countusd;
+
+		// echo $countkhr;
+
+		$txt2d = array();
+
+		$usd = array();
+
+		$khr = array();
+
+		for( $i = 0 ; $i < $counttxt2d ; $i++){
+
+			if($_POST['txt2d'][$i] == ""){
+
+				$error['txt2d'] = "txt2d value row is empty.";
+			
+			}elseif($_POST['txt2d'][$i] != ""){
+
+				$txt2d[$i] = mysqli_real_escape_string( $conn, $_POST['txt2d'][$i] );
+				
+			}else{
+
+				$error['txt2d'] = "Something unexpected occured in txt2d value.";
+
+			}
+
+		}
+
+
+		for( $i = 0 ; $i < $countusd ; $i++){
+
+			if($_POST['usd'][$i] == ""){
+
+				$error['usd'] = "usd row is empty.";
+			
+			}elseif($_POST['usd'][$i] != ""){
+
+				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
+				
+			}else{
+
+				$error['usd'] = "Something unexpected occured in usd value.";
+
+			}
+
+		}
+
+
+		for( $i = 0 ; $i < $countkhr ; $i++){
+
+			if($_POST['khr'][$i] == ""){
+
+				$error['khr'] = "khr row is empty.";
+			
+			}elseif($_POST['khr'][$i] != ""){
+
+				$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
+				
+			}else{
+
+				$error['khr'] = "Something unexpected occured in khr value.";
+
+			}
+
+		}
+
+
+		if(!empty($usd) || !empty($khr)){
+
+			echo "row not empty";
+		}
+	
+	}
+
+
+	// end of form parameters //
+
+}elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+	if(isset($_SESSION['userid'])){
+
+	$id = $_SESSION['userid'];
+
+	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+			        
+			        $result = mysqli_query($conn, $sql);
+
+			        if (mysqli_num_rows($result) > 0) {
+
+		            	while($row = mysqli_fetch_assoc($result)) {
+		            	
+				        	// $_SESSION['userid'] = $row['id'];
+
+				        	// print_r($row);
+
+		            
+		            	}
+
+
+		            }
+
+	}else{
+
+		header("Location: login.php");
+
+	}
 
 }
+
+
 
 ;?>
 
@@ -144,11 +454,75 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	
 		<section>
 
+			<?php if(isset($success['success'])){?>
+
+			<div class="alert alert-success">
+					
+				<?php echo $success['success'];?>
+
+			</div>
+
+			<?php }?>
+
+
 			<?php if(isset($error['error'])){?>
 
 			<div class="alert alert-danger">
 					
 				<?php echo $error['error'];?>
+
+			</div>
+
+			<?php }?>
+
+
+			<?php if(isset($error['txt2d'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['txt2d'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($error['usdandkhrerror'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usdandkhrerror'];?>
+
+			</div>
+
+			<?php }?>
+
+
+			<?php if(isset($error['usd'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usd'];?>
+
+			</div>
+
+			<?php }?>
+
+
+			<?php if(isset($error['usd'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usd'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($error['checkbox'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['checkbox'];?>
 
 			</div>
 
@@ -205,22 +579,178 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		      			<?php }?>
 	    			
 		    	</div>
+
+		    	<div id='SCREEN_VIEW_CONTAINER'><center><input type='button' value='Print' onclick='window.print()' /></center></div>
+		    	<div>
+		    		
+		      		<?php if(isset($success['success'])){
+
+						// check if only one row is inserted //
+						$count = count($order);
+
+						if($count == 1){
+
+							$checkorder = explode(',', $order[0]['checklevel']); 
+
+							$countcheckorder = count($checkorder);
+
+							if($checkorder[0] == 'l23'){
+
+								$countcheckorder = 23;
+							
+							}elseif($checkorder[0] == 'l25'){
+
+								$countcheckorder = 25;
+
+							}elseif($checkorder[0] == 'l27'){
+
+								$countcheckorder = 27;
+								
+							}elseif($checkorder[0] == 'l29'){
+
+								$countcheckorder = 29;
+								
+							}
+
+							if($order[0]['usd'] != 0.00){
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder;
+
+							}elseif($order[0]['khr'] != 0.00){
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder;
+
+							}						
+
+
+						?>
+
+							<div class="table-responsive">          
+							
+							  	<table class="table table-primary">
+							
+								    <thead>
+							
+								      <tr class="table-primary">
+								        <th>2d</th>
+								        <th>USD</th>
+								        <th>KHR</th>
+								        <th>PO</th>
+								      </tr>
+							
+								    </thead>
+							
+								    <tbody>
+								      <tr>
+								      	<td><?php echo $order[0]['2dtxt'];?></td>
+								      	<td><?php echo $order[0]['usd'];?></td>
+								      	<td><?php echo $order[0]['khr'];?></td>
+								      	<td><?php echo $order[0]['checklevel'];?></td>
+								      </tr>
+
+								      <tr>
+								      	<td>Total</td>
+								      	<td><?php echo $finalvalueusd;?></td>
+								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $order[0]['created_at'];?></td>
+								      </tr>
+							
+								    </tbody>
+							
+								</table>
+							
+							</div>
+
+						<?php }elseif($count > 1){?>
+
+							<?php $checkorder = explode(',', $order[0]['checklevel']); 
+
+							$countcheckorder = count($checkorder);
+
+							if($checkorder[0] == 'l23'){
+
+								$countcheckorder = 23;
+							
+							}elseif($checkorder[0] == 'l25'){
+
+								$countcheckorder = 25;
+
+							}elseif($checkorder[0] == 'l27'){
+
+								$countcheckorder = 27;
+								
+							}elseif($checkorder[0] == 'l29'){
+
+								$countcheckorder = 29;
+								
+							}
+
+							if($order[0]['usd'] != 0.00){
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+							}elseif($order[0]['khr'] != 0.00){
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+							}?>
+
+								<div class="table-responsive">          
+							
+							  	<table class="table table-primary">
+							
+								    <thead>
+							
+								      <tr class="table-primary">
+								        <th>2d</th>
+								        <th>USD</th>
+								        <th>KHR</th>
+								        <th>PO</th>
+								      </tr>
+							
+								    </thead>
+							
+								    <tbody>
+
+								<?php foreach ($order as $key => $value) {?>
+								
+								      <tr>
+								      	<td><?php echo $value['2dtxt'];?></td>
+								      	<td><?php echo $value['usd'];?></td>
+								      	<td><?php echo $value['khr'];?></td>
+								      	<td><?php echo $value['checklevel'];?></td>
+								      </tr>
+
+								<?php }?>
+
+								      <tr>
+								      	<td>Total</td>
+								      	<td><?php echo $finalvalueusd;?></td>
+								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $order[0]['created_at'];?></td>
+								      </tr>
+							
+								    </tbody>
+							
+								</table>
+							
+							</div> 
+
+			      		<?php  } }?>		    		
+
+		    	</div>
 				
-				<form action="2d-betform.php" method="POST">
+				<form action="2d1-betform.php" method="POST">
 	              
 	              	<input type="hidden" id="lastStage" value="1" />
+		            
+		            <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
 	              	<div class="first-line">
-
-		                <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
-
-			                  	<!-- <label for="2d">2D:</label> -->
 			                
-			                  	<button class="btn btn-primary">+</button>
+			                  	<!-- <span class="btn btn-primary" id="add" data-level="1">+</span> -->
 			                
 			                <div class="form-group">
-			                
-			                  	<!-- <label for="2d">2D:</label> -->
 			                
 			                  	<input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value">
 			                
@@ -228,15 +758,11 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			                <div class="form-group">
 		                
-			                  	<!-- <label for="usd">USD:</label> -->
-			                
 			                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD">
 		                
 		                	</div>
 
 		                	<div class="form-group">
-		                
-		                  		<!-- <label for="khr">KHR:</label> -->
 		                
 		                  		<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR">
 		                
@@ -270,6 +796,10 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
 
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]">K</label>
+
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]">O</label>
+
 	         		    </div>
 
 	               			<input type="hidden" value="" id="checkbox-val">
@@ -299,115 +829,25 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	</div>
 
 
-	<script type="text/javascript">
-		<script type="text/javascript">
-  
-  $(document).ready(function(){
+<script type="text/javascript">
 
-    $('#add').click(function(event){
+	$(document).ready(function(){
 
-      var level = $('#lastlevel').val();
+		var level = 1;
 
-      console.log("level is " + level);
+ 		$(document).on('click', '#add', function(event){
 
-      var txt2d = $('#2d'+level).val();
+ 			event.preventDefault();
 
-      var usd = $('#usd'+level).val();
+ 			$('.first-line').append('<div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div>');
 
-      var khr = $('#khr'+level).val();
+ 			level++
 
-      console.log("2d value is " + txt2d);
+		});
 
-      if( txt2d != '' && txt2d.length == 2 &&(usd != '' || khr != '')){
+ 	});
 
-        var radioValue = $("input[name='optradio']:checked").val();
-        
-        if(radioValue){
-        
-          console.log("Your are a - " + radioValue);
-          
-          txt2d = parseInt(txt2d);
-
-          if(radioValue == '5OD'){
-
-            if(level > '4'){
-
-               swal("Oops!", "You cannot add more fields!", "warning");
-
-            }else{
-
-              txt2d = txt2d + 2;
-
-              level ++;
-
-              $('#lastlevel').val(level); 
-
-              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="2d">2D:</label> <input type="text" id="2d'+level+'" class="form-control 2d" name="txt2d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+txt2d+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>');
-
-            }
-
-          }else if(radioValue == '5S'){
-
-            if(level > '4'){
-
-              swal("Oops!", "You cannot add more fields!", "warning");
-
-            }else{
-
-              txt2d = txt2d + 1;
-
-              level ++;
-
-              $('#lastlevel').val(level); 
-
-              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="2d">2D:</label> <input type="text" id="2d'+level+'" class="form-control 2d" name="txt2d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+txt2d+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
-
-            }
-
-          }else if(radioValue == '10S'){
-
-             if(level == 10){
-
-            console.log('matched');
-
-              swal("Oops!", "You cannot add more fields!", "warning");
-
-            }else{
-              console.log('not matched');
-
-              txt2d = txt2d + 1;
-
-              level ++;
-
-              $('#lastlevel').val(level); 
-
-              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="2d">2D:</label> <input type="text" id="2d'+level+'" class="form-control 2d" name="txt2d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+txt2d+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
-    
-            }
-
-          }else{
-            // console.log('nothing matched');
-            swal("Oops!", "Please handle checkbox validation error!", "warning");
-            // nothing goes here all checkbox conditions have been checked above
-          }
-
-          }else{
-
-            swal("Oops!", "Please select any of the radiobutton!", "warning");
-
-          }  
-
-        }else{
-
-          swal("Oops!", "Please input all fields before adding extra fields!", "warning");
-       
-        }
-
-    });
-
-  });
-
-  $(document).on('click', '.radio-inline', function(){
+  $(document).on('click', '.radio-inlines', function(){
 
      var d2val = $('#2d1').val();
 
@@ -530,9 +970,11 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
     });
 
-  $(document).on('click', '.checkLevel', function(){
+  $(document).on('click', '.checkStage', function(){
 
  var checked = $(this).prop('checked');
+
+ console.log(checked);
 
     if(checked){
 
@@ -544,6 +986,30 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
       if(checkboxValue == 'l23'){
 
+        $('#l25').prop('checked', false);
+        
+        $('#l27').prop('checked', false);
+        
+        $('#l29').prop('checked', false);
+
+        $('.singleCheckbox').prop('checked', false);
+
+      }else if(checkboxValue == 'l25'){
+
+        $('#l23').prop('checked', false);
+        
+        $('#l27').prop('checked', false);
+        
+        $('#l29').prop('checked', false);
+
+        $('.singleCheckbox').prop('checked', false);
+
+      }else if(checkboxValue == 'l27'){
+
+        $('#l23').prop('checked', false);
+        
+        $('#l25').prop('checked', false);
+        
         $('#l29').prop('checked', false);
 
         $('.singleCheckbox').prop('checked', false);
@@ -551,6 +1017,10 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
       }else if(checkboxValue == 'l29'){
 
         $('#l23').prop('checked', false);
+        
+        $('#l25').prop('checked', false);
+        
+        $('#l27').prop('checked', false);
 
         $('.singleCheckbox').prop('checked', false);
 
@@ -577,6 +1047,10 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
         
         $('#l23').prop('checked', false);
 
+        $('#l25').prop('checked', false);
+
+        $('#l27').prop('checked', false);
+
         $('#l29').prop('checked', false);
 
     }else{
@@ -591,74 +1065,6 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
   });
 
-  $(document).on('click', '.btn-default', function(event){
-
-    // alert('asasas');
-
-    var txt2d = $('#2d1').val();
-
-    var usd = $('#usd1').val();
-
-    var khr = $('#khr1').val();
-
-    console.log(txt2d);
-
-    console.log(usd);
-
-    console.log(khr);
-
- if(txt2d != "" && txt2d.length == 2){
-
-      if((usd != "") || (khr != "" && khr.length == 2)){
-
-        var status = $('#checkbox-val').val();
-
-          if(status == 'upper'){
-
-          // event.preventDefault();
-          
-          // swal("Oops!", "Checkbox checked!", "warning");
-
-        }else if(status == 'lower'){
-
-          event.preventDefault();
-
-          console.log('status is false but still it is showing this message');
-          
-          swal("Oops!", "None of the checkbox is checked!", "warning");
-
-        }else{
-
-          event.preventDefault();
-
-          swal("Oops!", "Please check any of the checkboxes before moving further.", "warning");          
-
-        }
-
-        // $('#3dform').submit();
-
-          // event.preventDefault();
-          
-          // swal("Oops!", "Condition satisfied!", "warning"); 
-
-      }else{
-
-        event.preventDefault();
-
-        swal("Oops!", "Please input either USD or KHR in valid format!", "warning");
-      }
-
-    }else{
-
-      event.preventDefault();
-           
-      swal("Oops!", "Please input 3D field with minimum 3 digits between 01-99 before moving forward!", "warning");
-
-    }
-
-  });
-
-</script>
 	</script>
 
 </body>
