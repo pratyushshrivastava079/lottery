@@ -270,6 +270,10 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
 
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]">K</label>
+
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]">O</label>
+
 	         		    </div>
 
 	               			<input type="hidden" value="" id="checkbox-val">
