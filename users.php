@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}else{
 
-		header("Location: 2d-betform.php");
+		header("Location: 2d1-betform.php");
 
 	}
 
@@ -166,7 +166,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<?php if(isset($error['username'])){?>
+			<?php if(isset($error['username'])){?>
 
 			<div class="alert alert-danger">
 					
