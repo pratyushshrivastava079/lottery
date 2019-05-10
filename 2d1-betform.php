@@ -580,8 +580,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	    			
 		    	</div>
 
-		    	<div id='SCREEN_VIEW_CONTAINER'><center><input type='button' value='Print' onclick='window.print()' /></center></div>
 		    	<div>
+
+		    		<div id='SCREEN_VIEW_CONTAINER'><center><input type='button' value='Print' onclick='window.print()' /></center></div>
 		    		
 		      		<?php if(isset($success['success'])){
 
@@ -624,6 +625,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 						?>
+
+
 
 							<div class="table-responsive">          
 							
@@ -782,23 +785,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			            <div class="checkbox">
 	                
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]">A</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]">B</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]" id="B">B</label>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]">C</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]" id="C">C</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]">D</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]" id="D">D</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]">H</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="H">H</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]">F</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]" id="F">F</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]">K</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]">O</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 
 	         		    </div>
 
@@ -974,47 +977,91 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  var checked = $(this).prop('checked');
 
- console.log(checked);
+ console.log("stage check is " + checked);
 
     if(checked){
 
       var checkboxValue = $(this).val();
 
-      $('#checkbox-val').val('upper');
+      $('#checkbox-val').val(checkboxValue);
 
       console.log(checkboxValue);
 
       if(checkboxValue == 'l23'){
 
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+  
         $('#l25').prop('checked', false);
         
         $('#l27').prop('checked', false);
         
         $('#l29').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
 
       }else if(checkboxValue == 'l25'){
 
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+
         $('#l23').prop('checked', false);
         
         $('#l27').prop('checked', false);
         
         $('#l29').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
 
       }else if(checkboxValue == 'l27'){
 
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+        
+        $('#F').prop('checked', false);
+
         $('#l23').prop('checked', false);
         
         $('#l25').prop('checked', false);
         
         $('#l29').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
 
       }else if(checkboxValue == 'l29'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+        
+        $('#F').prop('checked', false);
+        
+        $('#N').prop('checked', false);
 
         $('#l23').prop('checked', false);
         
@@ -1022,7 +1069,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#l27').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
 
       }
 
@@ -1041,27 +1088,91 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
      var checked = $(this).prop('checked');
 
-    if(checked){
+     console.log("checked is " + checked);
 
-        $('#checkbox-val').val('upper');
+     var value = $(this).val();
+
+     console.log("checked value is " + value);
+
+     var levelval = $('#checkbox-val').val();
+
+     console.log('level val is ' + levelval);
+
+     if(checked == true && levelval == 'l23'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+     	
+     }else if(checked == true && levelval == 'l25'){
+
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+
+     }else if(checked == true && levelval == 'l27'){
+
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
         
-        $('#l23').prop('checked', false);
+        $('#F').prop('checked', false);
 
-        $('#l25').prop('checked', false);
+     }else if(checked == true && levelval == 'l29'){
 
-        $('#l27').prop('checked', false);
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
 
-        $('#l29').prop('checked', false);
+        $('#H').prop('checked', false);
+        
+        $('#F').prop('checked', false);
+        
+        $('#N').prop('checked', false);
 
-    }else{
+     }
 
-        console.log('checkbox unclicked');
+    // if(checked){
 
-        $('#checkbox-val').val('lower');
+    //     $('#checkbox-val').val('upper');
+        
+    //     $('#l23').prop('checked', false);
 
-        console.log($('#checkbox-val').val());
+    //     $('#l25').prop('checked', false);
 
-    }
+    //     $('#l27').prop('checked', false);
+
+    //     $('#l29').prop('checked', false);
+
+    // }else{
+
+    //     console.log('checkbox unclicked');
+
+    //     $('#checkbox-val').val('lower');
+
+    //     console.log($('#checkbox-val').val());
+
+    // }
 
   });
 
