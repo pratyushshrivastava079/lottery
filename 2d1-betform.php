@@ -458,6 +458,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 		margin: 15px;
 	 	}
 
+	 	.checkbox label, .radio label{
+
+	 		padding: 10px 10px;
+	 	}
+
 	  </style>
 
 </head>
