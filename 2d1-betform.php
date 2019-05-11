@@ -751,7 +751,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	              	<div class="first-line">
 			                
-			                  	<!-- <span class="btn btn-primary" id="add" data-level="1">+</span> -->
+			                  	<span class="btn btn-primary" id="add" data-level="1">+</span>
 			                
 			                <div class="form-group">
 			                
