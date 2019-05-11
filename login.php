@@ -92,6 +92,8 @@
 	  src="https://code.jquery.com/jquery-3.4.1.min.js"
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
+
+	  	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  	
 	  <style type="text/css">
 	  	
@@ -148,6 +150,60 @@
 	 		padding: 10px 0px
 	 	}
 	  	
+	  		.navbar-header{
+
+	 		width: 30%;
+	 		display: inline-block;
+	 	}
+
+	 	.caps{
+
+	 		display: inline-block!important;
+	 		width: 68%;
+	 		text-align: center;
+	 	}
+
+	 	.navbars-brand, .navbar-header{
+
+		    height: 50px;
+		    padding: 15px 15px;
+		    font-size: 18px;
+		    line-height: 20px;
+	 	
+	 	}
+
+	 	.row.text-center{
+	 		padding: 10px 0px
+	 	}
+
+	 	.left,.middle,.right-account{
+
+	 		display: inline-block;
+	 		/*width: 32%;*/
+	 	}
+
+	 	.right-account{
+
+	 		text-align: right;
+	 		width: 20%;
+	 	}
+
+	 	.middle, .right-account{
+
+	 		padding: 15px 15px;
+	 	}
+
+
+	 	.left{
+
+	 		width: 10%;
+	 	}
+
+	 	.middle{
+
+	 		width: 68%;
+	 		text-align: center;
+	 	}
 
 	  </style>
 
@@ -161,21 +217,30 @@
   				
   			<div class="container">
     			
-	    		<div class="navbar-header">
+	    		<div class="navbar-header left">
 	      				
-	    			<a class="navbars-brand" href="login.php">Home</a>
+	    			<a href="login.php"><i class="fa fa-home" aria-hidden="true"></i></a>
 				
 	    		</div>
 					
-				<div class="caps navbar-header">
+				<div class="caps middle">
 
-					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+					<span><?php $today = date("d / m / Y h:i:s A"); echo $today; ?></span>
 
 		    	</div>
 
-		    	<div class="navbar-header logsin">
+		    	<div class="right-account">
 		    		
-					<span>Login</span>
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
+		      			
+		      			<?php }else{?>
+
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+
+		      			<?php }?>
+
 
 		    	</div>
 		  	
@@ -197,9 +262,10 @@
 
 		    			<span><a href="add-users.php">Add Users</a></span>
 
+		    			<span> | </span>
+		    			
 		    			<?php }?>
 		      				
-		    			<span> | </span>
 
 		    			<span><a href="2d1-betform.php">2D S1</a></span>
 		    		
@@ -223,18 +289,6 @@
 
 		    			<span><a href="#">Reports</a></span>
 		    			
-		    			<span> | </span>
-
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
-		      			
-		      			<?php }else{?>
-
-			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
-
-		      			<?php }?>
-	    			
 		    	</div>
 	
 		<section>

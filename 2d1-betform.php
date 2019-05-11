@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$error['txt2d'] = "txt2d value cannot be empty"; 
 		}
 
-		if($txt2d != "" && ( $usd != "" || $khr != "")){
+		if($txt2d != "" && ( $usd != "" || $khr != "") || ( $usd != "" && $khr != "")){
 
 			if($countcheck == 0 && $stagecheck == 0){
 
@@ -126,69 +126,139 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				}
 
+				// die(';eneter her');
+
+				// print_r($incrementval);
+
+				// die(); 
+
+				// echo "txt2d is ".$txt2d;
 
 				$arrayid = array();
 
+				if($incrementval == 0){
 
-				for($j = 0; $j < $incrementval; $j++){
+				// echo "txt2d is ".$txt2d;
+					$users = array(
 
-					$users[$j] = array(
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'2dtxt' => $txt2d,
+
+							'usd' => $usd,
+
+							'khr' => $khr,
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d', '$usd', '$khr', '$radio', '$checkboxlevel' )";
+						// print_r($query);
+						// die();
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid = $last_id;
 
 
-						'user_id' => $userid,
-
-						'order_id' => $order_id,
-
-						'2dtxt' => $newtxt2d[$j],
-
-						'usd' => $usd,
-
-						'khr' => $khr,
-
-						'radiobox' => $radio,
-
-						'checklevel' => $checkboxlevel 
-
-					);
-
-					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel' )";
-					// print_r($query);
-					$order = array();
-
-					if ($conn->query($query) === TRUE) {
-
-						$last_id = mysqli_insert_id($conn);
-
-						$arrayid[$j] = $last_id; 
-
-						// $sql = "SELECT * FROM `2dbetform` WHERE `id` = '$last_id'";
-				    	
-					 //    $result = mysqli_query($conn, $sql);
-
-					 //        if (mysqli_num_rows($result) > 0) {
-
-				  //           	while($row = mysqli_fetch_assoc($result)) {
-				            	
-						//         	$order[] = $row;
-
-				  //           	}
-				
-								// $success['success'] = "Bet placed successfully.";
-
-				    //         }else{
-
-								// $error['error'] = "Bet placed but unable to fetch last bid details.";
-				            	
-				    //         }
-										
-
-					} else {
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
 												
-						$error['error'] = "Unable to place bet.";
+						}
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+				
+							$success['success'] = "Bet placed successfully.";
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+
+				}elseif($incrementval > 0){
+
+
+					for($j = 0; $j < $incrementval; $j++){
+
+						$users[$j] = array(
+
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'2dtxt' => $newtxt2d[$j],
+
+							'usd' => $usd,
+
+							'khr' => $khr,
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel' )";
+						// print_r($query);
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid[$j] = $last_id; 
+
+							// $sql = "SELECT * FROM `2dbetform` WHERE `id` = '$last_id'";
+					    	
+						 //    $result = mysqli_query($conn, $sql);
+
+						 //        if (mysqli_num_rows($result) > 0) {
+
+					  //           	while($row = mysqli_fetch_assoc($result)) {
+					            	
+							//         	$order[] = $row;
+
+					  //           	}
+					
+									// $success['success'] = "Bet placed successfully.";
+
+					    //         }else{
+
+									// $error['error'] = "Bet placed but unable to fetch last bid details.";
+					            	
+					    //         }
 											
+
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
+												
+						}
+
 					}
-
-
 				}
 
 				$countarrayid = count($arrayid);
@@ -264,7 +334,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['usd'][$i] == ""){
 
-				$error['usd'] = "usd row is empty.";
+				// $error['usd'] = "usd row is empty.";
 			
 			}elseif($_POST['usd'][$i] != ""){
 
@@ -283,7 +353,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['khr'][$i] == ""){
 
-				$error['khr'] = "khr row is empty.";
+				// $error['khr'] = "khr row is empty.";
 			
 			}elseif($_POST['khr'][$i] != ""){
 
@@ -297,10 +367,263 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		}
 
+		$countcheck = count($_POST['checkbox']);
+
+		$stagecheck = count($_POST['Stage_checkbox']);
+
+		if($countcheck == 0 && $stagecheck == 0){
+
+				$error['checkbox'] = "Please select at least one of the checkbox";
+
+			}elseif($countcheck > 0 || $stagecheck > 0){
+
+				if( $countcheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+				}elseif($stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+				}elseif($countcheck > 1){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+					}
+
+				}
+
+			}
 
 		if(!empty($usd) || !empty($khr)){
 
-			echo "row not empty";
+			// echo "row not empty";
+
+			$userid = $_SESSION['userid'];
+
+				$order_id = uniqid();
+
+				if(is_array($checkboxlevel)){
+
+					$checkboxlevel = implode(',', $checkboxlevel);
+					
+				}
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+		
+
+			$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+			if($radio != ""){
+
+				$error['error'] = "Radio option cannot be selected in this case.";
+
+			}elseif($radio == ""){
+
+				for($j = 0 ; $j < $counttxt2d; $j++ ){
+
+					if($usd[$j] == ""){
+
+						$usd[$j] = 0;
+					}
+
+					if($khr[$j] == ""){
+
+						$khr[$j] = 0;
+					}
+
+					$users[$j] = array(
+
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'2dtxt' => $txt2d[$j],
+
+							'usd' => $usd[$j],
+
+							'khr' => $khr[$j],
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
+						// print_r($query);
+						// die();
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid[$j] = $last_id; 
+
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
+												
+						}
+
+				}
+
+				$countarrayid = count($arrayid);
+
+
+					for($k = 0 ; $k < $countarrayid ; $k++){
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+
+							$success['success'] = "Bet placed successfully.";
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+					}
+			}		
+
+		}
+
+		$countcheck = count($_POST['checkbox']);
+		
+		$stagecheck = count($_POST['Stage_checkbox']);
+
+		if($countcheck == 0 && $stagecheck == 0){
+
+				$error['checkbox'] = "Please select at least one of the checkbox";
+
+			}elseif($countcheck > 0 || $stagecheck > 0){
+
+				if( $countcheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+				}elseif($stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+				}elseif($countcheck > 1){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+					}
+
+				}
+
+			}
+
+		if(!empty($usd) && !empty($khr)){
+
+			$userid = $_SESSION['userid'];
+
+				$order_id = uniqid();
+
+				if(is_array($checkboxlevel)){
+
+					$checkboxlevel = implode(',', $checkboxlevel);
+					
+				}
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+
+			$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+			if($radio != ""){
+
+				$error['error'] = "Radio option cannot be selected in this case.";
+
+			}elseif($radio == ""){
+
+				for($j = 0 ; $j < $counttxt2d; $j++ ){
+
+					$users[$j] = array(
+
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'2dtxt' => $txt2d[$j],
+
+							'usd' => $usd[$j],
+
+							'khr' => $khr[$j],
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
+						// print_r($query);
+						// die();
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid[$j] = $last_id; 
+
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
+												
+						}
+
+				}
+
+				$countarrayid = count($arrayid);
+
+					for($k = 0 ; $k < $countarrayid ; $k++){
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+				
+							$success['success'] = "Bet placed successfully.";
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+					}
+
+			}
+			
 		}
 	
 	}
@@ -480,7 +803,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	 		margin-left:10px;
 	 	}
-	 	
+
 	 	@media only screen and (max-width: 768px) {
 		
 		.right-account{
@@ -693,15 +1016,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 							}
 
-							if($order[0]['usd'] != 0.00){
+							if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
 
-								$finalvalueusd = $order[0]['usd'] * $countcheckorder;
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
-							}elseif($order[0]['khr'] != 0.00){
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
-								$finalvaluekhr = $order[0]['khr'] * $countcheckorder;
+							}elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
 
-							}						
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+
+							 }				
 
 
 						?>
@@ -747,7 +1075,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						<?php }elseif($count > 1){?>
 
-							<?php $checkorder = explode(',', $order[0]['checklevel']); 
+							<?php $count; $checkorder = explode(',', $order[0]['checklevel']); 
 
 							$countcheckorder = count($checkorder);
 
@@ -769,15 +1097,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 							}
 
-							if($order[0]['usd'] != 0.00){
+							// if($order[0]['usd'] != 0.00){
+
+							// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+							// }elseif($order[0]['khr'] != 0.00){
+
+							// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+							// }else
+
+							if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
 
 								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
-							}elseif($order[0]['khr'] != 0.00){
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+							}elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
 								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
-							}?>
+
+							 }?>
 
 							<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table')" /></div>
 

@@ -432,15 +432,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   				
   			<div class="container">
     			
-	    		<div class="navbar-header">
+	    		<div class="navbar-header left">
 	      				
-	    			<a class="navbars-brand" href="login.php">Home</a>
+	    			<a href="login.php"><i class="fa fa-home" aria-hidden="true"></i></a>
 				
 	    		</div>
 					
-				<div class="caps navbars-brand">
+				<div class="caps middle">
 
-					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+					<span><?php $today = date("d / m / Y h:i:s A"); echo $today; ?></span>
+
+		    	</div>
+
+		    	<div class="right-account">
+		    		
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
+		      			
+		      			<?php }else{?>
+
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+
+		      			<?php }?>
+
 
 		    	</div>
 		  	
@@ -565,18 +580,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="#">Reports</a></span>
-		    			
-		    			<span> | </span>
-
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
-		      			
-		      			<?php }else{?>
-
-			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
-
-		      			<?php }?>
 	    			
 		    	</div>
 
