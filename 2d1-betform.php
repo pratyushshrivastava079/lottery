@@ -449,6 +449,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	.middle{
 
 	 		width: 65%;
+	 		text-align: center;
 	 	}
 
 	 	#screen-view-container{
