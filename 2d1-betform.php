@@ -426,17 +426,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	.left,.middle,.right-account{
 
 	 		display: inline-block;
-	 		width: 32%;
+	 		/*width: 32%;*/
 	 	}
 
 	 	.right-account{
 
 	 		text-align: right;
+	 		width: 30%;
 	 	}
 
 	 	.middle, .right-account{
 
 	 		padding: 15px 15px;
+	 	}
+
+
+	 	.left{
+
+	 		width: 10%;
+	 	}
+
+	 	.middle{
+
+	 		width: 65%;
 	 	}
 
 	 	#screen-view-container{
