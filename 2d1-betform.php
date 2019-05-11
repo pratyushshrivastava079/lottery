@@ -367,11 +367,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	  <style type="text/css">
 	  	
 	  	.form-group{
 
-	  			width: 30%;
+	  			width: 27%;
 	  			display: inline-block!important;
 	  			margin-right: 1%;
 	  		}
@@ -421,6 +423,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 		padding: 10px 0px
 	 	}
 
+	 	.left,.middle,.right-account{
+
+	 		display: inline-block;
+	 		width: 32%;
+	 	}
+
+	 	.right-account{
+
+	 		text-align: right;
+	 	}
+
+	 	.middle, .right-account{
+
+	 		padding: 15px 15px;
+	 	}
+
+	 	#screen-view-container{
+
+	 		text-align: right;
+	 		margin: 15px;
+	 	}
+
 	  </style>
 
 </head>
@@ -432,15 +456,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   				
   			<div class="container">
     			
-	    		<div class="navbar-header">
+	    		<div class="navbar-header left">
 	      				
-	    			<a class="navbars-brand" href="login.php">Home</a>
+	    			<a href="login.php"><i class="fa fa-home" aria-hidden="true"></i></a>
 				
 	    		</div>
 					
-				<div class="caps navbars-brand">
+				<div class="caps middle">
 
 					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+
+		    	</div>
+
+		    	<div class="right-account">
+		    		
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
+		      			
+		      			<?php }else{?>
+
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+
+		      			<?php }?>
+
 
 		    	</div>
 		  	
@@ -567,22 +606,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span><a href="#">Reports</a></span>
 		    			
 		    			<span> | </span>
-
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
-		      			
-		      			<?php }else{?>
-
-			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
-
-		      			<?php }?>
 	    			
 		    	</div>
 
 		    	<div>
-
-		    		<div id='SCREEN_VIEW_CONTAINER'><center><input type='button' value='Print' onclick='window.print()' /></center></div>
 		    		
 		      		<?php if(isset($success['success'])){
 
@@ -627,8 +654,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						?>
 
 
+						<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table-up')" /></div>
 
-							<div class="table-responsive">          
+							<div class="table-responsive" id="print-table-up">          
 							
 							  	<table class="table table-primary">
 							
@@ -648,7 +676,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								      	<td><?php echo $order[0]['2dtxt'];?></td>
 								      	<td><?php echo $order[0]['usd'];?></td>
 								      	<td><?php echo $order[0]['khr'];?></td>
-								      	<td><?php echo $order[0]['checklevel'];?></td>
+								      	<td>( <?php echo $order[0]['checklevel'];?> )</td>
 								      </tr>
 
 								      <tr>
@@ -698,7 +726,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							}?>
 
-								<div class="table-responsive">          
+							<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table')" /></div>
+
+								<div class="table-responsive" id="print-table">          
 							
 							  	<table class="table table-primary">
 							
@@ -721,7 +751,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								      	<td><?php echo $value['2dtxt'];?></td>
 								      	<td><?php echo $value['usd'];?></td>
 								      	<td><?php echo $value['khr'];?></td>
-								      	<td><?php echo $value['checklevel'];?></td>
+								      	<td>( <?php echo $value['checklevel'];?> )</td>
 								      </tr>
 
 								<?php }?>
@@ -795,13 +825,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="H">H</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]" id="F">F</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]" id="I">I</label>
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
-
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
-
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 
 	         		    </div>
 
@@ -816,6 +842,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			                <label class="checkbox-inline"><input type="checkbox" id="l27" value="l27" class="checkStage" name="Stage_checkbox[]">L 27</label>
 			                
 			                <label class="checkbox-inline"><input type="checkbox" id="l29" value="l29" class="checkStage" name="Stage_checkbox[]">L 29</label>
+
+			                 <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
+
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 			                
 			            </div>
 
@@ -835,6 +865,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <script type="text/javascript">
 
 	$(document).ready(function(){
+
+		var ab  = $.now();
+
+		var date = new Date(ab*1000);
+
+		console.log(date);
 
 		var level = 1;
 
@@ -1177,6 +1213,37 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   });
 
 	</script>
+
+	<script language="javascript" type="text/javascript">
+		
+		function printerDiv(divID) {
+		//Get the HTML of div
+
+		var divElements = document.getElementById(divID).innerHTML;
+
+		//Get the HTML of whole page
+		var oldPage = document.body.innerHTML;
+
+		//Reset the pages HTML with divs HTML only
+
+		     document.body.innerHTML = 
+
+		     "<html><head><title></title></head><body>" + 
+		     divElements + "</body>";
+
+
+
+		//Print Page
+		window.print();
+
+		//Restore orignal HTML
+		document.body.innerHTML = oldPage;
+
+		}
+	
+	</script>
+
+
 
 </body>
 </html>
