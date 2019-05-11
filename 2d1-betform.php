@@ -373,9 +373,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  	
 	  	.form-group{
 
-	  			width: 27%;
+	  			width: 25%;
 	  			display: inline-block!important;
-	  			margin-right: 1%;
+	  			margin: 1.5%;
+	  		}
+
+	  		#add{
+
+	  			display: inline-block;
+	  			width: 3.5%;
+	  		}
+
+	  		.fields{
+
+	  			margin-left:0.7%;
+	  			width: 101%;
 	  		}
 
 	  		.pclass{
@@ -432,7 +444,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	.right-account{
 
 	 		text-align: right;
-	 		width: 30%;
+	 		width: 20%;
 	 	}
 
 	 	.middle, .right-account{
@@ -448,7 +460,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	 	.middle{
 
-	 		width: 65%;
+	 		width: 68%;
 	 		text-align: center;
 	 	}
 
@@ -462,6 +474,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	 		padding: 10px 10px;
 	 	}
+
+
+	 	.radio, .checkbox{
+
+	 		margin-left:10px;
+	 	}
+	 	
+	 	@media only screen and (max-width: 768px) {
+		
+		.right-account{
+
+	 		width: 30%;
+	 	}
+
+	 	.middle{
+
+	 		width: 64%;
+	 	}
+
+	 	.last-checkbox{
+
+	 		margin-left: 0px!important;
+	 	}
+		
+		}
 
 	  </style>
 
@@ -482,7 +519,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					
 				<div class="caps middle">
 
-					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+					<span><?php $today = date("d / m / Y h:i:s A"); echo $today; ?></span>
 
 		    	</div>
 
@@ -623,8 +660,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		    			<span><a href="#">Reports</a></span>
 		    			
-		    			<span> | </span>
-	    			
 		    	</div>
 
 		    	<div>
@@ -798,8 +833,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		            <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
 	              	<div class="first-line">
+
+	              		<div class="field">
 			                
-			                  	<span class="btn btn-primary" id="add" data-level="1">+</span>
+			                <span class="btn btn-primary" id="add" data-level="1">+</span>
 			                
 			                <div class="form-group">
 			                
@@ -820,6 +857,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		                	</div>
 
 		              	</div>
+
+		             </div>
 
 		  	            <div class="radio">
 
@@ -863,7 +902,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			                 <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
+			                <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 			                
 			            </div>
 
@@ -896,7 +935,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
- 			$('.first-line').append('<span class="btn btn-primary" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div>');
+ 			$('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div></div>');
 
  			level++
 
