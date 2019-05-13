@@ -371,6 +371,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$stagecheck = count($_POST['Stage_checkbox']);
 
+		$arra = array();
+
 		if($countcheck == 0 && $stagecheck == 0){
 
 				$error['checkbox'] = "Please select at least one of the checkbox";
@@ -391,6 +393,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
 
+						$arra[] = $checkboxlevel[$j];
 					}
 
 				}
@@ -405,9 +408,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$order_id = uniqid();
 
-				if(is_array($checkboxlevel)){
+				if(is_array($arra)){
 
-					$checkboxlevel = implode(',', $checkboxlevel);
+					$checkboxlevel = implode(',', $arra);
 					
 				}
 
@@ -507,11 +510,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		$stagecheck = count($_POST['Stage_checkbox']);
 
+		$arra = array();
+
 		if($countcheck == 0 && $stagecheck == 0){
 
 				$error['checkbox'] = "Please select at least one of the checkbox";
 
 			}elseif($countcheck > 0 || $stagecheck > 0){
+
+				// echo $countcheck."<br/>";
+
+				// echo $stagecheck."<br/>";
 
 				if( $countcheck == 1){
 
@@ -527,11 +536,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
 
+						$arra[] = $checkboxlevel[$j];
 					}
 
 				}
 
 			}
+
+			// echo gettype($checkboxlevel);
+			// print_r($checkboxlevel);
+			// print_r($arra);
+
+			// print_r($checkboxlevel);
 
 		if(!empty($usd) && !empty($khr)){
 
@@ -539,10 +555,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$order_id = uniqid();
 
-				if(is_array($checkboxlevel)){
+				if(is_array($arra)){
 
-					$checkboxlevel = implode(',', $checkboxlevel);
-					
+					$checkboxlevel = implode(',', $arra);
+
+				}else{
+
+					// $checkboxlevel = explode(',', $checkboxlevel);
+					// echo "not array";
 				}
 
 		// check whether multiple checkbox or checkboxlevel has been posted //
@@ -1018,6 +1038,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
 
+								echo "sdss";
+
 								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
 								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
@@ -1029,6 +1051,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
 
+							 }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] == 0.00){
+
+							 	echo "khr zero";
+							
+							 }elseif($order[0]['khr'] != 0.00 || $order[0]['usd'] == 0.00){
+
+							 	echo "usd zero";
 							 }				
 
 
@@ -1075,52 +1104,85 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						<?php }elseif($count > 1){?>
 
-							<?php $count; $checkorder = explode(',', $order[0]['checklevel']); 
+							<?php $count; 
 
-							$countcheckorder = count($checkorder);
+							$finalvalueusd = 0;
 
-							if($checkorder[0] == 'l23'){
+							$finalvaluekhr = 0;
+							// echo "<pre>";
+							// print_r($order);
 
-								$countcheckorder = 23;
-							
-							}elseif($checkorder[0] == 'l25'){
+							for($i = 0 ; $i < $count; $i++){
 
-								$countcheckorder = 25;
+								$checkorder = explode(',', $order[$i]['checklevel']);
 
-							}elseif($checkorder[0] == 'l27'){
-
-								$countcheckorder = 27;
+								// print_r($checkorder);
 								
-							}elseif($checkorder[0] == 'l29'){
+								$countcheckorder = count($checkorder);
 
-								$countcheckorder = 29;
+								if($checkorder[$i] == 'l23'){
+
+									$countcheckorder = 23;
 								
-							}
+								}elseif($checkorder[$i] == 'l25'){
 
-							// if($order[0]['usd'] != 0.00){
+									$countcheckorder = 25;
 
-							// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+								}elseif($checkorder[$i] == 'l27'){
 
-							// }elseif($order[0]['khr'] != 0.00){
+									$countcheckorder = 27;
+									
+								}elseif($checkorder[$i] == 'l29'){
 
-							// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+									$countcheckorder = 29;
+									
+								}
 
-							// }else
+								// if($order[0]['usd'] != 0.00){
 
-							if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
+								// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
-								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+								// }elseif($order[0]['khr'] != 0.00){
 
-								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+								// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
-							}elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
+								// }else
 
-								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+								if($order[$i]['usd'] != 0.00 && $order[$i]['khr'] != 0.00){
 
-								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+
+									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+
+								}elseif($order[$i]['usd'] != 0.00 || $order[$i]['khr'] != 0.00){
+
+									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+
+									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
 
 
-							 }?>
+								}elseif($order[$i]['usd'] != 0.00 || $order[$i]['khr'] == 0.00){
+
+									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+
+									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+								
+								}elseif($order[$i]['khr'] != 0.00 || $order[$i]['usd'] == 0.00){
+
+									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+
+									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+
+								 }
+
+								 // print_r($finalvaluekhr);
+								 // echo "<br/>";
+								 // print_r($finalvalueusd);
+
+							}	
+
+
+							 ?>
 
 							<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table')" /></div>
 
