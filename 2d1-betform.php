@@ -410,7 +410,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				if(is_array($arra)){
 
-					$checkboxlevel = implode(',', $arra);
+					$checkboxlevel = implode(',', $array);
 					
 				}
 
@@ -1012,6 +1012,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						// check if only one row is inserted //
 						$count = count($order);
 
+						$finalvalueusd = 0;
+
+						$finalvaluekhr = 0;
+
 						if($count == 1){
 
 							$checkorder = explode(',', $order[0]['checklevel']); 
@@ -1036,29 +1040,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 							}
 
-							if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
+							// if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
 
-								echo "sdss";
+							// 	echo "sdss";
+
+							// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+							// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+							// }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
 
 								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
 
 								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
-							}elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
 
-								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+							 // }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] == 0.00){
 
-								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
-
-
-							 }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] == 0.00){
-
-							 	echo "khr zero";
+							 // 	echo "khr zero";
 							
-							 }elseif($order[0]['khr'] != 0.00 || $order[0]['usd'] == 0.00){
+							 // }elseif($order[0]['khr'] != 0.00 || $order[0]['usd'] == 0.00){
 
-							 	echo "usd zero";
-							 }				
+							 // 	echo "usd zero";
+							 // }				
 
 
 						?>
@@ -1148,38 +1152,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								// }else
 
-								if($order[$i]['usd'] != 0.00 && $order[$i]['khr'] != 0.00){
+								// if($order[$i]['usd'] != 0.00 && $order[$i]['khr'] != 0.00){
 
-									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+									
+								// 	$finalvalueusd = $order[$i]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+								// 	$finalvaluekhr = $order[$i]['khr'] * $countcheckorder;
 
-								}elseif($order[$i]['usd'] != 0.00 || $order[$i]['khr'] != 0.00){
-
-									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
-
-									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
-
-
-								}elseif($order[$i]['usd'] != 0.00 || $order[$i]['khr'] == 0.00){
-
-									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
-
-									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+								// 	echo "usd not empty ".$finalvalueusd." and khr not empty ". $finalvaluekhr."<br/>";
 								
-								}elseif($order[$i]['khr'] != 0.00 || $order[$i]['usd'] == 0.00){
+								// }elseif($order[$i]['usd'] == 0.00 && $order[$i]['khr'] != 0.00){
+									
 
-									$finalvalueusd = $order[$i]['usd'] * $countcheckorder * $count;
+								// 	$finalvalueusd = $order[$i]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $order[$i]['khr'] * $countcheckorder * $count;
+								// 	$finalvaluekhr = $order[$i]['khr'] * $countcheckorder;
 
-								 }
+								// 	echo "usd empty " .$finalvalueusd ." and khr not empty". $finalvaluekhr."<br/>";
 
-								 // print_r($finalvaluekhr);
-								 // echo "<br/>";
-								 // print_r($finalvalueusd);
+								// }elseif($order[$i]['usd'] != 0.00 && $order[$i]['khr'] == 0.00){
+
+
+									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
+
+									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
+								
+									// echo "usd not empty ".$finalvalueusd." and khr empty ".$finalvaluekhr."<br/>";
+								// }
+
 
 							}	
+								 // echo "<br/>";
+								 // print_r($finalvaluekhr);
+								 // print_r($finalvalueusd);
 
 
 							 ?>
