@@ -48,11 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
 
-				}elseif($stagecheck == 1){
-
-					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
-
-				}elseif($countcheck > 1){
+				}elseif($countcheck > 1 && $stagecheck == 1){
 
 					for( $j = 0; $j < $countcheck ; $j++ ){
 
@@ -60,9 +56,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					}
 
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($checkboxlevel, $stagelevel);
+
+				}elseif($countcheck > 1 && $stagecheck == 0){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+					
+				}elseif($countcheck == 0 && $stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
 				}
 
 				// if some exception occurs about minimum and maximum value for txt2d value then validation should be put here. //
+
+				// print_r($checkboxlevel);
 
 				$userid = $_SESSION['userid'];
 
@@ -383,22 +399,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
 
-				}elseif($stagecheck == 1){
-
-					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
-
-				}elseif($countcheck > 1){
+				}elseif($countcheck > 1 && $stagecheck == 1){
 
 					for( $j = 0; $j < $countcheck ; $j++ ){
 
 						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
 
 						$arra[] = $checkboxlevel[$j];
+
 					}
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($arra, $stagelevel);
+
+				}elseif($countcheck > 1 && $stagecheck == 0){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+					
+				}elseif($countcheck == 0 && $stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
 
 				}
 
 			}
+
+			// print_r($arra);
 
 		if(!empty($usd) || !empty($khr)){
 
@@ -410,13 +443,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				if(is_array($arra)){
 
-					$checkboxlevel = implode(',', $array);
+					$checkboxlevel = implode(',', $arra);
 					
 				}
 
 		// check whether multiple checkbox or checkboxlevel has been posted //
-
-		
 
 			$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
 
@@ -526,18 +557,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
 
-				}elseif($stagecheck == 1){
-
-					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
-
-				}elseif($countcheck > 1){
+				}elseif($countcheck > 1 && $stagecheck == 1){
 
 					for( $j = 0; $j < $countcheck ; $j++ ){
 
 						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
 
 						$arra[] = $checkboxlevel[$j];
+
 					}
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($arra, $stagelevel);
+
+				}elseif($countcheck > 1 && $stagecheck == 0){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+
+				}elseif($countcheck == 0 && $stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
 
 				}
 
@@ -1022,23 +1068,55 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							$countcheckorder = count($checkorder);
 
-							if($checkorder[0] == 'l23'){
+							if(end($checkorder) == 'l23'){
 
-								$countcheckorder = 23;
+								// $countcheckorder = 23;
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
 							
-							}elseif($checkorder[0] == 'l25'){
+							}elseif(end($checkorder) == 'l25'){
 
-								$countcheckorder = 25;
+								// $countcheckorder = 25;
 
-							}elseif($checkorder[0] == 'l27'){
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
 
-								$countcheckorder = 27;
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+
+
+							}elseif(end($checkorder) == 'l27'){
+
+								// $countcheckorder = 27;
+
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+
 								
-							}elseif($checkorder[0] == 'l29'){
+							}elseif(end($checkorder) == 'l29'){
 
-								$countcheckorder = 29;
-								
-							}
+								// $countcheckorder = 29;
+
+								// $countcheckorder = 23;
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+							}else{
 
 							// if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
 
@@ -1062,7 +1140,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							 // }elseif($order[0]['khr'] != 0.00 || $order[0]['usd'] == 0.00){
 
 							 // 	echo "usd zero";
-							 // }				
+							 // }
+
+							 }				
 
 
 						?>
@@ -1119,27 +1199,78 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							for($i = 0 ; $i < $count; $i++){
 
 								$checkorder = explode(',', $order[$i]['checklevel']);
+								$stageorder = explode(',', $order[$i]['Stagelevel']);
 
+								// print_r($order);
+								// print_r($stageorder);
 								// print_r($checkorder);
 								
 								$countcheckorder = count($checkorder);
 
-								if($checkorder[$i] == 'l23'){
 
-									$countcheckorder = 23;
+								if(end($checkorder) == 'l23'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 23 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 23 );
 								
-								}elseif($checkorder[$i] == 'l25'){
+								}elseif(end($checkorder) == 'l25'){
 
-									$countcheckorder = 25;
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 25;
 
-								}elseif($checkorder[$i] == 'l27'){
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 25 );
 
-									$countcheckorder = 27;
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 25 );									
+
+								}elseif(end($checkorder) == 'l27'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 27;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 27 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 27 );
 									
-								}elseif($checkorder[$i] == 'l29'){
+								}elseif(end($checkorder) == 'l29'){
 
-									$countcheckorder = 29;
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 29;
+
+									// if($checkorder[$i] == "l29"){
+										
+									// 	echo "final usd value is " . $finalvalueusd."<br/>";
+									// 	echo "final usd value is " . $order[$i]['usd']."<br/>";
+
+									// 	$finalvalueusd = $finalvalueusd + ($oder[$i]['usd']*29) ;
+
+									// 	$finalvaluekhr = $finalvaluekhr + $order[$i]['khr']  * 29;
+
+									// 	echo "if l29 " . $finalvalueusd."<br/>";
+
+									// }else{
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 29 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 29 );
+
+										// echo "order usd ". $order[$i]['usd']."<br/>";
+										// echo "countcheckorder ". $countcheckorder."<br/>";
+										// echo "l29 ". ($order[$i]['usd']*29)."<br/>";
+										// echo "final usd  ". $finalvalueusd."<br/>";
+										
+									// }
+
 									
+								}else{
+
+									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
+
+									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
+
 								}
 
 								// if($order[0]['usd'] != 0.00){
@@ -1171,11 +1302,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								// 	echo "usd empty " .$finalvalueusd ." and khr not empty". $finalvaluekhr."<br/>";
 
 								// }elseif($order[$i]['usd'] != 0.00 && $order[$i]['khr'] == 0.00){
-
-
-									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
-
-									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
 								
 									// echo "usd not empty ".$finalvalueusd." and khr empty ".$finalvaluekhr."<br/>";
 								// }
@@ -1292,7 +1418,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="H">H</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]" id="I">I</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]" id="I">I</label>
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
 
