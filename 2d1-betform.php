@@ -44,11 +44,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			}elseif($countcheck > 0 || $stagecheck > 0){
 
-				if( $countcheck == 1){
 
-					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
-
-				}elseif($countcheck > 1 && $stagecheck == 1){
+				if($countcheck > 1 && $stagecheck == 1){
 
 					for( $j = 0; $j < $countcheck ; $j++ ){
 
@@ -74,6 +71,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
 
+				}elseif($countcheck == 1 && $stagecheck == 1){
+
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					// $arra[] = $checkboxlevel[0];
+
+					// print_r($arra);
+
+					array_push($checkboxlevel, $stagelevel);
+
+					// print_r($arra);
 				}
 
 				// if some exception occurs about minimum and maximum value for txt2d value then validation should be put here. //
@@ -427,6 +437,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
 
+				}elseif($countcheck == 1 && $stagecheck == 1){
+
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$arra[] = $checkboxlevel[0];
+
+					array_push($arra, $stagelevel);
+
 				}
 
 			}
@@ -584,6 +604,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				}elseif($countcheck == 0 && $stagecheck == 1){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+				}elseif($countcheck == 1 && $stagecheck == 1){
+
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$arra[] = $checkboxlevel[0];
+
+					array_push($arra, $stagelevel);
 
 				}
 
