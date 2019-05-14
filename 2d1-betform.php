@@ -1098,7 +1098,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							$countcheckorder = count($checkorder);
 
-							if(end($checkorder) == 'l23'){
+							if(end($checkorder) == 'L 23'){
 
 								// $countcheckorder = 23;
 
@@ -1109,7 +1109,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
 							
-							}elseif(end($checkorder) == 'l25'){
+							}elseif(end($checkorder) == 'L 25'){
 
 								// $countcheckorder = 25;
 
@@ -1121,7 +1121,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
 
 
-							}elseif(end($checkorder) == 'l27'){
+							}elseif(end($checkorder) == 'L 27'){
 
 								// $countcheckorder = 27;
 
@@ -1134,7 +1134,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
 
 								
-							}elseif(end($checkorder) == 'l29'){
+							}elseif(end($checkorder) == 'L 29'){
 
 								// $countcheckorder = 29;
 
@@ -1238,7 +1238,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = count($checkorder);
 
 
-								if(end($checkorder) == 'l23'){
+								if(end($checkorder) == 'L 23'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
@@ -1247,7 +1247,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 23 );
 								
-								}elseif(end($checkorder) == 'l25'){
+								}elseif(end($checkorder) == 'L 25'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 25;
@@ -1256,7 +1256,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 25 );									
 
-								}elseif(end($checkorder) == 'l27'){
+								}elseif(end($checkorder) == 'L 27'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 27;
@@ -1265,12 +1265,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 27 );
 									
-								}elseif(end($checkorder) == 'l29'){
+								}elseif(end($checkorder) == 'L 29'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 29;
 
-									// if($checkorder[$i] == "l29"){
+									// if($checkorder[$i] == "L 29"){
 										
 									// 	echo "final usd value is " . $finalvalueusd."<br/>";
 									// 	echo "final usd value is " . $order[$i]['usd']."<br/>";
@@ -1279,7 +1279,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									// 	$finalvaluekhr = $finalvaluekhr + $order[$i]['khr']  * 29;
 
-									// 	echo "if l29 " . $finalvalueusd."<br/>";
+									// 	echo "if L 29 " . $finalvalueusd."<br/>";
 
 									// }else{
 
@@ -1289,7 +1289,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										// echo "order usd ". $order[$i]['usd']."<br/>";
 										// echo "countcheckorder ". $countcheckorder."<br/>";
-										// echo "l29 ". ($order[$i]['usd']*29)."<br/>";
+										// echo "L 29 ". ($order[$i]['usd']*29)."<br/>";
 										// echo "final usd  ". $finalvalueusd."<br/>";
 										
 									// }
@@ -1458,13 +1458,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	              		<div class="checkbox">
 	                
-			                <label class="checkbox-inline"><input type="checkbox" id="l23" value="l23" class="checkStage" name="Stage_checkbox[]">L 23</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="L 23" value="L 23" class="checkStage" name="Stage_checkbox[]">L 23</label>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" id="l25" value="l25" class="checkStage" name="Stage_checkbox[]">L 25</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="L 25" value="L 25" class="checkStage" name="Stage_checkbox[]">L 25</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" id="l27" value="l27" class="checkStage" name="Stage_checkbox[]">L 27</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="L 27" value="L 27" class="checkStage" name="Stage_checkbox[]">L 27</label>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" id="l29" value="l29" class="checkStage" name="Stage_checkbox[]">L 29</label>
+			                <label class="checkbox-inline"><input type="checkbox" id="L 29" value="L 29" class="checkStage" name="Stage_checkbox[]">L 29</label>
 
 			                 <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
@@ -1646,7 +1646,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
       console.log(checkboxValue);
 
-      if(checkboxValue == 'l23'){
+      if(checkboxValue == 'L 23'){
 
         $('#A').prop('checked', false);
   
@@ -1656,15 +1656,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   
         $('#D').prop('checked', false);
   
-        $('#l25').prop('checked', false);
+        $('#L 25').prop('checked', false);
         
-        $('#l27').prop('checked', false);
+        $('#L 27').prop('checked', false);
         
-        $('#l29').prop('checked', false);
+        $('#L 29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
-      }else if(checkboxValue == 'l25'){
+      }else if(checkboxValue == 'L 25'){
 
         $('#A').prop('checked', false);
   
@@ -1676,15 +1676,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
 
-        $('#l23').prop('checked', false);
+        $('#L 23').prop('checked', false);
         
-        $('#l27').prop('checked', false);
+        $('#L 27').prop('checked', false);
         
-        $('#l29').prop('checked', false);
+        $('#L 29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
-      }else if(checkboxValue == 'l27'){
+      }else if(checkboxValue == 'L 27'){
 
         $('#A').prop('checked', false);
   
@@ -1698,15 +1698,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#F').prop('checked', false);
 
-        $('#l23').prop('checked', false);
+        $('#L 23').prop('checked', false);
         
-        $('#l25').prop('checked', false);
+        $('#L 25').prop('checked', false);
         
-        $('#l29').prop('checked', false);
+        $('#L 29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
-      }else if(checkboxValue == 'l29'){
+      }else if(checkboxValue == 'L 29'){
 
         $('#A').prop('checked', false);
   
@@ -1722,11 +1722,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#N').prop('checked', false);
 
-        $('#l23').prop('checked', false);
+        $('#L 23').prop('checked', false);
         
-        $('#l25').prop('checked', false);
+        $('#L 25').prop('checked', false);
         
-        $('#l27').prop('checked', false);
+        $('#L 27').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
@@ -1757,7 +1757,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
      console.log('level val is ' + levelval);
 
-     if(checked == true && levelval == 'l23'){
+     if(checked == true && levelval == 'L 23'){
 
         $('#A').prop('checked', false);
   
@@ -1767,7 +1767,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   
         $('#D').prop('checked', false);
      	
-     }else if(checked == true && levelval == 'l25'){
+     }else if(checked == true && levelval == 'L 25'){
 
      	$('#A').prop('checked', false);
   
@@ -1779,7 +1779,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
 
-     }else if(checked == true && levelval == 'l27'){
+     }else if(checked == true && levelval == 'L 27'){
 
      	$('#A').prop('checked', false);
   
@@ -1793,7 +1793,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#F').prop('checked', false);
 
-     }else if(checked == true && levelval == 'l29'){
+     }else if(checked == true && levelval == 'L 29'){
 
      	$('#A').prop('checked', false);
   
@@ -1815,13 +1815,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     //     $('#checkbox-val').val('upper');
         
-    //     $('#l23').prop('checked', false);
+    //     $('#L 23').prop('checked', false);
 
-    //     $('#l25').prop('checked', false);
+    //     $('#L 25').prop('checked', false);
 
-    //     $('#l27').prop('checked', false);
+    //     $('#L 27').prop('checked', false);
 
-    //     $('#l29').prop('checked', false);
+    //     $('#L 29').prop('checked', false);
 
     // }else{
 
