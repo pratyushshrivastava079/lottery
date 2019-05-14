@@ -100,15 +100,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					
 				}
 
-				if($usd == ""){
+				// if($usd == ""){
 
-					$usd = 0;
+				// 	$usd = 0;
 				
-				}elseif($khr == ""){
+				// }elseif($khr == ""){
 
-					$khr = 0;
+				// 	$khr = 0;
 
-				}
+				// }
 
 				// var_dump($radio);
 
@@ -360,8 +360,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['usd'][$i] == ""){
 
-				// $error['usd'] = "usd row is empty.";
-			
+				$error['usd'] = "usd row is empty.";
+
 			}elseif($_POST['usd'][$i] != ""){
 
 				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
@@ -379,8 +379,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['khr'][$i] == ""){
 
-				// $error['khr'] = "khr row is empty.";
-			
+				$error['khr'] = "khr row is empty.";
+
 			}elseif($_POST['khr'][$i] != ""){
 
 				$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
@@ -392,6 +392,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			}
 
 		}
+
+		// $usd_empty = in_array("", $usd, true);
+		
+		// $khr_empty = in_array("", $khr, true);
+
+		// var_dump($usd_empty);
+		// var_dump($khr_empty);
+
+		// if($usd_empty && $khr_empty){
+
+		// 	echo "true";
+
+		// }else{
+
+		// 	echo "false";
+		// }
 
 		$countcheck = count($_POST['checkbox']);
 
@@ -437,6 +453,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
 
+					array_push($arra, $checkboxlevel );
+
 				}elseif($countcheck == 1 && $stagecheck == 1){
 
 					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
@@ -467,6 +485,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					
 				}
 
+				// print_r($checkboxlevel);
+
 		// check whether multiple checkbox or checkboxlevel has been posted //
 
 			$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
@@ -489,41 +509,43 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						$khr[$j] = 0;
 					}
 
-					$users[$j] = array(
+						$users[$j] = array(
 
 
-							'user_id' => $userid,
+								'user_id' => $userid,
 
-							'order_id' => $order_id,
+								'order_id' => $order_id,
 
-							'2dtxt' => $txt2d[$j],
+								'2dtxt' => $txt2d[$j],
 
-							'usd' => $usd[$j],
+								'usd' => $usd[$j],
 
-							'khr' => $khr[$j],
+								'khr' => $khr[$j],
 
-							'radiobox' => $radio,
+								'radiobox' => $radio,
 
-							'checklevel' => $checkboxlevel 
+								'checklevel' => $checkboxlevel 
 
-						);
+							);
 
-						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
-						// print_r($query);
-						// die();
-						$order = array();
+							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
+							// print_r($query);
+							// die();
+							$order = array();
 
-						if ($conn->query($query) === TRUE) {
+							if ($conn->query($query) === TRUE) {
 
-							$last_id = mysqli_insert_id($conn);
+								$last_id = mysqli_insert_id($conn);
 
-							$arrayid[$j] = $last_id; 
+								$arrayid[$j] = $last_id; 
 
-						} else {
+							} else {
+														
+								$error['error'] = "Unable to place bet.";
 													
-							$error['error'] = "Unable to place bet.";
-												
-						}
+							}
+
+						// }
 
 				}
 
@@ -604,6 +626,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				}elseif($countcheck == 0 && $stagecheck == 1){
 
 					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($arra, $checkboxlevel );
 
 				}elseif($countcheck == 1 && $stagecheck == 1){
 
@@ -1162,6 +1186,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
 
+								// var_dump($finalvaluekhr);
+
+								if($finalvalueusd == 0){
+
+									$finalvalueusd = "";
+								
+								}elseif($finalvaluekhr == 0){
+
+									$finalvaluekhr = "";
+
+								}
+
 
 							 // }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] == 0.00){
 
@@ -1300,6 +1336,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
 
 									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
+
+									if($finalvalueusd == 0){
+
+										$finalvalueusd = "";
+								
+									}elseif($finalvaluekhr == 0){
+
+										$finalvaluekhr = "";
+
+									}									
 
 								}
 
