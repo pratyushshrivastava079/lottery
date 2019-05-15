@@ -460,7 +460,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="#">Reports</a></span>
+		    			<span><a href="reports.php">Reports</a></span>
 		    			
 		    			<span> | </span>
 
