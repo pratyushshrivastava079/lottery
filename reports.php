@@ -30,6 +30,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            }
 
 
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $sumresult = mysqli_query($conn, $sumsql);
+
+		        if (mysqli_num_rows($sumresult) > 0) {
+
+	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$sumusers[] = $sumrow;
+
+
+	            	}
+
+	            }
+
+	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+	            $totalusd = $ar[0];
+
+	            // print_r($totalusd);
+
+
+	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $khrresult = mysqli_query($conn, $khrsql);
+
+		        if (mysqli_num_rows($khrresult) > 0) {
+
+	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$khrusers[] = $khrrow;
+
+
+	            	}
+
+	            }
+
+	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+	            $totalkhr = $khr[0];
+
+	            // print_r($totalkhr);
+
 	            // echo count($users);
 
 			        	// print_r($users);
@@ -394,6 +441,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 					    	<?php }?>
+
+					    	<tr>
+					    		
+					    		<td>Total</td>
+					    		<td><?php echo $totalusd;?></td>
+					    		<td><?php echo $totalkhr;?></td>
+
+					    	</tr>
 
 					    </tbody>
 
