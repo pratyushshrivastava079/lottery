@@ -427,6 +427,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					        <th>TKHR</th>
 					        
 					        <th>BetBy</th>
+
+					        <th>Stage</th>
 					  
 					      </tr>
 					  
@@ -446,6 +448,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					    			}
 
+					    			$user_id = $value['user_id'];
+
+					    			$usersql = "SELECT * FROM `users` WHERE `id` = '$user_id'";
+		    
+								    $userresult = mysqli_query($conn, $usersql);
+
+								        if (mysqli_num_rows($userresult) > 0) {
+
+							            	while($userrow = mysqli_fetch_assoc($userresult)) {
+							            	
+									        	$userdetail[] = $userrow;
+
+
+							            	}
+
+							            	// echo "<pre>";
+							            	$username = $userdetail[0]['username'];
+							            	// print_r($username);
+							            	$percent = $userdetail[0]['userpercent'];
+
+							            	$arr = explode('%', $percent);
+
+							            	$percent = $arr[0] / 100;
+
+							            	
+
+							            	
+							            
+							            }
+							            	
 
 					    		?>
 
@@ -455,8 +487,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    			<td><?php echo $value['usd'];?></td>
 					    			<td><?php echo $value['khr'];?></td>
 					    			<td><?php echo $value['checklevel'];?></td>
-					    			<td><?php echo $value['totalusd'];?></td>
-					    			<td><?php echo $value['totalkhr'];?></td>
+					    			<td><?php echo $value['totalusd'].'00';?></td>
+					    			<td><?php echo $value['totalkhr'].'00';?></td>
+					    			<td><?php echo $username;?></td>
 					    			<td><?php echo $stage;?></td>
 
 					    		</tr>
@@ -470,8 +503,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    		<td></td>
 					    		<td></td>
 					    		<td></td>
-					    		<td><?php echo $totalusd;?></td>
-					    		<td><?php echo $totalkhr;?></td>
+					    		<?php $totalusd = $totalusd * $percent ;
+
+							            	$totalkhr = $totalkhr * $percent ;?>
+					    		<td><?php echo $totalusd.'00';?></td>
+					    		<td><?php echo $totalkhr.'00';?></td>
 					    		<td></td>
 
 					    	</tr>
