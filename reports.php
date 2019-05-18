@@ -421,6 +421,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					        <th>KHR</th>
 
 					        <th>PO</th>
+					        
+					        <th>Total USD</th>
+
+					        <th>Total KHR</th>
+					        
+					        <th>BetBy</th>
 					  
 					      </tr>
 					  
@@ -428,7 +434,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					    <tbody>
 
-					    	<?php foreach ($users as $key => $value) {?>
+					    	<?php foreach ($users as $key => $value) {
+
+					    			if($value['stage'] == 1){
+
+					    				$stage = "2D Stage 1";
+					    			
+					    			}elseif($value['stage'] == 2){
+
+					    				$stage = "2D Stage 2";
+
+					    			}
+
+
+					    		?>
 
 					    		<tr>
 					    			
@@ -436,6 +455,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    			<td><?php echo $value['usd'];?></td>
 					    			<td><?php echo $value['khr'];?></td>
 					    			<td><?php echo $value['checklevel'];?></td>
+					    			<td><?php echo $value['totalusd'];?></td>
+					    			<td><?php echo $value['totalkhr'];?></td>
+					    			<td><?php echo $stage;?></td>
 
 					    		</tr>
 
@@ -447,6 +469,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    		<td>Total</td>
 					    		<td><?php echo $totalusd;?></td>
 					    		<td><?php echo $totalkhr;?></td>
+					    		<td></td>
+					    		<td></td>
+					    		<td></td>
+					    		<td></td>
 
 					    	</tr>
 

@@ -84,6 +84,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					array_push($checkboxlevel, $stagelevel);
 
 					// print_r($arra);
+				}elseif ($countcheck == 1) {
+					# code...
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
 				}
 
 				// if some exception occurs about minimum and maximum value for txt2d value then validation should be put here. //
@@ -154,8 +157,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				// die(';eneter her');
 
-				// print_r($incrementval);
+				// echo "incrementval " . $incrementval;
 
+				// print_r($incrementval);
+// 
 				// die(); 
 
 				// echo "txt2d is ".$txt2d;
@@ -213,6 +218,151 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$order[] = $row;
 
 				  			}
+
+				  			$count = count($order);
+
+				  			// print_r($order);
+
+				  			$finalvaluekhr = 0; 
+
+				  			$finalvalueusd = 0;
+
+							$checkorder = explode(',', $order[0]['checklevel']); 
+
+							// print_r($checkorder);
+
+							$countcheckorder = count($checkorder);
+
+							// print_r($countcheckorder);
+
+							if(end($checkorder) == 'L 23'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
+							
+							}elseif(end($checkorder) == 'L 25'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+
+
+							}elseif(end($checkorder) == 'L 27'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+
+								
+							}elseif(end($checkorder) == 'L 29'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+							}else{
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+								// echo 'finalusdvalue is ' . $finalusdvalue . "usd id " . $order[0]['usd'];
+
+								// echo 'finalkhrvalue is ' . $finalkhrvalue;
+
+								if($finalvalueusd == 0){
+
+									$finalvalueusd = "";
+								
+								}elseif($finalvaluekhr == 0){
+
+									$finalvaluekhr = "";
+
+								}
+
+							 }	
+
+							 $orderid = $order[0]['order_id'];
+
+								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+							// print_r($query);
+
+							// die();
+
+							if ($conn->query($query) === TRUE) {
+
+								$sql = "SELECT * FROM `2dbetform` WHERE `order_id` = '$orderid'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$orders[] = $row;
+
+				  			}
+				
+								$success['success'] = "Bet placed successfully.";
+
+
+							}else{
+
+								$error['error'] = "Bet placed but unable to fetch last bid details.";
+								
+							}		
+
+						}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				
 							$success['success'] = "Bet placed successfully.";
 
@@ -249,6 +399,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel' )";
 						// print_r($query);
+						// die();
 						$order = array();
 
 						if ($conn->query($query) === TRUE) {
@@ -305,7 +456,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				  			while($row = mysqli_fetch_assoc($result)) {
 				            	
-								$orders[] = $row;
+								$order[] = $row;
 
 				  			}
 
@@ -320,23 +471,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 23 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 23 );
 								
 								}elseif(end($checkorder) == 'L 25'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 25 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 25 );									
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
 
 								}elseif(end($checkorder) == 'L 27'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 27 );
 
 										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
 									
@@ -344,16 +495,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 29 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 29 );
 
 									
 								}else{
 
-									$finalvalueusd = $finalvalueusd + $orders[$k]['usd'] * $countcheckorder;
+									$finalvalueusd = $finalvalueusd + $order[$k]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $finalvaluekhr + $orders[$k]['khr'] * $countcheckorder;
+									$finalvaluekhr = $finalvaluekhr + $order[$k]['khr'] * $countcheckorder;
 
 									if($finalvalueusd == 0){
 
@@ -367,7 +518,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								}
 
-								$orderid = $orders[$k]['order_id'];
+								$orderid = $order[$k]['order_id'];
+								// print_r($orderid);
 
 								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
 
@@ -385,10 +537,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				  			while($row = mysqli_fetch_assoc($result)) {
 				            	
-								$order[] = $row;
+								$orders[] = $row;
 
 				  			}
-
+				  			// echo "<pre>";
 				  			// print_r($order);
 
 				  			// die();
@@ -417,112 +569,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				        }
 					}
 
-				}else{
-
-
-					$count = count($order);
-
-						$finalvalueusd = 0;
-
-						$finalvaluekhr = 0;
-
-						if($count == 1){
-
-							$checkorder = explode(',', $order[0]['checklevel']); 
-
-							$countcheckorder = count($checkorder);
-
-							if(end($checkorder) == 'L 23'){
-
-								$countcheckorder = $countcheckorder - 1;
-
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
-
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
-							
-							}elseif(end($checkorder) == 'L 25'){
-
-								$countcheckorder = $countcheckorder - 1;
-
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
-
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
-
-
-							}elseif(end($checkorder) == 'L 27'){
-
-								$countcheckorder = $countcheckorder - 1;
-
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
-
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
-
-								
-							}elseif(end($checkorder) == 'L 29'){
-
-								$countcheckorder = $countcheckorder - 1;
-
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
-
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
-							}else{
-
-								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
-
-								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
-
-								if($finalvalueusd == 0){
-
-									$finalvalueusd = "";
-								
-								}elseif($finalvaluekhr == 0){
-
-									$finalvaluekhr = "";
-
-								}
-
-							 }	
-
-							 $orderid = $order[0]['order_id'];
-
-								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
-
-							// print_r($query);
-
-							// die();
-
-							if ($conn->query($query) === TRUE) {
-
-								$sql = "SELECT * FROM `2dbetform` WHERE `order_id` = '$orderid'";
-				    	
-						$result = mysqli_query($conn, $sql);
-
-					 	if (mysqli_num_rows($result) > 0) {
-
-				  			while($row = mysqli_fetch_assoc($result)) {
-				            	
-								$order[] = $row;
-
-				  			}
-
-				  			// print_r($order);
-
-				  			// die();
-				
-								$success['success'] = "Bet placed successfully.";
-
-
-							}else{
-
-								$error['error'] = "Bet placed but unable to fetch last bid details.";
-								
-							}		
-
-							}}	
-
-
-
-				}			
+				}
+		
 			}
 
 		
