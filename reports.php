@@ -422,9 +422,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					        <th>PO</th>
 					        
-					        <th>Total USD</th>
+					        <th>TUSD</th>
 
-					        <th>Total KHR</th>
+					        <th>TKHR</th>
 					        
 					        <th>BetBy</th>
 					  
@@ -467,11 +467,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    	<tr>
 					    		
 					    		<td>Total</td>
+					    		<td></td>
+					    		<td></td>
+					    		<td></td>
 					    		<td><?php echo $totalusd;?></td>
 					    		<td><?php echo $totalkhr;?></td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
 					    		<td></td>
 
 					    	</tr>
