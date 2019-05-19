@@ -50,6 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 	            $totalusd = $ar[0];
+	            // $totalusd = $totalusd * 100;
 
 	            // print_r($totalusd);
 
@@ -73,7 +74,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	            $totalkhr = $khr[0]*100;
+	            $totalkhr = $khr[0] * 100;
+	            // $finaltotalkhr = $totalkhr * 100;
 
 	            // print_r($totalkhr);
 
@@ -493,7 +495,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							            	$percent = $userdetail[0]['userpercent'];
 
 							            	$arr = explode('%', $percent);
-
+							            	// echo $arr[0];
 							            	$percent = $arr[0] / 100;							            	
 							            
 							            }
@@ -531,11 +533,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    		<td></td>
 					    		<td></td>
 					    		<td></td>
-					    		<?php $totalusd = $totalusd * $percent ;
-
-							            	$totalkhr = $totalkhr * $percent ;?>
 					    		<td><?php echo $totalusd;?></td>
 					    		<td><?php echo $totalkhr;?></td>
+					    		<td></td>
+
+					    	</tr>
+
+					    	<tr>
+					    		
+					    		<td>Total</td>
+					    		<td></td>
+					    		<td></td>
+					    		<td></td>
+					    		<?php $totalusd = $totalusd * $percent ;
+
+							            	$finaltotalkhr = $totalkhr * $percent ;?>
+					    		<td><?php echo $totalusd;?></td>
+					    		<td><?php echo $finaltotalkhr;?></td>
 					    		<td></td>
 
 					    	</tr>
