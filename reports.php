@@ -438,6 +438,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					    	<?php foreach ($users as $key => $value) {
 
+					    		// echo "<pre>";
+
+					    		if($value['totalkhr'] == ""){
+
+					    			$value['totalkhr'] = NULL;
+					    		
+					    		}elseif($value['totalkhr'] != ""){
+
+					    			$value['totalkhr'] = $value['totalkhr'] * 100;
+
+					    		}
+
+					    		if($value['totalusd'] == ""){
+
+					    			$value['totalusd'] = NULL;
+					    		
+					    		// }elseif($value['totalusd'] != ""){
+
+					    			// $value['totalkhr'] = $lcg_value()['totalkhr'] * 100;
+
+					    		}
+
+					    		// var_dump($value['totalkhr']);
+
 					    			if($value['stage'] == 1){
 
 					    				$stage = "2D Stage 1";
@@ -470,13 +494,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							            	$arr = explode('%', $percent);
 
-							            	$percent = $arr[0] / 100;
-
-							            	
-
-							            	
+							            	$percent = $arr[0] / 100;							            	
 							            
 							            }
+
+							            // if( $value['totalkhr'] == 0 ){
+
+							            		// $value['totalkhr'] == '';
+
+							            	// }
+
+							            	// echo $value['totalkhr'];
 							            	
 
 					    		?>
@@ -488,7 +516,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    			<td><?php echo $value['khr'];?></td>
 					    			<td><?php echo $value['checklevel'];?></td>
 					    			<td><?php echo $value['totalusd'];?></td>
-					    			<td><?php echo $value['totalkhr']*100;?></td>
+					    			<td><?php echo $value['totalkhr'];?></td>
 					    			<td><?php echo $username;?></td>
 					    			<td><?php echo $stage;?></td>
 
