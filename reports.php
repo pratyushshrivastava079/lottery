@@ -444,9 +444,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					    			$value['totalkhr'] = NULL;
 					    		
-					    		}elseif($value['totalkhr'] != ""){
+					    		// }elseif($value['totalkhr'] != ""){
 
-					    			$value['totalkhr'] = $value['totalkhr'] * 100;
+					    			// $value['totalkhr'] = $value['totalkhr'] * 100;
 
 					    		}
 
