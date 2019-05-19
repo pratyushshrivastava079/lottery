@@ -73,7 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	            $totalkhr = $khr[0];
+	            $totalkhr = $khr[0]*100;
 
 	            // print_r($totalkhr);
 
@@ -487,8 +487,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    			<td><?php echo $value['usd'];?></td>
 					    			<td><?php echo $value['khr'];?></td>
 					    			<td><?php echo $value['checklevel'];?></td>
-					    			<td><?php echo $value['totalusd'].'00';?></td>
-					    			<td><?php echo $value['totalkhr'].'00';?></td>
+					    			<td><?php echo $value['totalusd'];?></td>
+					    			<td><?php echo $value['totalkhr']*100;?></td>
 					    			<td><?php echo $username;?></td>
 					    			<td><?php echo $stage;?></td>
 
@@ -506,8 +506,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    		<?php $totalusd = $totalusd * $percent ;
 
 							            	$totalkhr = $totalkhr * $percent ;?>
-					    		<td><?php echo $totalusd.'00';?></td>
-					    		<td><?php echo $totalkhr.'00';?></td>
+					    		<td><?php echo $totalusd;?></td>
+					    		<td><?php echo $totalkhr;?></td>
 					    		<td></td>
 
 					    	</tr>
