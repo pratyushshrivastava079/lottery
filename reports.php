@@ -9,11 +9,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	$id = $_SESSION['userid'];
+	if(isset($_GET['userid'])){
+	
+		$id = $_GET['userid'];
+
+	}else{
+
+		if($_SESSION['userlevel'] == 'A1'){
+
+			$id = 1;
+			
+		}else{
+
+			header("Location: logout.php");
+		}
+
+	}
 
 	// echo $id;
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
+
+	$usersql = "SELECT * FROM `users` WHERE 1";
+		    
+		    $userresult = mysqli_query($conn, $usersql);
+
+		        if (mysqli_num_rows($userresult) > 0) {
+
+	            	while($userrow = mysqli_fetch_assoc($userresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$finalusers[] = $userrow;
+
+
+	            	}
+
+	            }
+
+
+	            // print_r($finalusers);
+
+
+if(!isset($_GET['userid'])){
+
+
+
+	$sql = "SELECT * FROM `2dbetform` WHERE 1";
 		    
 		    $result = mysqli_query($conn, $sql);
 
@@ -28,6 +68,99 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            	}
 
 	            }
+
+
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE 1";
+
+		    $sumresult = mysqli_query($conn, $sumsql);
+
+		        if (mysqli_num_rows($sumresult) > 0) {
+
+	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$sumusers[] = $sumrow;
+
+
+	            	}
+
+	            }
+
+	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+	            $totalusd = $ar[0];
+	            // $totalusd = $totalusd * 100;
+
+	            // print_r($totalusd);
+
+
+	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE 1";
+
+		    $khrresult = mysqli_query($conn, $khrsql);
+
+		        if (mysqli_num_rows($khrresult) > 0) {
+
+	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$khrusers[] = $khrrow;
+
+
+	            	}
+
+	            }
+
+	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+	            $totalkhr = $khr[0] * 100;
+	            // $finaltotalkhr = $totalkhr * 100;
+
+	            // print_r($totalkhr);
+
+	            // echo count($users);
+
+			        	// print_r($users);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}else{
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
+
+	// echo $sql;
+		    
+		    $result = mysqli_query($conn, $sql);
+
+		        if (mysqli_num_rows($result) > 0) {
+
+	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$users[] = $row;
+
+
+	            	}
+
+	            }
+
+	            // var_dump($users);
+
+	            // die();
 
 
 	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
@@ -83,6 +216,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			        	// print_r($users);
 
+
+	        }
+
 }else{
 
 	echo "not allowed";
@@ -114,6 +250,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  crossorigin="anonymous"></script>
 
 	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
 
 	  <style type="text/css">
 	  	
@@ -408,6 +554,70 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			
 		    	</div>
 
+				<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    	<div class="table-responsive">
+				 
+					<table class="table table-striped">
+					  
+					    <thead>
+					  
+					      	<tr>
+
+					      		<td>&nbsp;</td>
+
+					      		<td>&nbsp;</td>
+
+					      		<td>&nbsp;</td>
+
+					      		<td>&nbsp;</td>
+
+					      		<td>&nbsp;</td>
+
+						    	<td>
+
+					    			<select class="username-filter" onchange="javascript:handleSelect(this)">
+
+					    				<?php foreach ($finalusers as $key => $value) {?>
+					    			
+					    				<option value="<?php echo $value['id'];?>"><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
+
+					    				<?php }?>
+
+					    			</select>
+
+					    		</td>
+
+					    		<td>
+
+					    			<select>
+					    			
+					    				<option>2D Stage 1</option>
+					    				<option>2D Stage 2</option>
+					    				<option>3D Stage 1</option>
+					    				<option>3D Stage 2</option>
+
+					    			</select>
+
+
+					    		</td>
+
+					    		<td>
+
+					    			<input type="text" id="datepicker" placeholder="DatePicker">					    			
+
+					    		</td>
+
+		    				</tr>
+
+		    			</thead>
+
+					</table>
+
+		    	</div>
+
+		    	<?php }?>
+
 		    	<div class="table-responsive">
 				 
 					<table class="table table-striped">
@@ -436,9 +646,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					    </thead>
 					  
-					    <tbody>
+					    <tbody id="data-body">
 
-					    	<?php foreach ($users as $key => $value) {
+					    	<?php 
+
+					    	if(!is_null($users)){
+
+
+					    	foreach ($users as $key => $value) {
 
 					    		// echo "<pre>";
 
@@ -476,23 +691,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					    			$user_id = $value['user_id'];
 
+					    			// echo $user_id;
+
 					    			$usersql = "SELECT * FROM `users` WHERE `id` = '$user_id'";
+
+					    			// echo $usersql;
 		    
 								    $userresult = mysqli_query($conn, $usersql);
 
 								        if (mysqli_num_rows($userresult) > 0) {
 
-							            	while($userrow = mysqli_fetch_assoc($userresult)) {
-							            	
-									        	$userdetail[] = $userrow;
-
-
-							            	}
-
-							            	// echo "<pre>";
-							            	$username = $userdetail[0]['username'];
-							            	// print_r($username);
-							            	$percent = $userdetail[0]['userpercent'];
+							            	$userdetail = mysqli_fetch_assoc($userresult);
+							            	$username = $userdetail['username'];
+							            	$percent = $userdetail['userpercent'];
 
 							            	$arr = explode('%', $percent);
 							            	// echo $arr[0];
@@ -547,12 +758,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    		<td></td>
 					    		<?php $totalusd = $totalusd * $percent ;
 
-							            	$finaltotalkhr = $totalkhr * $percent ;?>
+							    $finaltotalkhr = $totalkhr * $percent ;?>
+					    		
 					    		<td><?php echo $totalusd;?></td>
 					    		<td><?php echo $finaltotalkhr;?></td>
 					    		<td></td>
 
 					    	</tr>
+
+					    	<?php }else{?>
+
+					    		<tr>
+					    			<th>No Results Found.</th>
+					    		</tr>
+
+					    	<?php }?>
 
 					    </tbody>
 
@@ -570,5 +790,66 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	</div>
 
+
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+
+			$(document).on('change', '.username-filters', function(){
+
+				var userid = $(this).val();
+
+				console.log(userid);
+
+				$.ajax({
+
+					url: 'getusers.php',
+
+					type: 'POST',
+
+					data: { 'userid': userid },
+
+					success: function(response){
+
+						// console.log("response " + response);
+
+						var result = JSON.parse(response);
+
+						console.log(result);
+						
+						var users = result.users;
+
+						if(result.status == 'success'){
+
+							console.log(users.length);
+
+							for( var i = 0; i < users.length; i++){
+
+								$('#data-body').append('aa');
+
+								// console.log(i);
+								
+							}
+
+						}
+
+					}
+
+				});
+
+			});
+
+		});
+
+	</script>
+
+	<script type="text/javascript">
+function handleSelect(elm)
+{
+window.location = "reports.php?userid="+elm.value;
+}
+</script>
+
 </body>
 </html>
+
