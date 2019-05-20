@@ -123,33 +123,78 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					for($i = 0 ; $i < 5 ; $i++){
 
-						$newtxt2d[$i] = $txt2d + 2;
+						if($i == 0){
 
-						$txt2d = $newtxt2d[$i]; 
-						
-						$incrementval = 5; 
+							// echo $txt2d;
+
+							// $txt2d = $txt2d;
+
+							$newtxt2d[$i] = $txt2d;
+
+						}else{
+
+							$newtxt2d[$i] = $txt2d + 2;
+
+							$txt2d = $newtxt2d[$i]; 
+							
+							$incrementval = 5; 
+
+						}
+
+						// echo $txt2d;
 					}
 
 				}elseif($radio == '5S'){
 
 					for($i = 0 ; $i < 5 ; $i++){
 
-						$newtxt2d[$i] = $txt2d + 1;
+						if($i == 0){
 
-						$txt2d = $newtxt2d[$i]; 
+							// echo $txt2d;
 
-						$incrementval = 5; 
+							// $txt2d = $txt2d;
+
+							$newtxt2d[$i] = $txt2d;
+
+						}else{
+
+							$newtxt2d[$i] = $txt2d + 1;
+
+							$txt2d = $newtxt2d[$i]; 
+							
+							$incrementval = 5; 
+
+						}
+
 					}
 
 				}elseif($radio == '10S'){
 
 					for($i = 0 ; $i < 10 ; $i++){
 
-						$newtxt2d[$i] = $txt2d + 1;
+						if($i == 0){
 
-						$txt2d = $newtxt2d[$i]; 
+							// echo $txt2d;
 
-						$incrementval = 10; 
+							// $txt2d = $txt2d;
+
+							$newtxt2d[$i] = $txt2d;
+
+						}else{
+
+							$newtxt2d[$i] = $txt2d + 1;
+
+							$txt2d = $newtxt2d[$i]; 
+							
+							$incrementval = 10; 
+
+						}
+
+						// $newtxt2d[$i] = $txt2d + 1;
+
+						// $txt2d = $newtxt2d[$i]; 
+
+						// $incrementval = 10; 
 
 					}
 
@@ -163,7 +208,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 // 
 				// die(); 
 
-				// echo "txt2d is ".$txt2d;
+				// echo $radio;
+
+				// echo $txt2d;
+
+				// if($radio == '5OD'){
+
+				// 	echo "txt2d is ".$txt2d - 2;
+					
+				// }elseif($radio == '5S'){
+
+				// 	echo "txt2d is ".$txt2d - 1;
+
+				// }elseif($radio == '10S'){
+
+				// 	echo "txt2d is ".$txt2d - 1;
+
+				// }
+
 
 				$arrayid = array();
 
@@ -189,7 +251,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						);
 
-					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d', '$usd', '$khr', '$radio', '$checkboxlevel' )";
+					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt2d', '$usd', '$khr', '$radio', '$checkboxlevel', '1', '2dbetform' )";
 						// print_r($query);
 						// die();
 						$order = array();
@@ -397,7 +459,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						);
 
-						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel' )";
+						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$newtxt2d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel', '1', '2dbetform' )";
 						// print_r($query);
 						// die();
 						$order = array();
@@ -460,9 +522,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				  			}
 
-								$checkorder = explode(',', $orders[$k]['checklevel']);
+								$checkorder = explode(',', $order[$k]['checklevel']);
 								
-								$stageorder = explode(',', $orders[$k]['Stagelevel']);
+								$stageorder = explode(',', $order[$k]['Stagelevel']);
 								
 								$countcheckorder = count($checkorder);
 
@@ -514,9 +576,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = "";
 
-									}									
+									}							
+									// die();		
 
 								}
+								// echo $finalvalueusd;
 
 								$orderid = $order[$k]['order_id'];
 								// print_r($orderid);
@@ -541,7 +605,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				  			}
 				  			// echo "<pre>";
-				  			// print_r($order);
+				  			// print_r($orders);
 
 				  			// die();
 				
@@ -789,7 +853,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							);
 
-							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
+							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel', '1', '2dbetform' )";
 							// print_r($query);
 							// die();
 							$order = array();

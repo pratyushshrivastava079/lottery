@@ -26,6 +26,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
+	if(isset($_GET['stage'])){
+	
+		$stagelevel = $_GET['stage'];
+
+	}else{
+
+		if($_SESSION['userlevel'] == 'A1'){
+
+			$stagelevel = 1;
+			
+		}else{
+
+			header("Location: logout.php");
+		}
+
+	}
+
+	echo $stage;
+
 	// echo $id;
 
 
@@ -580,7 +599,7 @@ if(!isset($_GET['userid'])){
 
 					    				<?php foreach ($finalusers as $key => $value) {?>
 					    			
-					    				<option value="<?php echo $value['id'];?>"><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
+					    				<option value="<?php echo $value['id'];?>" selected="true"><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
 
 					    				<?php }?>
 
@@ -590,12 +609,12 @@ if(!isset($_GET['userid'])){
 
 					    		<td>
 
-					    			<select>
+					    			<select onchange="javascript:handleSelectstage(this)">
 					    			
-					    				<option>2D Stage 1</option>
-					    				<option>2D Stage 2</option>
-					    				<option>3D Stage 1</option>
-					    				<option>3D Stage 2</option>
+					    				<option value="1">2D Stage 1</option>
+					    				<option value="2">2D Stage 2</option>
+					    				<option value="3">3D Stage 1</option>
+					    				<option value="4">3D Stage 2</option>
 
 					    			</select>
 
@@ -679,14 +698,30 @@ if(!isset($_GET['userid'])){
 
 					    		// var_dump($value['totalkhr']);
 
-					    			if($value['stage'] == 1){
+					    			if($value['stage'] == 1 && $value['type'] == '2dbetform'){
 
 					    				$stage = "2D Stage 1";
+
+					    				// $type = "2D Betform";
 					    			
-					    			}elseif($value['stage'] == 2){
+					    			}elseif($value['stage'] == 2 && $value['type'] == '2dbetform'){
 
 					    				$stage = "2D Stage 2";
 
+					    				// $type = "2D Betform";
+					    			
+					    			}elseif($value['stage'] == 1 && $value['type'] == '3dbetform'){
+
+					    				$stage = "3D Stage 1";
+
+					    				// $type = "3D Betform";
+
+
+					    			}elseif($value['stage'] == 2 && $value['type'] == '3dbetform'){
+
+					    				$stage = "3D Stage 2";
+
+					    				// $type = "3D Betform";					    				
 					    			}
 
 					    			$user_id = $value['user_id'];
@@ -847,6 +882,11 @@ if(!isset($_GET['userid'])){
 function handleSelect(elm)
 {
 window.location = "reports.php?userid="+elm.value;
+}
+
+function handleSelectstage(elm)
+{
+window.location = "reports.php?stage="+elm.value;
 }
 </script>
 

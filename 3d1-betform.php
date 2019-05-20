@@ -4,33 +4,1327 @@ session_start();
 
 include('database.php');
 
-if(isset($_SESSION['userid'])){
-
-$id = $_SESSION['userid'];
-
-$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-		        
-		        $result = mysqli_query($conn, $sql);
-
-		        if (mysqli_num_rows($result) > 0) {
-
-	            	while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        	// $_SESSION['userid'] = $row['id'];
-
-			        	// print_r($row);
-
-	            
-	            	}
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
-	            }
+	$counttxt3d = count($_POST['txt3d']);
 
-}else{
+	$countusd = count($_POST['usd']);
 
-	header("Location: login.php");
+	$countkhr = count($_POST['khr']);
+
+	// checks if one row or more than one row of a form has been posted //
+
+	if($counttxt3d == 1 && $countkhr == 1 || $countusd == 1 ){
+
+		$txt3d = mysqli_real_escape_string( $conn, $_POST['txt3d'][0] );
+	
+		$usd = mysqli_real_escape_string( $conn, $_POST['usd'][0] );
+	
+		$khr = mysqli_real_escape_string( $conn, $_POST['khr'][0] );
+
+		$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+		$countcheck = count($_POST['checkbox']);
+		
+		$stagecheck = count($_POST['Stage_checkbox']);
+
+
+		$counttxt3d = implode($txt3d, ',' );
+
+		$counttxt3d = count($counttxt3d);
+
+		// var_dump(strlen($txt3d));
+
+		if($counttxt3d < 3){
+
+			$error['txt3d'] = "txt3d value should be of 3 digits."; 
+			
+		}
+
+		if($txt3d == ""){
+
+			$error['txt3d'] = "txt3d value cannot be empty"; 
+		}
+
+		if($txt3d != "" && ( $usd != "" || $khr != "") || ( $usd != "" && $khr != "")){
+
+			if($countcheck == 0 && $stagecheck == 0){
+
+				$error['checkbox'] = "Please select at least one of the checkbox";
+
+			}elseif($countcheck > 0 || $stagecheck > 0){
+
+
+				if($countcheck > 1 && $stagecheck == 1){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+					}
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($checkboxlevel, $stagelevel);
+
+				}elseif($countcheck > 1 && $stagecheck == 0){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+					
+				}elseif($countcheck == 0 && $stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+				}elseif($countcheck == 1 && $stagecheck == 1){
+
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					// $arra[] = $checkboxlevel[0];
+
+					// print_r($arra);
+
+					array_push($checkboxlevel, $stagelevel);
+
+					// print_r($arra);
+				}elseif ($countcheck == 1) {
+					# code...
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+				}
+
+				// if some exception occurs about minimum and maximum value for txt3d value then validation should be put here. //
+
+				// print_r($checkboxlevel);
+
+				$userid = $_SESSION['userid'];
+
+				$order_id = uniqid();
+
+				if(is_array($checkboxlevel)){
+
+					$checkboxlevel = implode(',', $checkboxlevel);
+					
+				}
+
+				// if($usd == ""){
+
+				// 	$usd = 0;
+				
+				// }elseif($khr == ""){
+
+				// 	$khr = 0;
+
+				// }
+
+				// var_dump($radio);
+
+				$newtxt3d = array();
+				
+				$incrementval = 0;
+
+				// echo $radio;
+
+				if($radio == '5L' || $radio == '5C' || $radio == '5R'){
+
+                $newtxt3d = $txt3d;
+
+                $newtxt3d = implode($txt3d, ',' );
+
+                // var_dump($newtxt3d);
+
+                // echo $txt3d;
+
+                // die();
+                    
+                for($i = 0 ; $i < 5 ; $i++){
+
+                    if($radio == '5L'){
+
+                        $newtxt3d[0] = $newtxt3d[0]+1;
+                        $incrementval = 5; 
+
+                        // print_r($newtxt3d);
+
+
+                    }elseif($radio == '5C'){
+
+                        $newtxt3d[1] = $newtxt3d[1]+1;
+                        $incrementval = 5; 
+
+                        // var_dump($newtxt3d);
+
+                    }elseif($radio == '5R'){
+
+                        $newtxt3d[2] = $newtxt3d[2]+1;
+
+                        $incrementval = 5; 
+                        // var_dump($newval);
+
+                    }else{}
+
+                }
+
+
+                     }elseif($radio == '10L' || $radio == '10C' || $radio == '10R'){
+
+                $newtxt3d = $txt3d;
+
+                $newtxt3d = implode($txt3d, ',' );
+
+                for($i = 0 ; $i < 10 ; $i++){
+
+                    if($radio == '10L'){
+
+                        $newtxt3d[0] = $newtxt3d[0]+1;
+
+                        // var_dump($newval);
+                        $incrementval = 10; 
+
+                    }elseif($radio == '10C'){
+
+                        $newtxt3d[1] = $newtxt3d[1]+1;
+
+                        // var_dump($newval);
+                        $incrementval = 10; 
+
+                    }elseif($radio == '10R'){
+
+                        $newtxt3d[2] = $newtxt3d[2]+1;
+
+                        // var_dump($newval);
+                        $incrementval = 10; 
+
+                    }else{}
+
+                }
+
+
+                }elseif($radio == '5OD'){
+
+					for($i = 0 ; $i < 5 ; $i++){
+
+						if($i == 0){
+
+							// echo $txt3d;
+
+							// $txt3d = $txt3d;
+
+							$newtxt3d[$i] = $txt3d;
+
+						}else{
+
+							$newtxt3d[$i] = $txt3d + 2;
+
+							$txt3d = $newtxt3d[$i]; 
+							
+							$incrementval = 5; 
+
+						}
+
+						// echo $txt3d;
+					}
+
+				}
+
+				// die(';eneter her');
+
+				// echo "incrementval " . $incrementval;
+
+				print_r($newtxt3d);
+// 
+				// die(); 
+
+				// echo $radio;
+
+				// echo $txt3d;
+
+				// if($radio == '5OD'){
+
+				// 	echo "txt3d is ".$txt3d - 2;
+					
+				// }elseif($radio == '5S'){
+
+				// 	echo "txt3d is ".$txt3d - 1;
+
+				// }elseif($radio == '10S'){
+
+				// 	echo "txt3d is ".$txt3d - 1;
+
+				// }
+
+
+				$arrayid = array();
+
+				if($incrementval == 0){
+
+				// echo "txt3d is ".$txt3d;
+					$users = array(
+
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'txt3d' => $txt3d,
+
+							'usd' => $usd,
+
+							'khr' => $khr,
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+					$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt3d', '$usd', '$khr', '$radio', '$checkboxlevel', '1', '3dbetform' )";
+						// print_r($query);
+						// die();
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid = $last_id;
+
+
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
+												
+						}
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+
+				  			$count = count($order);
+
+				  			// print_r($order);
+
+				  			$finalvaluekhr = 0; 
+
+				  			$finalvalueusd = 0;
+
+							$checkorder = explode(',', $order[0]['checklevel']); 
+
+							// print_r($checkorder);
+
+							$countcheckorder = count($checkorder);
+
+							// print_r($countcheckorder);
+
+							if(end($checkorder) == 'L 23'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
+							
+							}elseif(end($checkorder) == 'L 25'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+
+
+							}elseif(end($checkorder) == 'L 27'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+
+								
+							}elseif(end($checkorder) == 'L 29'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+							}else{
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+								// echo 'finalusdvalue is ' . $finalusdvalue . "usd id " . $order[0]['usd'];
+
+								// echo 'finalkhrvalue is ' . $finalkhrvalue;
+
+								if($finalvalueusd == 0){
+
+									$finalvalueusd = "";
+								
+								}elseif($finalvaluekhr == 0){
+
+									$finalvaluekhr = "";
+
+								}
+
+							 }	
+
+							 $orderid = $order[0]['order_id'];
+
+								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+							// print_r($query);
+
+							// die();
+
+							if ($conn->query($query) === TRUE) {
+
+								$sql = "SELECT * FROM `2dbetform` WHERE `order_id` = '$orderid'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$orders[] = $row;
+
+				  			}
+				
+								$success['success'] = "Bet placed successfully.";
+
+
+							}else{
+
+								$error['error'] = "Bet placed but unable to fetch last bid details.";
+								
+							}		
+
+						}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+							$success['success'] = "Bet placed successfully.";
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+
+				}elseif($incrementval > 0){
+
+
+					for($j = 0; $j < $incrementval; $j++){
+
+						$users[$j] = array(
+
+
+							'user_id' => $userid,
+
+							'order_id' => $order_id,
+
+							'txt3d' => $newtxt3d[$j],
+
+							'usd' => $usd,
+
+							'khr' => $khr,
+
+							'radiobox' => $radio,
+
+							'checklevel' => $checkboxlevel 
+
+						);
+
+						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$newtxt3d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel', '1', '3dbetform' )";
+						// print_r($query);
+						// die();
+						$order = array();
+
+						if ($conn->query($query) === TRUE) {
+
+							$last_id = mysqli_insert_id($conn);
+
+							$arrayid[$j] = $last_id; 
+
+							// $sql = "SELECT * FROM `2dbetform` WHERE `id` = '$last_id'";
+					    	
+						 //    $result = mysqli_query($conn, $sql);
+
+						 //        if (mysqli_num_rows($result) > 0) {
+
+					  //           	while($row = mysqli_fetch_assoc($result)) {
+					            	
+							//         	$order[] = $row;
+
+					  //           	}
+					
+									// $success['success'] = "Bet placed successfully.";
+
+					    //         }else{
+
+									// $error['error'] = "Bet placed but unable to fetch last bid details.";
+					            	
+					    //         }
+											
+
+						} else {
+													
+							$error['error'] = "Unable to place bet.";
+												
+						}
+
+					}
+				}
+
+				$countarrayid = count($arrayid);
+
+				$finalvalueusd = 0;
+
+				$finalvaluekhr = 0;
+
+				if($countarrayid == 5 || $countarrayid == 10){
+
+					for($k = 0 ; $k < $countarrayid ; $k++){
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+
+								$checkorder = explode(',', $order[$k]['checklevel']);
+								
+								$stageorder = explode(',', $order[$k]['Stagelevel']);
+								
+								$countcheckorder = count($checkorder);
+
+
+								if(end($checkorder) == 'L 23'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 23 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 23 );
+								
+								}elseif(end($checkorder) == 'L 25'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 25 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
+
+								}elseif(end($checkorder) == 'L 27'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 27 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+									
+								}elseif(end($checkorder) == 'L 29'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 29 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 29 );
+
+									
+								}else{
+
+									$finalvalueusd = $finalvalueusd + $order[$k]['usd'] * $countcheckorder;
+
+									$finalvaluekhr = $finalvaluekhr + $order[$k]['khr'] * $countcheckorder;
+
+									if($finalvalueusd == 0){
+
+										$finalvalueusd = "";
+								
+									}elseif($finalvaluekhr == 0){
+
+										$finalvaluekhr = "";
+
+									}									
+
+								}
+
+								$orderid = $order[$k]['order_id'];
+								// print_r($orderid);
+
+								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+							// print_r($query);
+
+							// die();
+
+							if ($conn->query($query) === TRUE) {
+
+								$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$orders[] = $row;
+
+				  			}
+				  			// echo "<pre>";
+				  			// print_r($order);
+
+				  			// die();
+				
+								$success['success'] = "Bet placed successfully.";
+
+
+							}else{
+
+								$error['error'] = "Bet placed but unable to fetch last bid details.";
+								
+							}
+
+
+							}else{
+
+								$error['error'] = "Unable to update total figure.";
+
+							}
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+					}
+
+				}
+		
+			}
+
+		
+		}else{
+
+			$error['usdandkhrerror'] = "Either usd or khr must have a value."; 
+		}
+
+	}else{
+
+
+		// echo $counttxt3d;
+
+		// echo $countusd;
+
+		// echo $countkhr;
+
+		// $finalvalueusd = 0;
+
+						// $finalvaluekhr = 0;
+
+		$txt3d = array();
+
+		$usd = array();
+
+		$khr = array();
+
+		for( $i = 0 ; $i < $counttxt3d ; $i++){
+
+			if($_POST['txt3d'][$i] == ""){
+
+				$error['txt3d'] = "txt3d value row is empty.";
+			
+			}elseif($_POST['txt3d'][$i] != ""){
+
+				$txt3d[$i] = mysqli_real_escape_string( $conn, $_POST['txt3d'][$i] );
+				
+			}else{
+
+				$error['txt3d'] = "Something unexpected occured in txt3d value.";
+
+			}
+
+		}
+
+
+		for( $i = 0 ; $i < $countusd ; $i++){
+
+			if($_POST['usd'][$i] == ""){
+
+				$error['usd'] = "usd row is empty.";
+
+			}elseif($_POST['usd'][$i] != ""){
+
+				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
+				
+			}else{
+
+				$error['usd'] = "Something unexpected occured in usd value.";
+
+			}
+
+		}
+
+
+		for( $i = 0 ; $i < $countkhr ; $i++){
+
+			if($_POST['khr'][$i] == ""){
+
+				$error['khr'] = "khr row is empty.";
+
+			}elseif($_POST['khr'][$i] != ""){
+
+				$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
+				
+			}else{
+
+				$error['khr'] = "Something unexpected occured in khr value.";
+
+			}
+
+		}
+
+		// $usd_empty = in_array("", $usd, true);
+		
+		// $khr_empty = in_array("", $khr, true);
+
+		// var_dump($usd_empty);
+		// var_dump($khr_empty);
+
+		// if($usd_empty && $khr_empty){
+
+		// 	echo "true";
+
+		// }else{
+
+		// 	echo "false";
+		// }
+
+		$countcheck = count($_POST['checkbox']);
+
+		$stagecheck = count($_POST['Stage_checkbox']);
+
+		$arra = array();
+
+		if($countcheck == 0 && $stagecheck == 0){
+
+				$error['checkbox'] = "Please select at least one of the checkbox";
+
+			}elseif($countcheck > 0 || $stagecheck > 0){
+
+				if( $countcheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+				}elseif($countcheck > 1 && $stagecheck == 1){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($arra, $stagelevel);
+
+				}elseif($countcheck > 1 && $stagecheck == 0){
+
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
+					
+				}elseif($countcheck == 0 && $stagecheck == 1){
+
+					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					array_push($arra, $checkboxlevel );
+
+				}elseif($countcheck == 1 && $stagecheck == 1){
+
+					$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+					$arra[] = $checkboxlevel[0];
+
+					array_push($arra, $stagelevel);
+
+				}
+
+			}
+
+			// print_r($arra);
+
+		if(!empty($usd) || !empty($khr)){
+
+			// echo "row not empty";
+
+			$userid = $_SESSION['userid'];
+
+				$order_id = uniqid();
+
+				if(is_array($arra)){
+
+					$checkboxlevel = implode(',', $arra);
+					
+				}
+
+				// print_r($checkboxlevel);
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+			$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+			if($radio != ""){
+
+				$error['error'] = "Radio option cannot be selected in this case.";
+
+			}elseif($radio == ""){
+
+				for($j = 0 ; $j < $counttxt3d; $j++ ){
+
+					if($usd[$j] == ""){
+
+						$usd[$j] = 0;
+					}
+
+					if($khr[$j] == ""){
+
+						$khr[$j] = 0;
+					}
+
+						$users[$j] = array(
+
+
+								'user_id' => $userid,
+
+								'order_id' => $order_id,
+
+								'txt3d' => $txt3d[$j],
+
+								'usd' => $usd[$j],
+
+								'khr' => $khr[$j],
+
+								'radiobox' => $radio,
+
+								'checklevel' => $checkboxlevel 
+
+							);
+
+							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel', '1', '3dbetform' )";
+							// print_r($query);
+							// die();
+							$order = array();
+
+							if ($conn->query($query) === TRUE) {
+
+								$last_id = mysqli_insert_id($conn);
+
+								$arrayid[$j] = $last_id; 
+
+							} else {
+														
+								$error['error'] = "Unable to place bet.";
+													
+							}
+
+						// }
+
+				}
+
+				// $finalvalueusd = 0;
+				// $finalvaluekhr = 0;
+
+				$countarrayid = count($arrayid);
+
+
+					for($k = 0 ; $k < $countarrayid ; $k++){
+
+						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$orders[] = $row;
+
+				  			}
+
+				  			$checkorder = explode(',', $orders[$k]['checklevel']);
+								
+								$stageorder = explode(',', $orders[$k]['Stagelevel']);
+								
+								$countcheckorder = count($checkorder);
+
+
+								if(end($checkorder) == 'L 23'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
+								
+								}elseif(end($checkorder) == 'L 25'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
+
+								}elseif(end($checkorder) == 'L 27'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+									
+								}elseif(end($checkorder) == 'L 29'){
+
+								$countcheckorder = $countcheckorder - 1;
+
+										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
+
+									
+								}else{
+
+									$finalvalueusd = $finalvalueusd + $orders[$k]['usd'] * $countcheckorder;
+
+									$finalvaluekhr = $finalvaluekhr + $orders[$k]['khr'] * $countcheckorder;
+
+									if($finalvalueusd == 0){
+
+										$finalvalueusd = "";
+								
+									}elseif($finalvaluekhr == 0){
+
+										$finalvaluekhr = "";
+
+									}									
+
+								}
+
+								$orderid = $orders[$k]['order_id'];
+
+								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+							// print_r($query);
+
+							// die();
+
+							if ($conn->query($query) === TRUE) {
+
+								$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+						$result = mysqli_query($conn, $sql);
+
+					 	if (mysqli_num_rows($result) > 0) {
+
+				  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+								$order[] = $row;
+
+				  			}
+
+				  			// print_r($order);
+
+				  			// die();
+				
+								$success['success'] = "Bet placed successfully.";
+
+
+							}else{
+
+								$error['error'] = "Bet placed but unable to fetch last bid details.";
+								
+							}
+
+
+							}else{
+
+								$error['error'] = "Unable to update total figure.";
+
+							}
+
+
+				        }else{
+
+							$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+				        }
+					}
+			}		
+
+		}
+
+		// $countcheck = count($_POST['checkbox']);
+		
+		// $stagecheck = count($_POST['Stage_checkbox']);
+
+		// $arra = array();
+
+		// if($countcheck == 0 && $stagecheck == 0){
+
+		// 		$error['checkbox'] = "Please select at least one of the checkbox";
+
+		// 	}elseif($countcheck > 0 || $stagecheck > 0){
+
+
+		// 		if( $countcheck == 1){
+
+		// 			$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+
+		// 		}elseif($countcheck > 1 && $stagecheck == 1){
+
+		// 			for( $j = 0; $j < $countcheck ; $j++ ){
+
+		// 				$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+		// 				$arra[] = $checkboxlevel[$j];
+
+		// 			}
+
+		// 			$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+		// 			array_push($arra, $stagelevel);
+
+		// 		}elseif($countcheck > 1 && $stagecheck == 0){
+
+		// 			for( $j = 0; $j < $countcheck ; $j++ ){
+
+		// 				$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+		// 				$arra[] = $checkboxlevel[$j];
+
+		// 			}
+
+		// 		}elseif($countcheck == 0 && $stagecheck == 1){
+
+		// 			$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+		// 			array_push($arra, $checkboxlevel );
+
+		// 		}elseif($countcheck == 1 && $stagecheck == 1){
+
+		// 			$checkboxlevel[0] = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+		// 			$stagelevel = mysqli_real_escape_string( $conn, $_POST['Stage_checkbox'][0] );
+
+		// 			$arra[] = $checkboxlevel[0];
+
+		// 			array_push($arra, $stagelevel);
+
+		// 		}
+
+		// 	}
+
+		// if(!empty($usd) && !empty($khr)){
+
+		// 	$userid = $_SESSION['userid'];
+
+		// 		$order_id = uniqid();
+
+		// 		if(is_array($arra)){
+
+		// 			$checkboxlevel = implode(',', $arra);
+
+		// 		}else{
+
+		// 		}
+
+		// check whether multiple checkbox or checkboxlevel has been posted //
+
+
+			// $radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
+
+			// if($radio != ""){
+
+			// 	$error['error'] = "Radio option cannot be selected in this case.";
+
+			// }elseif($radio == ""){
+
+			// 	for($j = 0 ; $j < $counttxt3d; $j++ ){
+
+			// 		$users[$j] = array(
+
+
+			// 				'user_id' => $userid,
+
+			// 				'order_id' => $order_id,
+
+			// 				'txt3d' => $txt3d[$j],
+
+			// 				'usd' => $usd[$j],
+
+			// 				'khr' => $khr[$j],
+
+			// 				'radiobox' => $radio,
+
+			// 				'checklevel' => $checkboxlevel 
+
+			// 			);
+
+			// 			$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `txt3d`, `usd`, `khr`, `radiobox`, `checklevel` ) VALUES( '$userid', '$order_id', '$txt3d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel' )";
+
+			// 			$order = array();
+
+			// 			if ($conn->query($query) === TRUE) {
+
+			// 				$last_id = mysqli_insert_id($conn);
+
+			// 				$arrayid[$j] = $last_id; 
+
+			// 			} else {
+													
+			// 				$error['error'] = "Unable to place bet.";
+												
+			// 			}
+
+			// 	}
+
+			// 	$countarrayid = count($arrayid);
+
+			// 		for($k = 0 ; $k < $countarrayid ; $k++){
+
+			// 			$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+			// 			$result = mysqli_query($conn, $sql);
+
+			// 		 	if (mysqli_num_rows($result) > 0) {
+
+			// 	  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+			// 					$orders[] = $row;
+
+			// 	  			}
+
+
+			// 	  			$checkorder = explode(',', $orders[$k]['checklevel']);
+								
+			// 					$stageorder = explode(',', $orders[$k]['Stagelevel']);
+								
+			// 					$countcheckorder = count($checkorder);
+
+
+			// 					if(end($checkorder) == 'L 23'){
+
+			// 					$countcheckorder = $countcheckorder - 1;
+
+			// 							$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
+
+			// 							$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
+								
+			// 					}elseif(end($checkorder) == 'L 25'){
+
+			// 					$countcheckorder = $countcheckorder - 1;
+
+			// 							$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
+
+			// 							$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 25 );									
+
+			// 					}elseif(end($checkorder) == 'L 27'){
+
+			// 					$countcheckorder = $countcheckorder - 1;
+
+			// 							$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
+
+			// 							$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+									
+			// 					}elseif(end($checkorder) == 'L 29'){
+
+			// 					$countcheckorder = $countcheckorder - 1;
+
+			// 							$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
+
+			// 							$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
+
+									
+			// 					}else{
+
+			// 						$finalvalueusd = $finalvalueusd + $orders[$k]['usd'] * $countcheckorder;
+
+			// 						$finalvaluekhr = $finalvaluekhr + $orders[$k]['khr'] * $countcheckorder;
+
+			// 						if($finalvalueusd == 0){
+
+			// 							$finalvalueusd = "";
+								
+			// 						}elseif($finalvaluekhr == 0){
+
+			// 							$finalvaluekhr = "";
+
+			// 						}									
+
+			// 					}
+
+			// 					$orderid = $orders[$k]['order_id'];
+
+			// 					$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+
+			// 				if ($conn->query($query) === TRUE) {
+
+			// 					$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+				    	
+			// 			$result = mysqli_query($conn, $sql);
+
+			// 		 	if (mysqli_num_rows($result) > 0) {
+
+			// 	  			while($row = mysqli_fetch_assoc($result)) {
+				            	
+			// 					$order[] = $row;
+
+			// 	  			}
+
+			// 					$success['success'] = "Bet placed successfully.";
+
+
+			// 				}else{
+
+			// 					$error['error'] = "Bet placed but unable to fetch last bid details.";
+								
+			// 				}
+
+
+			// 				}else{
+
+			// 					$error['error'] = "Unable to update total figure.";
+
+			// 				}
+
+
+			// 	        }else{
+
+			// 				$error['error'] = "Bet placed but unable to fetch last bid details.";
+				            	
+			// 	        }
+			// 		}
+
+			// }
+			
+		// }
+	
+	}
+
+
+	// end of form parameters //
+
+}elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+	if(isset($_SESSION['userid'])){
+
+	$id = $_SESSION['userid'];
+
+	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
+			        
+			        $result = mysqli_query($conn, $sql);
+
+			        if (mysqli_num_rows($result) > 0) {
+
+		            	while($row = mysqli_fetch_assoc($result)) {
+		            	
+				        	// $_SESSION['userid'] = $row['id'];
+
+				        	// print_r($row);
+
+		            
+		            	}
+
+
+		            }
+
+	}else{
+
+		header("Location: login.php");
+
+	}
 
 }
+
+
 
 ;?>
 
@@ -138,6 +1432,17 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 	
 		<section>
 
+			<?php if(isset($success['success'])){?>
+
+			<div class="alert alert-success">
+					
+				<?php echo $success['success'];?>
+
+			</div>
+
+			<?php }?>
+
+
 			<?php if(isset($error['error'])){?>
 
 			<div class="alert alert-danger">
@@ -148,8 +1453,61 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 
 			<?php }?>
 
+
+			<?php if(isset($error['txt2d'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['txt2d'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($error['usdandkhrerror'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usdandkhrerror'];?>
+
+			</div>
+
+			<?php }?>
+
+
+			<?php if(isset($error['usd'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usd'];?>
+
+			</div>
+
+			<?php }?>
+
+
+			<?php if(isset($error['usd'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['usd'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($error['checkbox'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $error['checkbox'];?>
+
+			</div>
+
+			<?php }?>
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				
+
 				<div class="row text-center">
 
 		      			<?php if($_SESSION['userlevel'] == "A1"){?>
@@ -184,23 +1542,344 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="#">Reports</a></span>
+		    			<span><a href="reports.php">Reports</a></span>
 		    			
-		    			<span> | </span>
+		    	</div>
 
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
-		      			
-		      			<?php }else{?>
+		    	<div>
+		    		
+		      		<?php if(isset($success['success'])){
 
-			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+						// check if only one row is inserted //
+						
+						$count = count($order);
 
-		      			<?php }?>
+						$finalvalueusd = 0;
+
+						$finalvaluekhr = 0;
+
+						if($count == 1){
+
+							$checkorder = explode(',', $order[0]['checklevel']); 
+
+							$countcheckorder = count($checkorder);
+
+							if(end($checkorder) == 'L 23'){
+
+								// $countcheckorder = 23;
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
+							
+							}elseif(end($checkorder) == 'L 25'){
+
+								// $countcheckorder = 25;
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+
+
+							}elseif(end($checkorder) == 'L 27'){
+
+								// $countcheckorder = 27;
+
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+
+								
+							}elseif(end($checkorder) == 'L 29'){
+
+								// $countcheckorder = 29;
+
+								// $countcheckorder = 23;
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+							}else{
+
+							// if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
+
+							// 	echo "sdss";
+
+							// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+							// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+							// }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] != 0.00){
+
+								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+								$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+								// var_dump($finalvaluekhr);
+
+								if($finalvalueusd == 0){
+
+									$finalvalueusd = "";
+								
+								}elseif($finalvaluekhr == 0){
+
+									$finalvaluekhr = "";
+
+								}
+
+
+							 // }elseif($order[0]['usd'] != 0.00 || $order[0]['khr'] == 0.00){
+
+							 // 	echo "khr zero";
+							
+							 // }elseif($order[0]['khr'] != 0.00 || $order[0]['usd'] == 0.00){
+
+							 // 	echo "usd zero";
+							 // }
+
+							 }				
+
+
+						?>
+
+
+						<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table-up')" /></div>
+
+							<div class="table-responsive" id="print-table-up">          
+							
+							  	<table class="table table-primary">
+							
+								    <thead>
+							
+								      <tr class="table-primary">
+								        <th>2d</th>
+								        <th>USD</th>
+								        <th>KHR</th>
+								        <th>PO</th>
+								      </tr>
+							
+								    </thead>
+							
+								    <tbody>
+								      <tr>
+								      	<td><?php echo $order[0]['2dtxt'];?></td>
+								      	<td><?php echo $order[0]['usd'];?></td>
+								      	<td><?php echo $order[0]['khr'];?></td>
+								      	<td>( <?php echo $order[0]['checklevel'];?> )</td>
+								      </tr>
+
+								      <tr>
+								      	<td>Total</td>
+								      	<td><?php echo $finalvalueusd;?></td>
+								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $order[0]['created_at'];?></td>
+								      </tr>
+							
+								    </tbody>
+							
+								</table>
+							
+							</div>
+
+						<?php }elseif($count > 1){?>
+
+							<?php $count; 
+
+							$finalvalueusd = 0;
+
+							$finalvaluekhr = 0;
+							// echo "<pre>";
+							// print_r($order);
+
+							for($i = 0 ; $i < $count; $i++){
+
+								$checkorder = explode(',', $order[$i]['checklevel']);
+								$stageorder = explode(',', $order[$i]['Stagelevel']);
+
+								// print_r($order);
+								// print_r($stageorder);
+								// print_r($checkorder);
+								
+								$countcheckorder = count($checkorder);
+
+
+								if(end($checkorder) == 'L 23'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 23;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 23 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 23 );
+								
+								}elseif(end($checkorder) == 'L 25'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 25;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 25 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 25 );									
+
+								}elseif(end($checkorder) == 'L 27'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 27;
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 27 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 27 );
+									
+								}elseif(end($checkorder) == 'L 29'){
+
+								$countcheckorder = $countcheckorder - 1;
+									// $countcheckorder = 29;
+
+									// if($checkorder[$i] == "L 29"){
+										
+									// 	echo "final usd value is " . $finalvalueusd."<br/>";
+									// 	echo "final usd value is " . $order[$i]['usd']."<br/>";
+
+									// 	$finalvalueusd = $finalvalueusd + ($oder[$i]['usd']*29) ;
+
+									// 	$finalvaluekhr = $finalvaluekhr + $order[$i]['khr']  * 29;
+
+									// 	echo "if L 29 " . $finalvalueusd."<br/>";
+
+									// }else{
+
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 29 );
+
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 29 );
+
+										// echo "order usd ". $order[$i]['usd']."<br/>";
+										// echo "countcheckorder ". $countcheckorder."<br/>";
+										// echo "L 29 ". ($order[$i]['usd']*29)."<br/>";
+										// echo "final usd  ". $finalvalueusd."<br/>";
+										
+									// }
+
+									
+								}else{
+
+									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
+
+									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
+
+									if($finalvalueusd == 0){
+
+										$finalvalueusd = "";
+								
+									}elseif($finalvaluekhr == 0){
+
+										$finalvaluekhr = "";
+
+									}									
+
+								}
+
+								// if($order[0]['usd'] != 0.00){
+
+								// 	$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
+
+								// }elseif($order[0]['khr'] != 0.00){
+
+								// 	$finalvaluekhr = $order[0]['khr'] * $countcheckorder * $count;
+
+								// }else
+
+								// if($order[$i]['usd'] != 0.00 && $order[$i]['khr'] != 0.00){
+
+									
+								// 	$finalvalueusd = $order[$i]['usd'] * $countcheckorder;
+
+								// 	$finalvaluekhr = $order[$i]['khr'] * $countcheckorder;
+
+								// 	echo "usd not empty ".$finalvalueusd." and khr not empty ". $finalvaluekhr."<br/>";
+								
+								// }elseif($order[$i]['usd'] == 0.00 && $order[$i]['khr'] != 0.00){
+									
+
+								// 	$finalvalueusd = $order[$i]['usd'] * $countcheckorder;
+
+								// 	$finalvaluekhr = $order[$i]['khr'] * $countcheckorder;
+
+								// 	echo "usd empty " .$finalvalueusd ." and khr not empty". $finalvaluekhr."<br/>";
+
+								// }elseif($order[$i]['usd'] != 0.00 && $order[$i]['khr'] == 0.00){
+								
+									// echo "usd not empty ".$finalvalueusd." and khr empty ".$finalvaluekhr."<br/>";
+								// }
+
+
+							}	
+								 // echo "<br/>";
+								 // print_r($finalvaluekhr);
+								 // print_r($finalvalueusd);
+
+
+							 ?>
+
+							<div id='screen-view-container'><input type='button' value='Print' onclick="javascript:printerDiv('print-table')" /></div>
+
+								<div class="table-responsive" id="print-table">          
+							
+							  	<table class="table table-primary">
+							
+								    <thead>
+							
+								      <tr class="table-primary">
+								        <th>2d</th>
+								        <th>USD</th>
+								        <th>KHR</th>
+								        <th>PO</th>
+								      </tr>
+							
+								    </thead>
+							
+								    <tbody>
+
+								<?php foreach ($order as $key => $value) {?>
+								      <tr>
+								      	<td><?php echo $value['2dtxt'];?></td>
+								      	<td><?php echo $value['usd'];?></td>
+								      	<td><?php echo $value['khr'];?></td>
+								      	<td>( <?php echo $value['checklevel'];?> )</td>
+								      </tr>
+
+								<?php }?>
+
+								      <tr>
+								      	<td>Total</td>
+								      	<td><?php echo $finalvalueusd;?></td>
+								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $order[0]['created_at'];?></td>
+								      </tr>
+							
+								    </tbody>
+							
+								</table>
+							
+							</div> 
+
+			      		<?php  } }?>
 	    			
 		    	</div>
 
-				<form action="3d-betform.php" method="POST" id="3dform">
+				<form action="3d1-betform.php" method="POST" id="3dform">
               
             		<input type="hidden" id="lastStage" value="1" />
 
@@ -293,6 +1972,641 @@ $sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 		</section>
 
 	</div>
+
+	<script type="text/javascript">
+
+  var permArr = [];
+
+  var usedChars = [];
+
+  function permute(input) {
+    
+    var i, ch;
+    
+    for (i = 0; i < input.length; i++) {
+      
+      ch = input.splice(i, 1)[0];
+      
+      usedChars.push(ch);
+    
+    if (input.length == 0) {
+    
+      permArr.push(usedChars.slice());
+    
+    }
+    
+    permute(input);
+    
+    input.splice(i, 0, ch);
+    
+    usedChars.pop();
+  
+  }
+  
+    return permArr
+
+  };
+  
+  $(document).ready(function(){
+
+    $('#add').click(function(event){
+
+      var level = $('#lastlevel').val();
+
+      console.log("level is " + level);
+
+      var txt3d = $('#3d'+level).val();
+
+      var usd = $('#usd'+level).val();
+
+      var khr = $('#khr'+level).val();
+
+      console.log("3d value is " + txt3d);
+
+      if( txt3d != '' && txt3d.length == 3 &&(usd != '' || khr != '')){
+
+        var radioValue = $("input[name='optradio']:checked").val();
+
+        console.log(radioValue);
+        
+        if(radioValue){
+        
+          console.log("Your are a - " + radioValue);
+          
+          txt3d = parseInt(txt3d);
+
+          if(radioValue == '5OD'){
+
+            if(level > '4'){
+
+               swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              // ab = ab.split("");
+
+              console.log(ab.length);
+
+              // var val = parseInt(ab[1]);
+          
+              // var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              // var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              // console.log("after abplus " + result );
+
+              // result = result.toString();
+
+              // ab = ab[0]+result+ab[2];
+
+              // ab = ab.split("");
+              // var result = JSON.stringify(permute(ab))
+              var result = getPermutations(ab);
+
+              console.log("result is " + result);
+              // result = JSON.stringify(result);
+              // var rr = result.split(" " , result);
+              console.log(result[1]);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              for($i = 0 ; $i < result.length ; $i ++ ){
+
+                if($i == 0){
+                  continue;
+                }
+                level = $i + 1;
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+result[$i]+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>');
+
+            }
+
+            }
+
+          }else if(radioValue == '5L'){
+
+            if(level > '4'){
+
+              swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[0]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = result+ab[1]+ab[2];
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }
+
+          }else if(radioValue == '5C'){
+
+             if(level > '4'){
+
+              swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[1]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = ab[0]+result+ab[2];
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }
+
+           }else if(radioValue == '5R'){
+
+             if(level > '4'){
+
+              swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[2]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = ab[0]+ab[1]+result;
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }
+            
+          }else if(radioValue == '10L'){
+
+             if(level > '9'){
+
+              swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[0]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = result+ab[1]+ab[2];
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }    
+
+          }else if(radioValue == '10C'){
+
+             if(level > '9'){
+
+              swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[1]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = ab[0]+result+ab[2];
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }
+
+          }else if(radioValue == '10R'){
+
+             if(level > '9'){
+
+             swal("Oops!", "You cannot add more fields!", "warning");
+
+            }else{
+
+              var ab = txt3d.toString();
+              
+              ab = ab.split("");
+
+              var val = parseInt(ab[2]);
+          
+              var textVal = parseInt(val || "0");
+          
+              // ab[0] = ab[0]+1;
+              var result = textVal + 1;
+
+              // txt3d = txt3d + 2;
+              console.log("after abplus " + result );
+
+              result = result.toString();
+
+              ab = ab[0]+ab[1]+result;
+
+              console.log("ab result is " + ab);
+
+              level ++;
+
+              $('#lastlevel').val(level); 
+
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+
+            }
+
+          }else{
+
+            swal("Oops!", "Please handle checkbox validation error!", "warning");
+
+            // nothing goes here all checkbox conditions have been checked above
+
+          }
+
+          }else{
+
+            swal("Oops!", "Please select any of the radiobutton!", "warning");
+
+          }  
+
+        }else{
+
+          swal("Oops!", "Please input all fields before adding extra fields!", "warning");
+       
+        }
+
+    });
+
+  });
+
+  $(document).on('click', '.radio-inline', function(){
+
+
+      var d3val = $('#3d1').val();
+
+      var usdval = $('#usd1').val();
+
+      var khrval = $('#khr1').val();
+
+      // console.log(d3val);
+
+      // console.log(usdval);
+
+      // console.log(khrval);
+
+      $('#lastlevel').val('1');
+
+      $('.first-line').html(' <div class="card-header"><h3 id="level" data-level="1">Level 1</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d1" class="form-control 3d" name="txt3d[]" placeholder="Only 3 digit number between 101-999 allowed" value="'+d3val+'"> </div><div class="form-group"><label for="usd">USD:</label><input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 )" value="'+usdval+'"> </div><div class="form-group"><label for="khr">KHR:</label><input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khrval+'"></div>');
+
+    });
+
+
+  $(document).on('keypress', '.3d', function(event){
+
+        var data = $(this).attr('id');
+
+        var targetValue = $(this).val();
+
+        console.log("target value is " + targetValue);
+
+        if (event.which ===8 || event.which === 13 || event.which === 37 || event.which === 39 || event.which === 46) { 
+          return;
+
+        }
+
+       if (event.which > 47 &&  event.which < 58  && targetValue.length < 3) {
+
+          // if( targetValue > 101 && targetValue < 999 ){
+        
+            var c = String.fromCharCode(event.which);
+
+            var val = parseInt(c);
+          
+            var textVal = parseInt(targetValue || "0");
+          
+            var result = textVal + val;
+
+            if (result < 0 || result > 99) {
+          
+               event.preventDefault();
+          
+            }
+       
+       }
+       
+       else {
+       
+           event.preventDefault();
+       
+       }
+
+
+    });
+
+  $(document).on('keypress', '.usd', function(event){
+
+        var data = $(this).attr('id');
+
+        var targetValue = $(this).val();
+
+        console.log(targetValue);
+
+        console.log(event.keyCode);
+
+        if (event.which ===8 || event.which === 13 || event.which === 37 || event.which === 39 || event.which === 46) { 
+          return;
+
+        }
+
+        // if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+          
+        //   event.preventDefault();
+        
+        // }else{
+        
+        if (event.which > 47 &&  event.which < 58  && targetValue.length < 6) {
+        
+          var c = String.fromCharCode(event.which);
+
+          var val = parseInt(c);
+        
+          var textVal = parseInt(targetValue || "0");
+        
+          var result = textVal + val;
+
+          if ( result < 0 ) {
+        
+             event.preventDefault();
+        
+          }
+
+          if (targetValue === "0") {
+        
+            $(this).val(val);
+        
+            event.preventDefault();
+        
+          }
+       
+       }
+
+       
+       else {
+       
+           event.preventDefault();
+       
+       }
+
+    });
+
+  $(document).on('click', '.checkLevel', function(){
+
+    var checked = $(this).prop('checked');
+
+    if(checked){
+
+      var checkboxValue = $(this).val();
+
+      $('#checkbox-val').val('upper');
+
+      console.log(checkboxValue);
+
+      if(checkboxValue == 'l19'){
+
+        $('#l22').prop('checked', false);
+
+        $('.singleCheckbox').prop('checked', false);
+
+      }else if(checkboxValue == 'l22'){
+
+        $('#l19').prop('checked', false);
+
+        $('.singleCheckbox').prop('checked', false);
+
+      }
+
+    }else{
+
+      console.log('checkbox unclicked');
+
+      $('#checkbox-val').val('lower');
+
+    }
+
+  });
+
+
+  $(document).on('click', '.singleCheckbox', function(){
+
+    var checked = $(this).prop('checked');
+
+    if(checked){
+
+        $('#checkbox-val').val('upper');
+        
+        $('#l19').prop('checked', false);
+
+        $('#l22').prop('checked', false);
+
+    }else{
+
+        console.log('checkbox unclicked');
+
+        $('#checkbox-val').val('lower');
+
+        console.log($('#checkbox-val').val());
+
+    }
+
+  });
+
+  $(document).on('click', '.btn-default', function(event){
+
+    var txt3d = $('#3d1').val();
+
+    var usd = $('#usd1').val();
+
+    var khr = $('#khr1').val();
+
+    console.log(txt3d);
+
+    console.log(usd);
+
+    console.log(khr);
+
+    if(txt3d != "" && txt3d.length == 3){
+
+      if((usd != "") || (khr != "" && khr.length == 3)){
+
+        var status = $('#checkbox-val').val();
+
+        console.log('status is ' + status);
+        
+        // console.log($(this).parent().find('.upper').find('.checkbox-inline').find('.singleCheckbox').attr('checked'));
+        
+        // console.log($(this).parent().find('.lower').find('.checkbox-inline').find('.singleCheckbox').prop('checked'));
+        
+        if(status == 'upper'){
+
+          // event.preventDefault();
+          
+          // swal("Oops!", "Checkbox checked!", "warning");
+
+        }else if(status == 'lower'){
+
+          event.preventDefault();
+
+          console.log('status is false but still it is showing this message');
+          
+          swal("Oops!", "None of the checkbox is checked!", "warning");
+
+        }else{
+
+          event.preventDefault();
+
+          swal("Oops!", "Please check any of the checkboxes before moving further.", "warning");          
+
+        }
+
+        // $('#3dform').submit();
+
+          // event.preventDefault();
+          
+          // swal("Oops!", "Condition satisfied!", "warning"); 
+
+      }else{
+
+        event.preventDefault();
+
+        swal("Oops!", "Please input either USD or KHR in valid format!", "warning");
+      }
+
+    }else{
+
+      event.preventDefault();
+           
+      swal("Oops!", "Please input 3D field with minimum 3 digits between 101-999 before moving forward!", "warning");
+
+    }
+
+  });
+
+   function getPermutations(string) {
+      var results = [];
+
+      if (string.length === 1) 
+      {
+        results.push(string);
+        return results;
+      }
+
+      for (var i = 0; i < string.length; i++) 
+      {
+        var firstChar = string[i];
+        var otherChar = string.substring(0, i) + string.substring(i + 1);
+        var otherPermutations = getPermutations(otherChar);
+        
+        for (var j = 0; j < otherPermutations.length; j++) {
+          results.push(firstChar + otherPermutations[j]);
+        }
+      }
+      return results;
+    }
+    
+    var permutation = getPermutations('YES');
+    console.log("Total permutation: "+permutation.length);
+    console.log(permutation);
+
+</script>
 
 </body>
 </html>
