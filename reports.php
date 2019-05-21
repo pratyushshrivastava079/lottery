@@ -30,6 +30,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 		$stagelevel = $_GET['stage'];
 
+		if($stagelevel == 1){
+
+			$stage = 1;
+
+			$type = '2dbetform';
+
+		}elseif($stagelevel == 2){
+
+			$stage = 2;
+
+			$type = '2dbetform';			
+
+		}elseif($stagelevel == 3){
+
+			$stage = 1;
+
+			$type = '3dbetform';			
+
+		}elseif($stagelevel == 4){
+
+			$stage = 2;
+
+			$type = '3dbetform';			
+
+		}
+
 	}else{
 
 		if($_SESSION['userlevel'] == 'A1'){
@@ -43,7 +69,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	echo $stage;
+
+	if(isset($_GET['date'])){
+	
+		$date = $_GET['date'];
+
+		echo date("Y-m-d H:i:s",strtotime($date));
+
+	}else{
+
+		if($_SESSION['userlevel'] == 'A1'){
+
+			$date = 1;
+			
+		}else{
+
+			header("Location: logout.php");
+		}
+
+	}
+
+	// echo $stage;
+	// echo $date;
 
 	// echo $id;
 
@@ -65,10 +112,43 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            }
 
 
+	     //    $datesql = "SELECT * FROM `users` WHERE 'created_at' >= '$date'";
+		    
+		    // $dateresult = mysqli_query($conn, $datesql);
+
+		    //     if (mysqli_num_rows($dateresult) > 0) {
+
+	     //        	while($daterow = mysqli_fetch_assoc($dateresult)) {
+	            	
+			   //      	$users[] = $daterow;
+
+
+	     //        	}
+
+	     //        }
+
+
+	     //        $stagesql = "SELECT * FROM `users` WHERE 'stage' = '$stage'";
+		    
+		    // $dateresult = mysqli_query($conn, $datesql);
+
+		    //     if (mysqli_num_rows($dateresult) > 0) {
+
+	     //        	while($daterow = mysqli_fetch_assoc($dateresult)) {
+	            	
+			   //      	$users[] = $daterow;
+
+
+	     //        	}
+
+	     //        }
+
+
 	            // print_r($finalusers);
+	            // print_r($dateusers);
 
 
-if(!isset($_GET['userid'])){
+if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 
 
@@ -80,7 +160,6 @@ if(!isset($_GET['userid'])){
 
 	            	while($row = mysqli_fetch_assoc($result)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
 			        	$users[] = $row;
 
 
@@ -157,9 +236,170 @@ if(!isset($_GET['userid'])){
 
 
 
-}else{
+}elseif(isset($_GET['userid'])){
 
 	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
+
+	// echo $sql;
+		    
+		    $result = mysqli_query($conn, $sql);
+
+		        if (mysqli_num_rows($result) > 0) {
+
+	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$users[] = $row;
+
+
+	            	}
+
+	            }
+
+	            // var_dump($users);
+
+	            // die();
+
+
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $sumresult = mysqli_query($conn, $sumsql);
+
+		        if (mysqli_num_rows($sumresult) > 0) {
+
+	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$sumusers[] = $sumrow;
+
+
+	            	}
+
+	            }
+
+	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+	            $totalusd = $ar[0];
+	            // $totalusd = $totalusd * 100;
+
+	            // print_r($totalusd);
+
+
+	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $khrresult = mysqli_query($conn, $khrsql);
+
+		        if (mysqli_num_rows($khrresult) > 0) {
+
+	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$khrusers[] = $khrrow;
+
+
+	            	}
+
+	            }
+
+	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+	            $totalkhr = $khr[0] * 100;
+	            // $finaltotalkhr = $totalkhr * 100;
+
+	            // print_r($totalkhr);
+
+	            // echo count($users);
+
+			        	// print_r($users);
+
+
+	        }
+
+
+	        elseif(isset($_GET['stage'])){
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type'";
+
+	// echo $sql;
+		    
+		    $result = mysqli_query($conn, $sql);
+
+		        if (mysqli_num_rows($result) > 0) {
+
+	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$users[] = $row;
+
+
+	            	}
+
+	            }
+
+	            // var_dump($users);
+
+	            // die();
+
+
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $sumresult = mysqli_query($conn, $sumsql);
+
+		        if (mysqli_num_rows($sumresult) > 0) {
+
+	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$sumusers[] = $sumrow;
+
+
+	            	}
+
+	            }
+
+	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+	            $totalusd = $ar[0];
+	            // $totalusd = $totalusd * 100;
+
+	            // print_r($totalusd);
+
+
+	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+		    $khrresult = mysqli_query($conn, $khrsql);
+
+		        if (mysqli_num_rows($khrresult) > 0) {
+
+	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$khrusers[] = $khrrow;
+
+
+	            	}
+
+	            }
+
+	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+	            $totalkhr = $khr[0] * 100;
+	            // $finaltotalkhr = $totalkhr * 100;
+
+	            // print_r($totalkhr);
+
+	            // echo count($users);
+
+			        	// print_r($users);
+
+
+	        }elseif(isset($_GET['date'])){
+
+	$sql = "SELECT * FROM `2dbetform` WHERE 'created_at' >= '$date'";
 
 	// echo $sql;
 		    
@@ -878,6 +1118,22 @@ if(!isset($_GET['userid'])){
 
 	</script>
 
+
+
+	<script type="text/javascript">
+		
+		$(document).ready(function() {
+
+			$(document).on('change', '#datepicker', function(){
+
+				window.location = "reports.php?date="+this.value;
+
+			});
+
+		});
+
+	</script>
+
 	<script type="text/javascript">
 function handleSelect(elm)
 {
@@ -887,6 +1143,11 @@ window.location = "reports.php?userid="+elm.value;
 function handleSelectstage(elm)
 {
 window.location = "reports.php?stage="+elm.value;
+}
+
+function handleSelectdate(elm)
+{
+window.location = "reports.php?date="+elm.value;
 }
 </script>
 
