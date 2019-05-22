@@ -94,8 +94,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	// echo $id;
 
+	$userid = $_SESSION['userid'];
 
-	$usersql = "SELECT * FROM `users` WHERE 1";
+	// echo $userid;
+
+	$usersql = "SELECT * FROM `users` WHERE `id` = '$userid'";
 		    
 		    $userresult = mysqli_query($conn, $usersql);
 
@@ -154,7 +157,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 
 
-	$sql = "SELECT * FROM `2dbetform` WHERE 1";
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid'";
 		    
 		    $result = mysqli_query($conn, $sql);
 
@@ -170,7 +173,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 	            }
 
 
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE 1";
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
 		    $sumresult = mysqli_query($conn, $sumsql);
 
@@ -195,7 +198,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 	            // print_r($totalusd);
 
 
-	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE 1";
+	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
 		    $khrresult = mysqli_query($conn, $khrsql);
 
@@ -322,7 +325,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	        elseif(isset($_GET['stage'])){
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type'";
+	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage', `type` = '$type' AND `user_id` = '$userid'";
 
 	// echo $sql;
 		    
@@ -401,7 +404,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	        }elseif(isset($_GET['date'])){
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date'";
+	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid'";
 
 	// echo $sql;
 		    
@@ -815,8 +818,6 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			
 		    	</div>
 
-				<?php if($_SESSION['userlevel'] == "A1"){?>
-
 		    	<div class="table-responsive">
 				 
 					<table class="table table-striped">
@@ -839,9 +840,10 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    			<select class="username-filter" onchange="javascript:handleSelect(this)">
 
+					    				<option selected="true">-- Choose User --</option>
 					    				<?php foreach ($finalusers as $key => $value) {?>
-					    			
-					    				<option value="<?php echo $value['id'];?>" selected="true"><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
+					    				
+					    				<option value="<?php echo $value['id'];?>" ><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
 
 					    				<?php }?>
 
@@ -853,6 +855,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    			<select onchange="javascript:handleSelectstage(this)">
 					    			
+					    				<option selected="true">-- Choose Stage --</option>
 					    				<option value="1">2D Stage 1</option>
 					    				<option value="2">2D Stage 2</option>
 					    				<option value="3">3D Stage 1</option>
@@ -865,7 +868,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    		<td>
 
-					    			<input type="text" id="datepicker" placeholder="DatePicker">					    			
+					    			<input type="text" id="datepicker" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">					    			
 
 					    		</td>
 
@@ -877,7 +880,6 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 		    	</div>
 
-		    	<?php }?>
 
 		    	<div class="table-responsive">
 				 
@@ -1144,6 +1146,7 @@ window.location = "reports.php?userid="+elm.value;
 
 function handleSelectstage(elm)
 {
+	console.log(elm.value);
 window.location = "reports.php?stage="+elm.value;
 }
 
