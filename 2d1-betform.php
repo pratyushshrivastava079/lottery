@@ -833,15 +833,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				for($j = 0 ; $j < $counttxt2d; $j++ ){
 
-					if($usd[$j] == ""){
+					// if($usd[$j] == ""){
 
-						$usd[$j] = 0;
-					}
+					// 	$usd[$j] = 0;
+					// }
 
-					if($khr[$j] == ""){
+					// if($khr[$j] == ""){
 
-						$khr[$j] = 0;
-					}
+					// 	$khr[$j] = 0;
+					// }
 
 						$users[$j] = array(
 
@@ -961,8 +961,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								}
 
-								echo $finalvaluekhr;
-								echo $finalvalueusd;
+								// echo $finalvaluekhr;
+								// echo $finalvalueusd;
 
 								$orderid = $orders[$k]['order_id'];
 
