@@ -532,6 +532,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 								$countcheckorder = count($checkorder);
 
+								// echo $countcheckorder;
 
 								if(end($checkorder) == 'L 23'){
 
