@@ -74,7 +74,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 		$date = $_GET['date'];
 
-		echo date("Y-m-d H:i:s",strtotime($date));
+		$date = date("Y-m-d H:i:s",strtotime($date));
 
 	}else{
 
@@ -108,6 +108,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 	            	}
+
+	            	// print_r($finalusers)
 
 	            }
 
@@ -399,7 +401,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	        }elseif(isset($_GET['date'])){
 
-	$sql = "SELECT * FROM `2dbetform` WHERE 'created_at' >= '$date'";
+	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date'";
 
 	// echo $sql;
 		    
