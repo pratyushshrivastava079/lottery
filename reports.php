@@ -116,6 +116,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	            }		
 
+	
+	}elseif($_SESSION['userlevel'] == "A4"){
+
+		$usersql = "SELECT * FROM `users` WHERE `id` = '$userid'";
+		    
+		    $userresult = mysqli_query($conn, $usersql);
+
+		        if (mysqli_num_rows($userresult) > 0) {
+
+	            	while($userrow = mysqli_fetch_assoc($userresult)) {
+	            	
+			        	// $_SESSION['userdetails'] = $row;
+			        	$finalusers[] = $userrow;
+
+
+	            	}
+
+	            	// print_r($finalusers)
+
+	            }	
 	}else{
 
 			$usersql = "SELECT * FROM `users` WHERE `id` = '$userid'";
@@ -151,7 +171,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	            	// print_r($finalusers);
 
 	            }
-	}
 
 
 
