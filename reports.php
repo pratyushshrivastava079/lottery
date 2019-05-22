@@ -96,9 +96,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$userid = $_SESSION['userid'];
 
-	// echo $userid;
+	if($_SESSION['userlevel'] == "A1"){
 
-	$usersql = "SELECT * FROM `users` WHERE `id` = '$userid'";
+		$usersql = "SELECT * FROM `users` WHERE 1";
 		    
 		    $userresult = mysqli_query($conn, $usersql);
 
@@ -114,43 +114,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	            	// print_r($finalusers)
 
+	            }		
+
+	}else{
+
+			$usersql = "SELECT * FROM `users` WHERE `id` = '$userid'";
+		    
+		    $userresult = mysqli_query($conn, $usersql);
+
+		        if (mysqli_num_rows($userresult) > 0) {
+
+	            	$userrow = mysqli_fetch_assoc($userresult);
+	            	
+			        	$finalusers[0] = $userrow;
+
+
+			        }
+
+			$iduser = $userrow['username'];
+			
+			$subusersql = "SELECT * FROM `users` WHERE `added_by` = '$iduser'";
+		    
+		    $subuserresult = mysqli_query($conn, $subusersql);
+
+		        if (mysqli_num_rows($subuserresult) > 0) {
+
+	            	while($subuserrow = mysqli_fetch_assoc($subuserresult)) {
+	            	
+			        	$finalusers[] = $subuserrow;
+
+
+	            	}
+
+
+
+	            	// print_r($finalusers);
+
 	            }
+	}
 
 
-	     //    $datesql = "SELECT * FROM `users` WHERE 'created_at' >= '$date'";
-		    
-		    // $dateresult = mysqli_query($conn, $datesql);
-
-		    //     if (mysqli_num_rows($dateresult) > 0) {
-
-	     //        	while($daterow = mysqli_fetch_assoc($dateresult)) {
-	            	
-			   //      	$users[] = $daterow;
-
-
-	     //        	}
-
-	     //        }
-
-
-	     //        $stagesql = "SELECT * FROM `users` WHERE 'stage' = '$stage'";
-		    
-		    // $dateresult = mysqli_query($conn, $datesql);
-
-		    //     if (mysqli_num_rows($dateresult) > 0) {
-
-	     //        	while($daterow = mysqli_fetch_assoc($dateresult)) {
-	            	
-			   //      	$users[] = $daterow;
-
-
-	     //        	}
-
-	     //        }
-
-
-	            // print_r($finalusers);
-	            // print_r($dateusers);
 
 
 if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
