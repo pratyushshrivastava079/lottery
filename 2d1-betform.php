@@ -350,6 +350,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								}
 
+								echo $finalvalueusd;
+
+								echo $finalvaluekhr;
+
 							 }	
 
 							 $orderid = $order[0]['order_id'];
@@ -582,10 +586,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								}
 								// echo $finalvalueusd;
 
+								// echo $finalvalueusd. "<br/>";
+								
+								// echo $finalvaluekhr. "<br/>";
+
 								$orderid = $order[$k]['order_id'];
 								// print_r($orderid);
 
-								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+								$query = "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
 
 							// print_r($query);
 

@@ -920,6 +920,27 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    		// echo "<pre>";
 
+					    		if($value['radiobox'] == '5S'){
+
+					    			// echo "5s";
+
+					    			$value['totalkhr'] = $value['totalkhr'] / 5;
+
+					    			$value['totalusd'] = $value['totalusd'] / 5;
+
+					    		}elseif($value['radiobox'] == '5OD'){
+
+					    			$value['totalkhr'] = $value['totalkhr'] / 5;
+
+					    			$value['totalusd'] = $value['totalusd'] / 5;
+
+					    		}elseif($value['radiobox'] == '10S'){
+
+					    			$value['totalkhr'] = $value['totalkhr'] / 10;
+
+					    			$value['totalusd'] = $value['totalusd'] / 10;
+					    		}
+
 					    		if($value['totalkhr'] == ""){
 
 					    			$value['totalkhr'] = NULL;
