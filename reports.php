@@ -328,9 +328,9 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	        elseif(isset($_GET['stage'])){
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage', `type` = '$type' AND `user_id` = '$userid'";
+	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type' AND `user_id` = '$userid'";
 
-	// echo $sql;
+	echo $sql;
 		    
 		    $result = mysqli_query($conn, $sql);
 
