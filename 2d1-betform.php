@@ -2262,7 +2262,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
 
         $('#L23').prop('checked', false);
         
@@ -2284,7 +2284,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
         
         $('#N').prop('checked', false);
 
@@ -2357,7 +2357,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
 
      }else if(checked == true && levelval == 'L 29'){
 
@@ -2371,7 +2371,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
         
         $('#N').prop('checked', false);
 
