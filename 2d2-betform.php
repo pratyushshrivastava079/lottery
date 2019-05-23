@@ -2210,11 +2210,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   
         $('#D').prop('checked', false);
   
-        $('#L 25').prop('checked', false);
+        $('#L25').prop('checked', false);
         
-        $('#L 27').prop('checked', false);
+        $('#L27').prop('checked', false);
         
-        $('#L 29').prop('checked', false);
+        $('#L29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
@@ -2230,11 +2230,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
 
-        $('#L 23').prop('checked', false);
+        $('#L23').prop('checked', false);
         
-        $('#L 27').prop('checked', false);
+        $('#L27').prop('checked', false);
         
-        $('#L 29').prop('checked', false);
+        $('#L29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
@@ -2252,11 +2252,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#F').prop('checked', false);
 
-        $('#L 23').prop('checked', false);
+        $('#L23').prop('checked', false);
         
-        $('#L 25').prop('checked', false);
+        $('#L25').prop('checked', false);
         
-        $('#L 29').prop('checked', false);
+        $('#L29').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
@@ -2276,11 +2276,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#N').prop('checked', false);
 
-        $('#L 23').prop('checked', false);
+        $('#L23').prop('checked', false);
         
-        $('#L 25').prop('checked', false);
+        $('#L25').prop('checked', false);
         
-        $('#L 27').prop('checked', false);
+        $('#L27').prop('checked', false);
 
         // $('.singleCheckbox').prop('checked', false);
 
@@ -2345,7 +2345,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
 
      }else if(checked == true && levelval == 'L 29'){
 
@@ -2359,7 +2359,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
         
-        $('#F').prop('checked', false);
+        $('#I').prop('checked', false);
         
         $('#N').prop('checked', false);
 

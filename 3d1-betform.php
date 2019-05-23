@@ -1353,17 +1353,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	  <style type="text/css">
 	  	
-	  	.form-group{
+	  		.form-group{
 
-	  			width: 30%;
+	  			width: 25%;
 	  			display: inline-block!important;
-	  			margin-right: 1%;
+	  			margin: 1.5%;
+	  		}
+
+	  		#add{
+
+	  			display: inline-block;
+	  			width: 3.5%;
+	  		}
+
+	  		.fields{
+
+	  			margin-left:0.7%;
+	  			width: 101%;
 	  		}
 
 	  		.pclass{
 
 	  			width: 20%;
 	  			display: inline-block!important;
+	  		}
+
+	  		.first-line{
+
+	  			border: 1px solid #d2d2d2;
+	  			padding: 2%;
+	  			border-radius: 5px; 
 	  		}
 
 	  		.navbar-nav{
@@ -1397,6 +1416,71 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	.row.text-center{
 	 		padding: 10px 0px
 	 	}
+
+	 	.left,.middle,.right-account{
+
+	 		display: inline-block;
+	 		/*width: 32%;*/
+	 	}
+
+	 	.right-account{
+
+	 		text-align: right;
+	 		width: 20%;
+	 	}
+
+	 	.middle, .right-account{
+
+	 		padding: 15px 15px;
+	 	}
+
+
+	 	.left{
+
+	 		width: 10%;
+	 	}
+
+	 	.middle{
+
+	 		width: 68%;
+	 		text-align: center;
+	 	}
+
+	 	#screen-view-container{
+
+	 		text-align: right;
+	 		margin: 15px;
+	 	}
+
+	 	.checkbox label, .radio label{
+
+	 		padding: 10px 10px;
+	 	}
+
+
+	 	.radio, .checkbox{
+
+	 		margin-left:10px;
+	 	}
+
+	 	@media only screen and (max-width: 768px) {
+		
+		.right-account{
+
+	 		width: 30%;
+	 	}
+
+	 	.middle{
+
+	 		width: 64%;
+	 	}
+
+	 	.last-checkbox{
+
+	 		margin-left: 0px!important;
+	 	}
+		
+		}
 
 	  </style>
 
@@ -1883,9 +1967,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
               
             		<input type="hidden" id="lastStage" value="1" />
 
+                	<div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
+              		
               		<div class="first-line">
 
-                		<div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
+              			<span class="btn btn-primary" id="add" data-level="1">+</span>
 
                 		<div class="form-group">
                 
@@ -1933,19 +2019,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  		            <div class="checkbox upper">
  	               
-    		            <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]">A</label>
+    		            <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]">B</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]" id="B">B</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]">C</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]" id="C">C</label>
 		
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]">D</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]" id="D">D</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]">H</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="E">H</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="F" name="checkbox[]">F</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]" id="I">I</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]">N</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
 
 		            </div>
 
@@ -1953,13 +2039,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		            <div class="checkbox lower">
                 
-		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="l19" class="checkStage" name="Stage_checkbox[]">L 19</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="L 19" class="checkStage" name="Stage_checkbox[]">L 19</label>
 		                
-		                <label class="checkbox-inline"><input type="checkbox" id="l20" value="l20" class="checkStage" name="Stage_checkbox[]">L 20</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l20" value="L 20" class="checkStage" name="Stage_checkbox[]">L 20</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" id="l21" value="l21" class="checkStage" name="Stage_checkbox[]">L 21</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l21" value="L 21" class="checkStage" name="Stage_checkbox[]">L 21</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="l22" class="checkStage" name="Stage_checkbox[]">L 22</label>
+		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="L 22" class="checkStage" name="Stage_checkbox[]">L 22</label>
 		                
 		            </div>
 
@@ -1974,6 +2060,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</div>
 
 	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+		var ab  = $.now();
+
+		var date = new Date(ab*1000);
+
+		console.log(date);
+
+		var level = 1;
+
+ 		$(document).on('click', '#add', function(event){
+
+ 			event.preventDefault();
+
+ 			$('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div></div>');
+
+ 			level++
+
+		});
+
+ 	});
 
   var permArr = [];
 
@@ -2009,7 +2117,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   
   $(document).ready(function(){
 
-    $('#add').click(function(event){
+    $('#adds').click(function(event){
 
       var level = $('#lastlevel').val();
 
@@ -2328,7 +2436,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
   });
 
-  $(document).on('click', '.radio-inline', function(){
+  $(document).on('click', '.radio-inlines', function(){
 
 
       var d3val = $('#3d1').val();
@@ -2448,29 +2556,103 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     });
 
-  $(document).on('click', '.checkLevel', function(){
+  $(document).on('click', '.checkStage', function(){
 
     var checked = $(this).prop('checked');
+
+ console.log("stage check is " + checked);
 
     if(checked){
 
       var checkboxValue = $(this).val();
 
-      $('#checkbox-val').val('upper');
+      $('#checkbox-val').val(checkboxValue);
 
       console.log(checkboxValue);
 
-      if(checkboxValue == 'l19'){
+     if(checkboxValue == 'L 19'){
 
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+  
+        $('#l20').prop('checked', false);
+        
+        $('#l21').prop('checked', false);
+        
         $('#l22').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
 
-      }else if(checkboxValue == 'l22'){
+      }else if(checkboxValue == 'L 20'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
 
         $('#l19').prop('checked', false);
+        
+        $('#l21').prop('checked', false);
+        
+        $('#l22').prop('checked', false);
 
-        $('.singleCheckbox').prop('checked', false);
+        // $('.singleCheckbox').prop('checked', false);
+
+      }else if(checkboxValue == 'L 21'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+        
+        $('#I').prop('checked', false);
+
+        $('#l19').prop('checked', false);
+        
+        $('#l20').prop('checked', false);
+        
+        $('#l22').prop('checked', false);
+
+        // $('.singleCheckbox').prop('checked', false);
+
+      }else if(checkboxValue == 'L 22'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+        
+        $('#I').prop('checked', false);
+        
+        $('#N').prop('checked', false);
+
+        $('#l19').prop('checked', false);
+        
+        $('#l20').prop('checked', false);
+        
+        $('#l21').prop('checked', false);
+
+        // $('.singleCheckbox').prop('checked', false);
 
       }
 
@@ -2489,27 +2671,73 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     var checked = $(this).prop('checked');
 
-    if(checked){
+     console.log("checked is " + checked);
 
-        $('#checkbox-val').val('upper');
+     var value = $(this).val();
+
+     console.log("checked value is " + value);
+
+     var levelval = $('#checkbox-val').val();
+
+     console.log('level val is ' + levelval);
+
+     if(checked == true && levelval == 'L 23'){
+
+        $('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+     	
+     }else if(checked == true && levelval == 'L 25'){
+
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
+
+     }else if(checked == true && levelval == 'L 27'){
+
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
+
+        $('#H').prop('checked', false);
         
-        $('#l19').prop('checked', false);
+        $('#I').prop('checked', false);
 
-        $('#l22').prop('checked', false);
+     }else if(checked == true && levelval == 'L 29'){
 
-    }else{
+     	$('#A').prop('checked', false);
+  
+        $('#B').prop('checked', false);
+  
+        $('#C').prop('checked', false);
+  
+        $('#D').prop('checked', false);
 
-        console.log('checkbox unclicked');
+        $('#H').prop('checked', false);
+        
+        $('#I').prop('checked', false);
+        
+        $('#N').prop('checked', false);
 
-        $('#checkbox-val').val('lower');
-
-        console.log($('#checkbox-val').val());
-
-    }
+     }
 
   });
 
-  $(document).on('click', '.btn-default', function(event){
+  $(document).on('click', '.btn-defaults', function(event){
 
     var txt3d = $('#3d1').val();
 
@@ -2527,7 +2755,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
       if((usd != "") || (khr != "" && khr.length == 3)){
 
-        var status = $('#checkbox-val').val();
+        var status = $('#checkbox-val1').val();
 
         console.log('status is ' + status);
         

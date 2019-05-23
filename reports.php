@@ -9,9 +9,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
+	$_SESSION['subuserid'] = $_SESSION['userid'];
+
+	// echo $_SESSION['subuserid'];
+
 	if(isset($_GET['userid'])){
 	
 		$id = $_GET['userid'];
+
+		$_SESSION['subuserid'] = $id;
+
+		// echo $_SESSION['subuserid'];
 
 	}else{
 
@@ -94,7 +102,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	// echo $id;
 
-	$userid = $_SESSION['userid'];
+	$userid = $_SESSION['subuserid'];
+
+	// echo $userid;
 
 	if($_SESSION['userlevel'] == "A1"){
 
@@ -328,6 +338,13 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	        elseif(isset($_GET['stage'])){
 
+	        	// if(isset($_GET['userid'])){
+
+	        		// $userid = $_GET['userid'];
+	        	// }
+
+	        	// echo $userid;
+
 	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type' AND `user_id` = '$userid'";
 
 	// echo $sql;
@@ -376,7 +393,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 	            // print_r($totalusd);
 
 
-	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+	        $khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
 
 		    $khrresult = mysqli_query($conn, $khrsql);
 
