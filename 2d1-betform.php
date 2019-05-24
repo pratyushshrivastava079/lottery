@@ -888,7 +888,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$countarrayid = count($arrayid);
 
-
 					for($k = 0 ; $k < $countarrayid ; $k++){
 
 						$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";

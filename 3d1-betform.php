@@ -1,11 +1,27 @@
 <?php 
+ 
+function pc_permute($items, $perms = array( )) {
+    if (empty($items)) {
+        $return = array($perms);
+    }  else {
+        $return = array();
+        for ($i = count($items) - 1; $i >= 0; --$i) {
+             $newitems = $items;
+             $newperms = $perms;
+         list($foo) = array_splice($newitems, $i, 1);
+             array_unshift($newperms, $foo);
+             $return = array_merge($return, pc_permute($newitems, $newperms));
+         }
+    }
+    return $return;
+} 
+
 
 session_start();
 
 include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
 
 	$counttxt3d = count($_POST['txt3d']);
 
@@ -24,7 +40,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$khr = mysqli_real_escape_string( $conn, $_POST['khr'][0] );
 
 		$radio = mysqli_real_escape_string( $conn, $_POST['optradio'] );
-
 
 		// check whether multiple checkbox or checkboxlevel has been posted //
 
@@ -133,81 +148,124 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				$incrementval = 0;
 
-				// echo $radio;
+				$newval = str_split($txt3d);
+
+				// print_r($newval);
 
 				if($radio == '5L' || $radio == '5C' || $radio == '5R'){
 
-                $newtxt3d = $txt3d;
+	                if($radio == '5L'){
 
-                $newtxt3d = implode($txt3d, ',' );
+	                	for($i = 0 ; $i < 5 ; $i++){
 
-                // var_dump($newtxt3d);
+	                        // $value = implode('',$newval);
+							
+							print_r($value);
 
-                // echo $txt3d;
+	                        array_push($newtxt3d, implode('',$newval));
+	                        
+	                        $newval[0] = $newval[0]+1;
+	                        
+	                        // echo "<pre>";
 
-                // die();
-                    
-                for($i = 0 ; $i < 5 ; $i++){
 
-                    if($radio == '5L'){
+	                        $incrementval = 5;
 
-                        $newtxt3d[0] = $newtxt3d[0]+1;
-                        $incrementval = 5; 
+	                        // $newval = implode('', $newval);
 
-                        // print_r($newtxt3d);
+    	                    // $newval = implode('',$newval);
+
+	                    }
 
 
                     }elseif($radio == '5C'){
 
-                        $newtxt3d[1] = $newtxt3d[1]+1;
-                        $incrementval = 5; 
+	                	for($i = 0 ; $i < 5 ; $i++){
 
-                        // var_dump($newtxt3d);
+	                        array_push($newtxt3d, implode('',$newval));	                		
+
+	                        $newval[1] = $newval[1]+1;
+
+	                        $incrementval = 5;
+
+	                        // print_r($newval);
+
+    	                    // $newval = implode('',$newval);
+
+	                    }
 
                     }elseif($radio == '5R'){
 
-                        $newtxt3d[2] = $newtxt3d[2]+1;
+	                	for($i = 0 ; $i < 5 ; $i++){
 
-                        $incrementval = 5; 
-                        // var_dump($newval);
+	                        array_push($newtxt3d, implode('',$newval));
+
+	                        $newval[1] = $newval[1]+1;
+
+	                        $incrementval = 5;
+
+	                        // print_r($newval);
+
+    	                    // $newval = implode('',$newval);
+
+	                    }
 
                     }else{}
 
-                }
+                    // $newval = explode(',', $newval);
+
+                    // print_r($newtxt3d);
 
 
-                     }elseif($radio == '10L' || $radio == '10C' || $radio == '10R'){
+                }elseif($radio == '10L' || $radio == '10C' || $radio == '10R'){
 
-                $newtxt3d = $txt3d;
+                // $newtxt3d = $txt3d;
 
-                $newtxt3d = implode($txt3d, ',' );
+               $newval = str_split($txt3d);
 
-                for($i = 0 ; $i < 10 ; $i++){
+                // for($i = 0 ; $i < 10 ; $i++){
 
                     if($radio == '10L'){
 
-                        $newtxt3d[0] = $newtxt3d[0]+1;
+                    	for($i = 0 ; $i < 10 ; $i++){
 
-                        // var_dump($newval);
+                        // print_r($newval);
+	                    array_push($newtxt3d, implode('',$newval));                   	
+
+                        $newval[0] = $newval[0]+1;
+
                         $incrementval = 10; 
+
+                    }
 
                     }elseif($radio == '10C'){
 
-                        $newtxt3d[1] = $newtxt3d[1]+1;
+                    	for($i = 0 ; $i < 10 ; $i++){
+	                    array_push($newtxt3d, implode('',$newval));                 	
+                        
+                        $newval[1] = $newval[1]+1;
 
                         // var_dump($newval);
                         $incrementval = 10; 
+
+                    }
 
                     }elseif($radio == '10R'){
+	                 	
+	                 	for($i = 0 ; $i < 10 ; $i++){
 
-                        $newtxt3d[2] = $newtxt3d[2]+1;
+	                    array_push($newtxt3d, implode('',$newval));              	
+
+                        $newval[2] = $newval[2]+1;
 
                         // var_dump($newval);
                         $incrementval = 10; 
+
+                    }
 
                     }else{}
 
-                }
+                // }
 
 
                 }elseif($radio == '5OD'){
@@ -235,13 +293,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						// echo $txt3d;
 					}
 
+				}elseif($radio == '5X'){
+
+					$newval  = str_split($txt3d);
+
+	                $value = pc_permute($newval);
+	    
+	                $d3txtfinal  = array();
+
+	                for($i = 0 ; $i < count($value) ; $i++){
+
+	                    array_push($newtxt3d, implode('', $value[$i]));
+	                }
+
+
+	                $incrementval = 5;
+	                // echo "<pre>";
+	                // print_r($newtxt3d);
+
 				}
 
 				// die(';eneter her');
 
 				// echo "incrementval " . $incrementval;
 
-				print_r($newtxt3d);
+				// print_r($newtxt3d);
 // 
 				// die(); 
 
@@ -334,39 +410,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							// print_r($countcheckorder);
 
-							if(end($checkorder) == 'L 23'){
+							if(end($checkorder) == 'L 19'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
 							
-							}elseif(end($checkorder) == 'L 25'){
+							}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
 
 
-							}elseif(end($checkorder) == 'L 27'){
+							}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
 
 								
-							}elseif(end($checkorder) == 'L 29'){
+							}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
 							}else{
 
 								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
@@ -474,7 +550,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				}elseif($incrementval > 0){
 
-
+					// die('assas');
 					for($j = 0; $j < $incrementval; $j++){
 
 						$users[$j] = array(
@@ -544,6 +620,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				$finalvaluekhr = 0;
 
 				if($countarrayid == 5 || $countarrayid == 10){
+
+					// die('inside');
 
 					for($k = 0 ; $k < $countarrayid ; $k++){
 
@@ -706,6 +784,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			}elseif($_POST['txt3d'][$i] != ""){
 
 				$txt3d[$i] = mysqli_real_escape_string( $conn, $_POST['txt3d'][$i] );
+
+				if(strlen($txt3d[$i]) < 3){
+
+				 	$error['error'] = "txt3d cannot be smaller than 3.";
+
+				 }
 				
 			}else{
 
@@ -888,7 +972,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							);
 
-							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel', '1', '3dbetform' )";
+							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt3d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel', '1', '3dbetform' )";
 							// print_r($query);
 							// die();
 							$order = array();
@@ -936,7 +1020,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = count($checkorder);
 
 
-								if(end($checkorder) == 'L 23'){
+								if(end($checkorder) == 'L 19'){
 
 								$countcheckorder = $countcheckorder - 1;
 
@@ -944,7 +1028,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
 								
-								}elseif(end($checkorder) == 'L 25'){
+								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
@@ -952,7 +1036,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
 
-								}elseif(end($checkorder) == 'L 27'){
+								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
@@ -960,7 +1044,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
 									
-								}elseif(end($checkorder) == 'L 29'){
+								}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
@@ -1648,30 +1732,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							$countcheckorder = count($checkorder);
 
-							if(end($checkorder) == 'L 23'){
+							if(end($checkorder) == 'L 19'){
 
 								// $countcheckorder = 23;
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 23 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 23 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
 							
-							}elseif(end($checkorder) == 'L 25'){
+							}elseif(end($checkorder) == 'L 20'){
 
 								// $countcheckorder = 25;
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 25 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 25 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
 
 
-							}elseif(end($checkorder) == 'L 27'){
+							}elseif(end($checkorder) == 'L 21'){
 
 								// $countcheckorder = 27;
 
@@ -1679,12 +1763,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 27 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 27 );
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
 
 								
-							}elseif(end($checkorder) == 'L 29'){
+							}elseif(end($checkorder) == 'L 22'){
 
 								// $countcheckorder = 29;
 
@@ -1693,9 +1777,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 29 );
+								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 29 );								
+								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
 							}else{
 
 							// if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
@@ -1800,34 +1884,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = count($checkorder);
 
 
-								if(end($checkorder) == 'L 23'){
+								if(end($checkorder) == 'L 19'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 23 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 19 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 23 );
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 19 );
 								
-								}elseif(end($checkorder) == 'L 25'){
+								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 25;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 25 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 20 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 25 );									
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 20 );									
 
-								}elseif(end($checkorder) == 'L 27'){
+								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 27;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 27 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 21 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 27 );
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 21 );
 									
-								}elseif(end($checkorder) == 'L 29'){
+								}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 29;
@@ -1845,9 +1929,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									// }else{
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 29 );
+										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 22 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 29 );
+										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 22 );
 
 										// echo "order usd ". $order[$i]['usd']."<br/>";
 										// echo "countcheckorder ". $countcheckorder."<br/>";
@@ -2001,7 +2085,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		            <div class="radio">
 
-		            	<label class="radio-inline"><input type="radio" name="optradio" value="5OD">5 X</label>
+		            	<label class="radio-inline"><input type="radio" name="optradio" value="5X">5 X</label>
 		              
 		                <label class="radio-inline"><input type="radio" name="optradio" value="5L">5 L</label>
 		              
@@ -2027,7 +2111,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="D" name="checkbox[]" id="D">D</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="E">H</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="H" name="checkbox[]" id="H">H</label>
 
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]" id="I">I</label>
 
@@ -2075,7 +2159,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
- 			$('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div></div>');
+              $('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="3d1" class="form-control 2d" name="txt3d[]" placeholder="3D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div></div>');
 
  			level++
 
@@ -2264,7 +2348,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
               $('#lastlevel').val(level); 
 
-              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="'+level+'">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
+              $('.first-line').append('<div class="card-header"><h3 id="level" data-level="1">Level '+level+'</h3></div><div class="form-group"> <label for="3d">3d:</label> <input type="text" id="3d'+level+'" class="form-control 3d" name="txt3d[]" placeholder="Only 2 digit number between 00-99 allowed" value="'+ab+'"> </div><div class="form-group"> <label for="usd">USD:</label> <input type="text" id="usd'+level+'" class="form-control usd" name="usd[]" placeholder="Only 6 digit float number is allowed ( eg 1.25 or 253.75 ) " value="'+usd+'"/> </div><div class="form-group"> <label for="khr">KHR:</label> <input type="text" id="khr'+level+'" class="form-control khr" name="khr[]" placeholder="Only 6 digit integer is allowed ( eg 20 or 35 or 1500 )" value="'+khr+'"/></div>'); 
 
             }
 
@@ -2681,7 +2765,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
      console.log('level val is ' + levelval);
 
-     if(checked == true && levelval == 'L 23'){
+     if(checked == true && levelval == 'L 19'){
 
         $('#A').prop('checked', false);
   
@@ -2691,7 +2775,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   
         $('#D').prop('checked', false);
      	
-     }else if(checked == true && levelval == 'L 25'){
+     }else if(checked == true && levelval == 'L 20'){
 
      	$('#A').prop('checked', false);
   
@@ -2703,7 +2787,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $('#H').prop('checked', false);
 
-     }else if(checked == true && levelval == 'L 27'){
+     }else if(checked == true && levelval == 'L 21'){
 
      	$('#A').prop('checked', false);
   
@@ -2717,7 +2801,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         
         $('#I').prop('checked', false);
 
-     }else if(checked == true && levelval == 'L 29'){
+     }else if(checked == true && levelval == 'L 22'){
 
      	$('#A').prop('checked', false);
   
@@ -2835,6 +2919,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     console.log(permutation);
 
 </script>
+
+<script language="javascript" type="text/javascript">
+		
+		function printerDiv(divID) {
+		//Get the HTML of div
+
+		var divElements = document.getElementById(divID).innerHTML;
+
+		//Get the HTML of whole page
+		var oldPage = document.body.innerHTML;
+
+		//Reset the pages HTML with divs HTML only
+
+		     document.body.innerHTML = 
+
+		     "<html><head><title></title></head><body>" + 
+		     divElements + "</body>";
+
+
+
+		//Print Page
+		window.print();
+
+		//Restore orignal HTML
+		document.body.innerHTML = oldPage;
+
+		}
+	
+	</script>
 
 </body>
 </html>
