@@ -414,35 +414,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
 							
 							}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
 
 
 							}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
 
 								
 							}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
 							}else{
 
 								$finalvalueusd = $order[0]['usd'] * $countcheckorder * $count;
@@ -644,44 +644,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = count($checkorder);
 
 
-								if(end($checkorder) == 'L 23'){
+								if(end($checkorder) == 'L 19'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 23 );
+										$finalvalueusd = ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 19 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 23 );
+										$finalvaluekhr = ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 19 );
 								
-								}elseif(end($checkorder) == 'L 25'){
+								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 25 );
+										$finalvalueusd = ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 20 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
+										$finalvaluekhr = ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 20 );									
 
-								}elseif(end($checkorder) == 'L 27'){
+								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 27 );
+										$finalvalueusd = ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 21 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+										$finalvaluekhr = ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 21 );
 									
-								}elseif(end($checkorder) == 'L 29'){
+								}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 29 );
+										$finalvalueusd = ( $order[$k]['usd']  * $countcheckorder ) + ( $order[$k]['usd'] * 22 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 29 );
+										$finalvaluekhr = ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 22 );
 
 									
 								}else{
 
-									$finalvalueusd = $finalvalueusd + $order[$k]['usd'] * $countcheckorder;
+									$finalvalueusd = $order[$k]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $finalvaluekhr + $order[$k]['khr'] * $countcheckorder;
+									$finalvaluekhr = $order[$k]['khr'] * $countcheckorder;
 
 									if($finalvalueusd == 0){
 
@@ -1024,40 +1024,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
+										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
+										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
 								
 								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
+										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
+										$finalvaluekhr = $finalvalueusd + ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
 
 								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
+										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
 									
 								}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd +  ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
+										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
+										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
 
 									
 								}else{
 
 									$finalvalueusd = $finalvalueusd + $orders[$k]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $finalvaluekhr + $orders[$k]['khr'] * $countcheckorder;
+									$finalvaluekhr = $finalvalueusd + $orders[$k]['khr'] * $countcheckorder;
 
 									if($finalvalueusd == 0){
 
