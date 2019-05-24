@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	}
 
-	if(isset($_GET['stage'])){
+	if(isset($_GET['stage']) && isset($_GET['userid'])){
 	
 		$stagelevel = $_GET['stage'];
 
@@ -102,9 +102,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	// echo $id;
 
-	$userid = $_SESSION['subuserid'];
+	$userid = $_SESSION['userid'];
 
-	// echo $userid;
+	// echo "user id is " . $userid;
 
 	if($_SESSION['userlevel'] == "A1"){
 
@@ -254,7 +254,9 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 
 
-}elseif(isset($_GET['userid'])){
+}elseif(isset($_GET['userid']) && !isset($_GET['stage'])){
+
+	$id = $_SESSION['subuserid'];
 
 	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
 
@@ -336,12 +338,13 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 	        }
 
 
-	        elseif(isset($_GET['stage'])){
+	        elseif(isset($_GET['stage']) && isset($_GET['userid'])){
 
-	        	// if(isset($_GET['userid'])){
+	        	if(isset($_GET['userid'])){
 
-	        		// $userid = $_GET['userid'];
-	        	// }
+	        		$userid = $_GET['userid'];
+	        	
+	        	}
 
 	        	// echo $userid;
 
@@ -422,7 +425,16 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 			        	// print_r($users);
 
 
-	        }elseif(isset($_GET['date'])){
+	        }elseif(isset($_GET['date']) && isset($_GET['uid'])){
+
+	        	if(isset($_GET['uid'])){
+
+	        		$userid = $_GET['uid'];
+	        	
+	        	}else{
+
+	        		$userid = $_SESSION['userid'];
+	        	}
 
 	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid'";
 
@@ -876,10 +888,10 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 					    			<select onchange="javascript:handleSelectstage(this)">
 					    			
 					    				<option selected="true">-- Choose Stage --</option>
-					    				<option value="1">2D Stage 1</option>
-					    				<option value="2">2D Stage 2</option>
-					    				<option value="3">3D Stage 1</option>
-					    				<option value="4">3D Stage 2</option>
+					    				<option value="1, <?php echo $_SESSION['subuserid'];?>">2D Stage 1</option>
+					    				<option value="2, <?php echo $_SESSION['subuserid'];?>">2D Stage 2</option>
+					    				<option value="3, <?php echo $_SESSION['subuserid'];?>">3D Stage 1</option>
+					    				<option value="4, <?php echo $_SESSION['subuserid'];?>">3D Stage 2</option>
 
 					    			</select>
 
@@ -888,7 +900,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    		<td>
 
-					    			<input type="text" id="datepicker" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">					    			
+					    			<input type="text" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">					    			
 
 					    		</td>
 
@@ -1169,7 +1181,9 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 			$(document).on('change', '#datepicker', function(){
 
-				window.location = "reports.php?date="+this.value;
+				var id = $(this).data('id');
+
+				window.location = "reports.php?date="+this.value+"&uid="+id;
 
 			});
 
@@ -1177,16 +1191,25 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 	</script>
 
-	<script type="text/javascript">
+<script type="text/javascript">
+
 function handleSelect(elm)
 {
 window.location = "reports.php?userid="+elm.value;
 }
 
 function handleSelectstage(elm)
-{
-	console.log(elm.value);
-window.location = "reports.php?stage="+elm.value;
+{	
+
+	var str = elm.value;
+
+	str = str.split(',');
+
+	console.log(str[0]);
+
+	var userid = str[1].trim();
+
+	window.location = "reports.php?stage="+str[0]+"&userid="+userid;
 }
 
 function handleSelectdate(elm)
