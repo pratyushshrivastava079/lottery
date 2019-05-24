@@ -804,7 +804,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['usd'][$i] == ""){
 
-				$error['usd'] = "usd row is empty.";
+				// $error['usd'] = "usd row is empty.";
 
 			}elseif($_POST['usd'][$i] != ""){
 
@@ -823,7 +823,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['khr'][$i] == ""){
 
-				$error['khr'] = "khr row is empty.";
+				// $error['khr'] = "khr row is empty.";
 
 			}elseif($_POST['khr'][$i] != ""){
 
@@ -943,6 +943,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				for($j = 0 ; $j < $counttxt3d; $j++ ){
 
+
 					if($usd[$j] == ""){
 
 						$usd[$j] = 0;
@@ -952,6 +953,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 						$khr[$j] = 0;
 					}
+
+
 
 						$users[$j] = array(
 
@@ -993,8 +996,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				}
 
-				// $finalvalueusd = 0;
-				// $finalvaluekhr = 0;
+				$finalvalueusd = 0;
+				$finalvaluekhr = 0;
 
 				$countarrayid = count($arrayid);
 
@@ -1024,56 +1027,82 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 23 );
+										$finalvalueusd = ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 19 );
 
-										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 23 );
+										$finalvaluekhr =  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 19 );
 								
 								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 25 );
+										$finalvalueusd = ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 20 );
 
-										$finalvaluekhr = $finalvalueusd + ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 25 );									
+										$finalvaluekhr = ( $order[$k]['khr']  * $countcheckorder ) + ( $order[$k]['khr'] * 20 );									
 
 								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 27 );
+										$finalvalueusd = ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 21 );
 
-										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 27 );
+										$finalvaluekhr =  ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 21 );
 									
 								}elseif(end($checkorder) == 'L 22'){
 
 								$countcheckorder = $countcheckorder - 1;
 
-										$finalvalueusd = $finalvalueusd + ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 29 );
+										$finalvalueusd = ( $orders[$k]['usd']  * $countcheckorder ) + ( $orders[$k]['usd'] * 22 );
 
-										$finalvaluekhr = $finalvalueusd + ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 29 );
+										$finalvaluekhr = ( $orders[$k]['khr']  * $countcheckorder ) + ( $orders[$k]['khr'] * 22 );
 
 									
 								}else{
 
-									$finalvalueusd = $finalvalueusd + $orders[$k]['usd'] * $countcheckorder;
+									$finalvalueusd = $orders[$k]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $finalvalueusd + $orders[$k]['khr'] * $countcheckorder;
 
-									if($finalvalueusd == 0){
+									$finalvaluekhr = $orders[$k]['khr'] * $countcheckorder;
+									if($k == 0){
 
-										$finalvalueusd = "";
+
+									$swapvalusd = $finalvalueusd;
+									$swapvalkhr = $finalvaluekhr;
+									}
+
+									// elseif($finalvalueusd == 0 ){
+
+									// }
+
+									// if($finalvalueusd == 0){
+
+
+										// header("Location:3d1-betform.php?usd-error=USD value cannot be empty.");
+										// $finalvalueusd = $swapvalusd;
+
+										// echo "<br/>";
+										// echo $finalvalueusd;
+										// echo "<br/>";
+										// echo $swapvalusd;
 								
-									}elseif($finalvaluekhr == 0){
+									// }elseif($finalvaluekhr == 0){
 
-										$finalvaluekhr = "";
+										// header("Location:3d1-betform.php?khr-error=KHR value cannot be empty.");
+										// $finalvaluekhr = $swapvalkhr;
 
-									}									
+									// }									
 
 								}
 
+										// exit();
+									// echo $finalvalueusd;
+									// echo $finalvaluekhr;
 								$orderid = $orders[$k]['order_id'];
-
+								// if( $finalvaluekhr == 0 || $finalvaluekhr == 0){
+								// 	continue;
+								// }else{
 								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
+
+							// }
 
 							// print_r($query);
 
@@ -1674,6 +1703,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			<?php }?>
 
+
+			<?php if(isset($_GET['usd-error'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $_GET['usd-error'];?>
+
+			</div>
+
+			<?php }?>
+
+			<?php if(isset($_GET['khr-error'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $_GET['khr-error'];?>
+
+			</div>
+
+			<?php }?>
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 				<div class="row text-center">
@@ -1739,9 +1789,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 19 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 19 );
 							
 							}elseif(end($checkorder) == 'L 20'){
 
@@ -1750,9 +1800,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 20 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 20 );
 
 
 							}elseif(end($checkorder) == 'L 21'){
@@ -1763,9 +1813,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 21 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 21 );
 
 								
 							}elseif(end($checkorder) == 'L 22'){
@@ -1777,9 +1827,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-								$finalvalueusd = $finalvalueusd +  ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
+								$finalvalueusd = ( $order[0]['usd']  * $countcheckorder ) + ( $order[0]['usd'] * 22 );
 
-								$finalvaluekhr = $finalvaluekhr +  ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
+								$finalvaluekhr = ( $order[0]['khr']  * $countcheckorder ) + ( $order[0]['khr'] * 22 );								
 							}else{
 
 							// if($order[0]['usd'] != 0.00 && $order[0]['khr'] != 0.00){
@@ -1889,27 +1939,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 19 );
+										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 19 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 19 );
+										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 19 );
 								
 								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 25;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 20 );
+										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 20 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 20 );									
+										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 20 );									
 
 								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 27;
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 21 );
+										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 21 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 21 );
+										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 21 );
 									
 								}elseif(end($checkorder) == 'L 22'){
 
@@ -1929,9 +1979,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									// }else{
 
-										$finalvalueusd = $finalvalueusd +  ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 22 );
+										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 22 );
 
-										$finalvaluekhr = $finalvaluekhr +  ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 22 );
+										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 22 );
 
 										// echo "order usd ". $order[$i]['usd']."<br/>";
 										// echo "countcheckorder ". $countcheckorder."<br/>";
@@ -1943,9 +1993,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 									
 								}else{
 
-									$finalvalueusd = $finalvalueusd + $order[$i]['usd'] * $countcheckorder;
+									$finalvalueusd = $order[$i]['usd'] * $countcheckorder;
 
-									$finalvaluekhr = $finalvaluekhr + $order[$i]['khr'] * $countcheckorder;
+									$finalvaluekhr =  $order[$i]['khr'] * $countcheckorder;
 
 									if($finalvalueusd == 0){
 
