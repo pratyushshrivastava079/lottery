@@ -201,7 +201,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        array_push($newtxt3d, implode('',$newval));
 
-	                        $newval[1] = $newval[2]+1;
+	                        $newval[2] = $newval[2]+1;
 
 	                        $incrementval = 5;
 
