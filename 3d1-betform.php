@@ -160,7 +160,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        // $value = implode('',$newval);
 							
-							print_r($value);
+							// print_r($value);
 
 	                        array_push($newtxt3d, implode('',$newval));
 	                        
@@ -298,18 +298,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					$newval  = str_split($txt3d);
 
 	                $value = pc_permute($newval);
+
+	                // print_r($value);
+
 	    
 	                $d3txtfinal  = array();
 
 	                for($i = 0 ; $i < count($value) ; $i++){
 
 	                    array_push($newtxt3d, implode('', $value[$i]));
+
+	                	// echo gettype(implode('', $value[$i]));
 	                }
 
 
-	                $incrementval = 5;
+	                $incrementval = count($newtxt3d);
 	                // echo "<pre>";
-	                // print_r($newtxt3d);
+	                // print_r($incrementval);
 
 				}
 
@@ -619,7 +624,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$finalvaluekhr = 0;
 
-				if($countarrayid == 5 || $countarrayid == 10){
+				if($countarrayid == 5 || $countarrayid == 10 || $countarrayid == 6){
 
 					// die('inside');
 
@@ -1062,6 +1067,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 									$finalvaluekhr = $orders[$k]['khr'] * $countcheckorder;
+									
 									if($k == 0){
 
 
@@ -1094,8 +1100,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								}
 
 										// exit();
-									// echo $finalvalueusd;
-									// echo $finalvaluekhr;
+									echo $finalvalueusd;
+									echo "<br/>";
+									echo $finalvaluekhr;
+									echo "<br/>";
 								$orderid = $orders[$k]['order_id'];
 								// if( $finalvaluekhr == 0 || $finalvaluekhr == 0){
 								// 	continue;
