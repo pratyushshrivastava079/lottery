@@ -159,116 +159,137 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                	for($i = 0 ; $i < 5 ; $i++){
 
-	                        // $value = implode('',$newval);
-							
-							// print_r($value);
-
 	                        array_push($newtxt3d, implode('',$newval));
-	                        
-	                        $newval[0] = $newval[0]+1;
-	                        
-	                        // echo "<pre>";
 
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
 	                        $incrementval = 5;
 
-	                        // $newval = implode('', $newval);
-
-    	                    // $newval = implode('',$newval);
-
 	                    }
 
-
+	                    $txt3d = $newtxt3d;
+	                    
                     }elseif($radio == '5C'){
 
 	                	for($i = 0 ; $i < 5 ; $i++){
 
-	                        array_push($newtxt3d, implode('',$newval));	                		
+	                        array_push($newtxt3d, implode('',$newval));
 
-	                        $newval[1] = $newval[1]+1;
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
 
 	                        $incrementval = 5;
 
-	                        // print_r($newval);
-
-    	                    // $newval = implode('',$newval);
-
 	                    }
 
+	                    $txt3d = $newtxt3d;
+	                    
                     }elseif($radio == '5R'){
 
 	                	for($i = 0 ; $i < 5 ; $i++){
 
 	                        array_push($newtxt3d, implode('',$newval));
 
-	                        $newval[2] = $newval[2]+1;
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(1*$i);
 
 	                        $incrementval = 5;
 
-	                        // print_r($newval);
-
-    	                    // $newval = implode('',$newval);
-
 	                    }
 
+	                    $txt3d = $newtxt3d;
+	                    
                     }else{}
-
-                    // $newval = explode(',', $newval);
-
-                    // print_r($newtxt3d);
 
 
                 }elseif($radio == '10L' || $radio == '10C' || $radio == '10R'){
 
-                // $newtxt3d = $txt3d;
-
                $newval = str_split($txt3d);
-
-                // for($i = 0 ; $i < 10 ; $i++){
 
                     if($radio == '10L'){
 
                     	for($i = 0 ; $i < 10 ; $i++){
 
-                        // print_r($newval);
-	                    array_push($newtxt3d, implode('',$newval));                   	
+                        	array_push($newtxt3d, implode('',$newval));
 
-                        $newval[0] = $newval[0]+1;
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
-                        $incrementval = 10; 
+	                        echo $newtxt3d[$i];
 
-                    }
+	                        if($newtxt3d[$i] > 999){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+	                        	}
+	                        }
+
+	                        echo "<br/>";
+
+	                        echo "-----------------";
+
+	                        echo $newtxt3d[$i];
+
+	                        echo "-----------------";
+	                        echo "<br/>";
+
+	                        $incrementval = 10;
+
+                    	}
+                    	
+                    	$txt3d = $newtxt3d;
 
                     }elseif($radio == '10C'){
 
                     	for($i = 0 ; $i < 10 ; $i++){
 
-	                    array_push($newtxt3d, implode('',$newval));                 	
-                        
-                        $newval[1] = $newval[1]+1;
+	                    	array_push($newtxt3d, implode('',$newval));
 
-                        // var_dump($newval);
-                        $incrementval = 10; 
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
-                    }
+	                        if($newtxt3d[$i] > 999){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+	                        	}
+	                        }
+
+	                        $incrementval = 10;
+
+
+
+                    	}
+                    	
+                    	$txt3d = $newtxt3d;
 
                     }elseif($radio == '10R'){
 	                 	
 	                 	for($i = 0 ; $i < 10 ; $i++){
 
-	                    array_push($newtxt3d, implode('',$newval));              	
+	                    	array_push($newtxt3d, implode('',$newval));
 
-                        $newval[2] = $newval[2]+1;
+	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
-                        // var_dump($newval);
-                        $incrementval = 10; 
+	                        if($newtxt3d[$i] > 999){
 
-                    }
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+	                        	}
+	                        }
+
+	                        $incrementval = 10;
+
+                    	}
+                    	
+                    	$txt3d = $newtxt3d;
 
                     }else{}
-
-                // }
-
 
                 }elseif($radio == '5OD'){
 
@@ -317,6 +338,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	                // echo "<pre>";
 	                $newtxt3d = array_unique($newtxt3d);
 
+	                $newarray = $newtxt3d;
+
+	                // $newtxt3d = $newtxt3d;
+
+					$newtxt3d = array_values(array_filter($newarray));
+
 				}
 
 				// die(';eneter her');
@@ -344,6 +371,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				// 	echo "txt3d is ".$txt3d - 1;
 
 				// }
+	                        // print_r($newtxt3d);
 
 
 				$arrayid = array();
@@ -404,7 +432,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				  			// print_r($order);
 
-				  			print_r($count);
+				  			// print_r($count);
 
 				  			$finalvaluekhr = 0; 
 
@@ -558,15 +586,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				}elseif($incrementval > 0){
 
+				$checkorder = count($arra);
 
+				print_r($checkorder);
 
-					$checkorder = count($arra);
+				$usdval[] = $usd;
+				
+				$khrval[] = $khr;
 
-				// print_r($usd);
+				// print_r($usdval);
+
+				// print_r($khrval);
 
 				// $stageorder = count($arra);
 
 				$checkboxlevel = explode(',', $checkboxlevel);
+
 				// $countcheckorder = $counttxt3d;
 
 				$finalvalueusd = 0;
@@ -578,10 +613,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				for($j = 0 ; $j < $incrementval; $j++ ){								
 
 					$countcheckorder = count($arra);
+
 				// 	// echo "<br/>";
 				// 	// print_r($khr);
 
-				// 	// die();
+				//	// die();
 
 				// 	$finalvalueusd = 0;
 
@@ -591,7 +627,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				// echo "<pre>";
 				// print_r($usd[$j]);
 
-								if(end($checkboxlevel) == 'L 19'){
+					// echo gettype($countcheckorder);
+
+							if(end($checkboxlevel) == 'L 19'){
 
 								$countcheckorder = $countcheckorder - 1;
 
@@ -654,10 +692,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									$finalvaluekhr = $khrval[0][$j] * count($arra);					
 
-									// print_r($usdval[0][$j]);
+									print_r($usdval[0][$j]);
+									// print_r(count($arra));
 
-				// 					// print_r($khrval[0][$j]);
-				// 					// print_r($countcheckorder);
+									// print_r($khrval[0][$j]);
+				 				
+				 					// print_r($countcheckorder);
 
 								}
 
@@ -696,27 +736,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 
-					// die('assas');
-					// for($j = 0; $j < $incrementval; $j++){
+						// die('assas');
+						
+						// for($j = 0; $j < $incrementval; $j++){
 
-					// 	$users[$j] = array(
+						// 	$users[$j] = array(
 
 
-					// 		'user_id' => $userid,
+						// 		'user_id' => $userid,
 
-					// 		'order_id' => $order_id,
+						// 		'order_id' => $order_id,
 
-					// 		'txt3d' => $newtxt3d[$j],
+						// 		'txt3d' => $newtxt3d[$j],
 
-					// 		'usd' => $usd,
+						// 		'usd' => $usd,
 
-					// 		'khr' => $khr,
+						// 		'khr' => $khr,
 
-					// 		'radiobox' => $radio,
+						// 		'radiobox' => $radio,
 
-					// 		'checklevel' => $checkboxlevel 
+						// 		'checklevel' => $checkboxlevel 
 
-					// 	);
+						// 	);
+
+
 
 						if($newtxt3d[$j] == ""){
 
@@ -725,15 +768,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 						}else{
 
 							if(is_array($checkboxlevel)){
-							$checkboxlevel = implode(',', $checkboxlevel);
+								
+								$checkboxlevel = implode(',', $checkboxlevel);
 
 						}
 
 						$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type`, `totalusd`, `totalkhr` ) VALUES( '$userid', '$order_id', '$newtxt3d[$j]', '$usd', '$khr', '$radio', '$checkboxlevel', '1', '3dbetform', '$finalvalueusd', '$finalvaluekhr' )";
 
 						// echo "<pre>";
+						
 						// print_r($query);
+						
 						// die();
+
 						$order = array();
 
 						if ($conn->query($query) === TRUE) {
@@ -763,11 +810,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					    //         }
 											
 
-						} else {
+							} else {
+														
+								$error['error'] = "Unable to place bet.";
 													
-							$error['error'] = "Unable to place bet.";
-												
-						}
+							}
 						}
 
 
@@ -803,7 +850,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$stageorder = explode(',', $order[$k]['Stagelevel']);
 								
 								$countcheckorder = count($checkorder);
-
 
 								if(end($checkorder) == 'L 19'){
 
@@ -857,6 +903,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								}
 
 								$orderid = $order[$k]['order_id'];
+
 								// print_r($orderid);
 
 								$query= "UPDATE 2dbetform SET totalusd = '$finalvalueusd', totalkhr = '$finalvaluekhr' WHERE order_id='$orderid'";
@@ -867,17 +914,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							if ($conn->query($query) === TRUE) {
 
-								$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
+							$sql = "SELECT * FROM `2dbetform` WHERE `id` = '$arrayid[$k]'";
 				    	
-						$result = mysqli_query($conn, $sql);
+							$result = mysqli_query($conn, $sql);
 
-					 	if (mysqli_num_rows($result) > 0) {
+						 	if (mysqli_num_rows($result) > 0) {
 
-				  			while($row = mysqli_fetch_assoc($result)) {
-				            	
-								$orders[] = $row;
+					  			while($row = mysqli_fetch_assoc($result)) {
+					            	
+									$orders[] = $row;
 
-				  			}
+					  		}
+
 				  			// echo "<pre>";
 				  			// print_r($order);
 
@@ -1114,8 +1162,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				// $usdval[] = $usdval[0];
 				// $khrval[] = $khrval[0];
-				// print_r($usdval[0]);
-				// print_r($khrval[0]);
+				print_r($usdval[0]);
+				print_r($khrval[0]);
 
 				$checkorder = count($checkboxlevel);
 
@@ -1157,7 +1205,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 										// print_r($usd[0]);
 										// print_r($usdval);
 										// print_r($khr[0]);
-										print_r($khrval);
+										// print_r($khrval);
 										$finalvalueusd = ( $usd[$j]  * $countcheckorder ) + ( $usd[$j] * 19 );
 
 										$finalvaluekhr = ( $khr[$j]  * $countcheckorder ) + ( $khr[$j] * 19 );
@@ -1204,10 +1252,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								}else{
 
 
-									$finalvalueusd = $usdval[0][$j] * count($arra);
+									$finalvalueusd = $usd[0][$j] * count($arra);
 
 
-									$finalvaluekhr = $khrval[0][$j] * count($arra);					
+									$finalvaluekhr = $khr[0][$j] * count($arra);					
 
 									// print_r($usdval[0][$j]);
 
@@ -2113,27 +2161,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 23;
 
-										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 19 );
+										$finalvalueusd = $finalvalueusd + ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 19 );
 
-										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 19 );
+										$finalvaluekhr = $finalvaluekhr + ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 19 );
 								
 								}elseif(end($checkorder) == 'L 20'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 25;
 
-										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 20 );
+										$finalvalueusd = $finalvalueusd + ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 20 );
 
-										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 20 );									
+										$finalvaluekhr = $finalvaluekhr +( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 20 );									
 
 								}elseif(end($checkorder) == 'L 21'){
 
 								$countcheckorder = $countcheckorder - 1;
 									// $countcheckorder = 27;
 
-										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 21 );
+										$finalvalueusd = $finalvalueusd + ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 21 );
 
-										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 21 );
+										$finalvaluekhr = $finalvaluekhr + ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 21 );
 									
 								}elseif(end($checkorder) == 'L 22'){
 
@@ -2153,9 +2201,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									// }else{
 
-										$finalvalueusd = ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 22 );
+										$finalvalueusd = $finalvalueusd + ( $order[$i]['usd']  * $countcheckorder ) + ( $order[$i]['usd'] * 22 );
 
-										$finalvaluekhr = ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 22 );
+										$finalvaluekhr = $finalvaluekhr + ( $order[$i]['khr']  * $countcheckorder ) + ( $order[$i]['khr'] * 22 );
 
 										// echo "order usd ". $order[$i]['usd']."<br/>";
 										// echo "countcheckorder ". $countcheckorder."<br/>";
