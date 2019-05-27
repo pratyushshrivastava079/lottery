@@ -2450,7 +2450,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		            	<label class="radio-inline"><input type="radio" name="optradio" value="5X">X</label>
 		              
-		                <label class="radio-inline"><input type="radio" name="optradio" value="5L">5OD</label>
+		                <label class="radio-inline"><input type="radio" name="optradio" value="5OD">5OD</label>
 		              
 		                <label class="radio-inline"><input type="radio" name="optradio" value="5C">5 S</label>
 
