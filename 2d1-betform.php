@@ -2030,7 +2030,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			                
 			                <label class="checkbox-inline"><input type="checkbox" id="L29" value="L 29" class="checkStage" name="Stage_checkbox[]">L 29</label>
 
-			                 <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
 			                <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 			                

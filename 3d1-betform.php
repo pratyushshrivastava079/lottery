@@ -165,7 +165,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        if($newtxt3d[$i] > 999){
 
-	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
+
+	                        	echo $newtxt3d[$i]."<br/>";
 
 	                        	if(count(str_split($newtxt3d[$i])) < 3){
 
@@ -193,9 +195,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
 
+	                        $floor = floor( $newtxt3d[0] / 100 ) * 100;
+	                        
+	                        $ceil = ceil( $newtxt3d[0] / 100 ) * 100;
+
+	                        $lastdigit = $newtxt3d[$i] % 100;
+
+	                        if($newtxt3d[$i] > $ceil){
+
+	                        	$newtxt3d[$i] = $floor + $lastdigit;
+
+	                        }
+	                         
 	                        if($newtxt3d[$i] > 999){
 
-	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
 
 	                        	if(count(str_split($newtxt3d[$i])) < 3){
 
@@ -225,7 +239,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        if($newtxt3d[$i] > 999){
 
-	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
 
 	                        	if(count(str_split($newtxt3d[$i])) < 3){
 
@@ -260,7 +274,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
-	                        echo $newtxt3d[$i];
+	                        // echo $newtxt3d[$i];
 
 	                        if($newtxt3d[$i] > 999){
 
@@ -2479,6 +2493,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		                <label class="checkbox-inline"><input type="checkbox" id="l21" value="L 21" class="checkStage" name="Stage_checkbox[]">L 21</label>
 
 		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="L 22" class="checkStage" name="Stage_checkbox[]">L 22</label>
+
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
+
+			            <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
 		                
 		            </div>
 
