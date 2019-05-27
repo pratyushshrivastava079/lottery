@@ -163,6 +163,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(100*$i);
 
+	                        if($newtxt3d[$i] > 999){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+
+	                        		if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = $newtxt3d[$i]."0";
+
+	                        		}
+	                        	}
+	                        }
+
 	                        $incrementval = 5;
 
 	                    }
@@ -177,6 +193,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
 
+	                        if($newtxt3d[$i] > 999){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+
+	                        		if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        			$newtxt3d[$i] = $newtxt3d[$i]."0";
+
+	                        		}	                        		
+	                        	}
+	                        }
+
 	                        $incrementval = 5;
 
 	                    }
@@ -190,6 +222,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	                        array_push($newtxt3d, implode('',$newval));
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(1*$i);
+
+	                        if($newtxt3d[$i] > 999){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] % 100;
+
+	                        	if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+
+	                        		if(count(str_split($newtxt3d[$i])) < 3){
+
+	                        			$newtxt3d[$i] = $newtxt3d[$i]."0";
+
+	                        		}
+	                        	}
+	                        }
 
 	                        $incrementval = 5;
 
