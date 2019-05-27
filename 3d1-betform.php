@@ -189,45 +189,68 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	                    
                     }elseif($radio == '5C'){
 
-	                	for($i = 0 ; $i < 5 ; $i++){
+	                	// for($i = 0 ; $i < 5 ; $i++){
 
-	                        array_push($newtxt3d, implode('',$newval));
+	                 //        array_push($newtxt3d, implode('',$newval));
 
-	                        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
+	                 //        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
 
-	                        $floor = floor( $newtxt3d[0] / 100 ) * 100;
+	                 //        $floor = floor( $newtxt3d[0] / 100 ) * 100;
 	                        
-	                        $ceil = ceil( $newtxt3d[0] / 100 ) * 100;
+	                 //        $ceil = ceil( $newtxt3d[0] / 100 ) * 100;
 
-	                        $lastdigit = $newtxt3d[$i] % 100;
+	                 //        $lastdigit = $newtxt3d[$i] % 100;
 
-	                        if($newtxt3d[$i] > $ceil){
+	                 //        if($newtxt3d[$i] > $ceil){
 
-	                        	$newtxt3d[$i] = $floor + $lastdigit;
+	                 //        	$newtxt3d[$i] = $floor + $lastdigit;
 
-	                        }
+	                 //        }
 	                         
-	                        if($newtxt3d[$i] > 999){
+	                 //        if($newtxt3d[$i] > 999){
 
-	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
+	                 //        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
 
-	                        	if(count(str_split($newtxt3d[$i])) < 3){
+	                 //        	if(count(str_split($newtxt3d[$i])) < 3){
 
-	                        		$newtxt3d[$i] = "0".$newtxt3d[$i];
+	                 //        		$newtxt3d[$i] = "0".$newtxt3d[$i];
 
-	                        		if(count(str_split($newtxt3d[$i])) < 3){
+	                 //        		if(count(str_split($newtxt3d[$i])) < 3){
 
-	                        			$newtxt3d[$i] = $newtxt3d[$i]."0";
+	                 //        			$newtxt3d[$i] = $newtxt3d[$i]."0";
 
-	                        		}	                        		
-	                        	}
-	                        }
+	                 //        		}	                        		
+	                 //        	}
+	                 //        }
 
-	                        $incrementval = 5;
+	                 //        $incrementval = 5;
 
-	                    }
+	                 //    }
 
-	                    $txt3d = $newtxt3d;
+	                 //    $txt3d = $newtxt3d;
+
+                    	for($i = 0 ; $i < 5 ; $i++){
+
+						if($i == 0){
+
+							// echo $txt3d;
+
+							// $txt3d = $txt3d;
+
+							$newtxt3d[$i] = $txt3d;
+
+						}else{
+
+							$newtxt3d[$i] = $txt3d + 1;
+
+							$txt3d = $newtxt3d[$i]; 
+							
+							$incrementval = 5; 
+
+						}
+
+						// echo $txt3d;
+					}
 	                    
                     }elseif($radio == '5R'){
 
