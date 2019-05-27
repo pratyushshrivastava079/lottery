@@ -295,6 +295,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(10*$i);
 
+	                        $floor = floor( $newtxt3d[0] / 100 ) * 100;
+	                        
+	                        $ceil = ceil( $newtxt3d[0] / 100 ) * 100;
+
+	                        $lastdigit = $newtxt3d[$i] % 100;
+
+	                        if($newtxt3d[$i] > $ceil){
+
+	                        	$newtxt3d[$i] = $floor + $lastdigit;
+
+	                        }
+
 	                        if($newtxt3d[$i] > 999){
 
 	                        	$newtxt3d[$i] = $newtxt3d[$i] % 1000;
@@ -320,6 +332,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	                    	array_push($newtxt3d, implode('',$newval));
 
 	                        $newtxt3d[$i] = $newtxt3d[$i]+(1*$i);
+
+	                        $floor = floor( $newtxt3d[0] / 100 ) * 100;
+								                        
+	                        $ceil =  ceil( $newtxt3d[0] / 10 ) * 10  ;
+
+	                        // echo $ceil;
+
+	                        $lastdigit = $newtxt3d[$i] % 100;
+
+	                        if($newtxt3d[$i] >= $ceil){
+
+	                        	$newtxt3d[$i] = $newtxt3d[$i] - 10;
+
+	                        }
 
 	                        if($newtxt3d[$i] > 999){
 
