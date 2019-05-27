@@ -636,7 +636,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$checkorder = count($arra);
 
-				print_r($checkorder);
+				// print_r($checkorder);
 
 				$usdval[] = $usd;
 				
@@ -740,7 +740,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 									$finalvaluekhr = $khrval[0][$j] * count($arra);					
 
-									print_r($usdval[0][$j]);
+									// print_r($usdval[0][$j]);
 									// print_r(count($arra));
 
 									// print_r($khrval[0][$j]);
@@ -2333,7 +2333,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								    <thead>
 							
 								      <tr class="table-primary">
-								        <th>2d</th>
+								        <th>3d</th>
 								        <th>USD</th>
 								        <th>KHR</th>
 								        <th>PO</th>
