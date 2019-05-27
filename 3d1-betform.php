@@ -272,14 +272,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	                        	}
 	                        }
 
-	                        echo "<br/>";
+	                        // echo "<br/>";
 
-	                        echo "-----------------";
+	                        // echo "-----------------";
 
-	                        echo $newtxt3d[$i];
+	                        // echo $newtxt3d[$i];
 
-	                        echo "-----------------";
-	                        echo "<br/>";
+	                        // echo "-----------------";
+	                        // echo "<br/>";
 
 	                        $incrementval = 10;
 
