@@ -2153,7 +2153,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								    <thead>
 							
 								      <tr class="table-primary">
-								        <th>2d</th>
+								        <th>3d</th>
 								        <th>USD</th>
 								        <th>KHR</th>
 								        <th>PO</th>
