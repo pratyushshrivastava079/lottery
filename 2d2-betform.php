@@ -1964,17 +1964,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			                
 			                </div>
 
+		                	<div class="form-group">
+		                
+		                  		<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR">
+		                
+		                	</div>
+
 			                <div class="form-group">
 		                
 			                  	<input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD">
 		                
 		                	</div>
 
-		                	<div class="form-group">
-		                
-		                  		<input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR">
-		                
-		                	</div>
 
 		              	</div>
 
@@ -2055,9 +2056,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
- 			$('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign" style="visibility:hidden;">+</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div></div>');
+ 			$('.first-line').append('<div class="fields"><span class="btn btn-primary minus-sign">-</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div></div>');
 
  			level++
+
+		});
+
+		$(document).on('click', '.minus-sign', function(event){
+
+ 			event.preventDefault();
+
+              $(this).parent().remove();
+
+ 			level++;
 
 		});
 
