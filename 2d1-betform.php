@@ -2086,6 +2086,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			level++;
 
+ 			 $('.radio').remove();
+
 		});
 
 		$(document).on('click', '.minus-sign', function(event){

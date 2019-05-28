@@ -395,10 +395,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					        <th>User</th>
 					  
-					        <th>Level</th>
-					  
-					        <th>Percent</th>
-
 					        <th>Actions</th>
 					  
 					      </tr>
@@ -407,42 +403,63 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					    <tbody>
 
-					    <?php 
+					   		<tr>
+					      		
+					      		<td>A</td>
+					      		<td class="enable" data-value="A">Enabled</td>
 
-					    if(!empty($users)){
+					      	</tr>
 
-					    foreach ($users as $key => $value) {?>
+					      	<tr>
+					      		<td>B</td>
+					      		<td class="enable" data-value="B">Enabled</td>
 
-					      <tr>
-					      
-					        <td><?php echo $value['username'];?></td>
-					      
-					        <td><?php echo $value['userlevel'];?></td>
-					        
-					        <?php if($value['userpercent'] == NULL){?>
+					      	</tr>
 
-					        <td>NULL</td>
+					      	<tr>
+					      		<td>C</td>
+					      		<td class="enable" data-value="C">Enabled</td>
 
-					        <?php }else{?>
+					      	</tr>
 
-					        <td><?php echo $value['userpercent'];?></td>
+					      	<tr>
 
-					        <?php }?>
+					      		<td>D</td>
+					      		<td class="enable" data-value="D">Enabled</td>
 
-					        <td>
-					        
-					        	<a href="edit-users.php?id=<?php echo $value['id'];?>"><i data-id="" class="fa fa-pencil edit-user" aria-hidden="true"></i></a>&nbsp;&nbsp;<a href="delete-user.php?id=<?php echo $value['id'];?>"><i data-id="<?php echo $value['id'];?>" class="fa fa-times" aria-hidden="true"></i></a>
+					      	</tr>
 
-					        </td>
+					      	<tr>
 
-					      </tr>
+					      		<td>H</td>
+					      		<td class="enable" data-value="H">Enabled</td>
 
+					      	</tr>
 
-					    <?php }}else{?>
+					      	<tr>
 
-					    	<tr><td></td><td>No Results Found</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					      		<td>I</td>
+					      		<td class="enable" data-value="I">Enabled</td>
 
-					    <?php }?>  
+					      	</tr>
+
+					      	<tr>
+					      		<td>N</td>
+					      		<td class="enable" data-value="N">Enabled</td>
+
+					      	</tr>
+
+					      	<tr>
+					      		<td>K</td>
+					      		<td class="enable" data-value="K">Enabled</td>
+
+					      	</tr>
+
+					      	<tr>
+					      		<td>O</td>
+					      		<td class="enable" data-value="O">Enabled</td>
+
+							</tr>  
 
 					    </tbody>
 					
@@ -456,157 +473,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	</div>
 
+	<script type="text/javascript">
+		
+		$(document).on('click', '.enable', function(){
 
+			var value = $(this).data('value');
 
-	<!-- Bootstrap modal to edit field details -->
-
-
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Edit User</h4>
-	      </div>
-	      <div class="modal-body">
-			
-			<form id="edit-modal">
-			
-			  <div class="form-group">
-			
-			    <!-- <label for="username">Username:</label> -->
-			
-			    <input type="text" class="form-control" id="username-modal" placeholder="Username" value="" name="username-modal">
-			
-			  </div>
-			
-			  <div class="form-group">
-			
-			    <!-- <label for="level">Level:</label> -->
-			  
-			    <select class="form-control" id="level-modal" name="level-modal">
-		        
-		        	<option>-- User Level --</option>
-
-		        	<option value="A1">A1</option>
-		        
-		        	<option value="A2">A2</option>
-		        
-		        	<option value="A3">A3</option>
-		        
-		        	<option value="A4">A4</option>
-		      
-		      	</select>
-			
-			  </div>
-
-			  <div class="form-group">
-			
-			    <!-- <label for="percent">Percent:</label> -->
-			  
-			    <input type="text" class="form-control" id="percent-modal" placeholder="percent" value="" name="percent-modal">
-			
-			  </div>
-			
-			</form>
-	      
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" form="edit-modal" id="submit-modal" class="btn btn-primary">Submit</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-
-	  </div>
-	</div>
-
-
-
-<script type="text/javascript">
-	
-
-	$(function(){
-
-		$(document).on('click', '.edit-user', function(){
-
-			var id = $(this).data('id');
-
-			console.log(id);
+			console.log(value);
 
 			$.ajax({
 
-				url: 'edit.php',
+				url: 'disable-checkbox.php',
 
 				method: 'POST',
 
-				data: { 'id': id },
-
-				success: function(response){
-
-					var resp = JSON.parse(response);
-
-					console.log(resp);
-
-					if(resp.status == 'success'){
-
-						var user = resp.users[0];
-
-						var username = user.username;
-						
-						var level = user.userlevel;
-						
-						var percent = user.userpercent;
-
-						console.log(resp.users[0]);
-
-						console.log(username);
-						
-						console.log(level);
-						
-						console.log(percent);
-
-						$('#username-modal').val(username);
-
-						$("#level-modal").val(level);
-
-						$('#percent-modal').val(percent);
-
-						$('#submit-modal').data('id', id);						
-
-						$('#myModal').modal('show');
-
-					}else if(resp.status == 'error'){
-
-						console.log('user not found');
-
-					}
-				}
-
-			});
-
-
-		});
-
-		$(document).on('click', '#submit-modal', function(){
-
-			var username = $('#username-modal').val();
-			
-			var level = $('#level-modal').val();
-			
-			var percent = $('#percent-modal').val();
-			
-			var id = $(this).data('id');
-
-			$.ajax({
-
-				url: 'edit.php',
-
-				method: 'POST',
-
-				data: { 'userid': id, 'username-modal': username, 'level-modal': level, 'percent-modal': percent },
+				data: { 'id': value },
 
 				success: function(response){
 
@@ -638,6 +519,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					// 	$('#percent-modal').val(percent);
 
+					// 	$('#submit-modal').data('id', id);						
+
 					// 	$('#myModal').modal('show');
 
 					// }else if(resp.status == 'error'){
@@ -649,15 +532,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			});
 
-
 		});
 
-
-	});
-
-	
-</script>
-
+	</script>
 
 </body>
-</html>-
+</html>
