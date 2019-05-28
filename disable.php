@@ -493,7 +493,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 					// var resp = JSON.parse(response);
 
-					console.log(response);
+					// console.log(response);
 
 					// if(resp.status == 'success'){
 

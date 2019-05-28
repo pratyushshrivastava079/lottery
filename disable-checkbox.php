@@ -19,11 +19,11 @@ include('database.php');
 
 				$users[] = $row;
 
-				print_r($row);
+				// print_r($row);
 
 				if($row['status'] == '1'){
 
-					$update = "UPDATE `checkbox_status` SET `STATUS` = 0 WHERE `id` = '$id'";
+					$update = "UPDATE `checkbox_status` SET `STATUS` = 0 WHERE `checkbox` = '$id'";
 
 					echo $update;
 
@@ -38,7 +38,7 @@ include('database.php');
 				
 				}elseif($row['status'] == '0'){
 
-					$update = "UPDATE `checkbox_status` SET `STATUS` = 1 WHERE `id` = '$id'";
+					$update = "UPDATE `checkbox_status` SET `STATUS` = 1 WHERE `checkbox` = '$id'";
 
 					if ($conn->query($query) === TRUE) {
 						

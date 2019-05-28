@@ -1746,8 +1746,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							
 								      <tr class="table-primary">
 								        <th>2d</th>
-								        <th>USD</th>
 								        <th>KHR</th>
+								        <th>USD</th>
 								        <th>PO</th>
 								      </tr>
 							
@@ -1756,15 +1756,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								    <tbody>
 								      <tr>
 								      	<td><?php echo $order[0]['2dtxt'];?></td>
-								      	<td><?php echo $order[0]['usd'];?></td>
 								      	<td><?php echo $order[0]['khr'];?></td>
+								      	<td><?php echo $order[0]['usd'];?></td>
 								      	<td>( <?php echo $order[0]['checklevel'];?> )</td>
 								      </tr>
 
 								      <tr>
 								      	<td>Total</td>
-								      	<td><?php echo $finalvalueusd;?></td>
 								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $finalvalueusd;?></td>
 								      	<td><?php echo $order[0]['created_at'];?></td>
 								      </tr>
 							
@@ -1923,8 +1923,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 							
 								      <tr class="table-primary">
 								        <th>2d</th>
-								        <th>USD</th>
 								        <th>KHR</th>
+								        <th>USD</th>
 								        <th>PO</th>
 								      </tr>
 							
@@ -1936,8 +1936,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 								
 								      <tr>
 								      	<td><?php echo $value['2dtxt'];?></td>
-								      	<td><?php echo $value['usd'];?></td>
 								      	<td><?php echo $value['khr'];?></td>
+								      	<td><?php echo $value['usd'];?></td>
 								      	<td>( <?php echo $value['checklevel'];?> )</td>
 								      </tr>
 
@@ -1945,8 +1945,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 								      <tr>
 								      	<td>Total</td>
-								      	<td><?php echo $finalvalueusd;?></td>
 								      	<td><?php echo $finalvaluekhr;?></td>
+								      	<td><?php echo $finalvalueusd;?></td>
 								      	<td><?php echo $order[0]['created_at'];?></td>
 								      </tr>
 							
