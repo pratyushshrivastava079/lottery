@@ -668,6 +668,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if($_POST['txt2d'][$i] == ""){
 
 				$error['txt2d'] = "txt2d value row is empty.";
+
+				header("Location: 2d2-betform.php?error=txt2d value row is empty.");				
 			
 			}elseif($_POST['txt2d'][$i] != ""){
 
@@ -687,6 +689,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if($_POST['usd'][$i] == ""){
 
 				$error['usd'] = "usd row is empty.";
+
+				header("Location: 2d2-betform.php?error=usd row is empty.");
 
 			}elseif($_POST['usd'][$i] != ""){
 
@@ -1497,6 +1501,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	<div class="container">
 	
 		<section>
+
+			<?php if(isset($_GET['error'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $_GET['error'];?>
+
+			</div>
+
+			<?php }?>
 
 			<?php if(isset($success['success'])){?>
 

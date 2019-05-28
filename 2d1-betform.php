@@ -676,6 +676,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if($_POST['txt2d'][$i] == ""){
 
 				$error['txt2d'] = "txt2d value row is empty.";
+
+				header("Location: 2d1-betform.php?error=txt2d value row is empty.");
 			
 			}elseif($_POST['txt2d'][$i] != ""){
 
@@ -696,6 +698,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				$error['usd'] = "usd row is empty.";
 
+				header("Location: 2d1-betform.php?error=usd row is empty.");
+
 			}elseif($_POST['usd'][$i] != ""){
 
 				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
@@ -714,6 +718,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if($_POST['khr'][$i] == ""){
 
 				$error['khr'] = "khr row is empty.";
+
+				header("Location: 2d1-betform.php?error=khr row is empty.");
 
 			}elseif($_POST['khr'][$i] != ""){
 
@@ -1508,6 +1514,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 		<section>
 
+			<?php if(isset($_GET['error'])){?>
+
+			<div class="alert alert-danger">
+					
+				<?php echo $_GET['error'];?>
+
+			</div>
+
+			<?php }?>
+
 			<?php if(isset($success['success'])){?>
 
 			<div class="alert alert-success">
@@ -2066,7 +2082,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
- 			$('.first-line').append('<div class="fields"><span class="btn btn-primary plus-sign">-</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div></div>');
+ 			$('.first-line').append('<div class="fields"><span class="btn btn-primary minus-sign">-</span><div class="form-group"> <input type="text" id="2d1" class="form-control 2d" name="txt2d[]" placeholder="2D value"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div></div>');
 
  			level++;
 
@@ -2075,6 +2091,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$(document).on('click', '.minus-sign', function(event){
 
  			event.preventDefault();
+
+ 			console.log('click');
 
               $(this).parent().remove();
 
