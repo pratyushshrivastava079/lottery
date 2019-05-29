@@ -1669,10 +1669,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="add-users.php">Add Users</a></span>
+		    			
+		    			<span> | </span>
 
 		    			<?php }?>
 		      				
-		    			<span> | </span>
 
 		    			<span><a href="2d1-betform.php">2D S1</a></span>
 		    		
@@ -1695,6 +1696,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="reports.php">Reports</a></span>
+
+		    			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    			<span> | </span>
+
+		    			<span><a href="disable.php">Disable check boxes</a></span>
+
+		    			<?php }?>
 		    			
 		    	</div>
 
@@ -2035,6 +2044,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				<form action="2d1-betform.php" method="POST">
 	              
 	              	<input type="hidden" id="lastStage" value="1" />
+	              	<input type="hidden" id="firstlevel" value="1" />
 		            
 		            <div class="card-header"><h3 id="Stage" data-Stage="1">Stage 1</h3></div>
 
@@ -2168,8 +2178,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		console.log(date);
 
 		var level = 1;
+ 			// $('#firstlevel').val(level);
+ 			// console.log($('#firstlevel').val());
 
  		$(document).on('click', '#add', function(event){
+
+
 
  			event.preventDefault();
 
@@ -2177,7 +2191,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			level++;
 
- 			 $('.radio').remove();
+ 			 $('.radio').css('display', 'none');
 
 		});
 
@@ -2185,11 +2199,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
- 			console.log('click');
+ 			if(level == 2){
 
-              $(this).parent().remove();
+ 			$('.radio').css('display', 'block');
+            
+ 			}
 
- 			level++;
+            $(this).parent().remove();
+
+ 			level--;
+
+ 			console.log(level);
 
 		});
 

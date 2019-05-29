@@ -1649,10 +1649,11 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 		    			<span> | </span>
 
 		    			<span><a href="add-users.php">Add Users</a></span>
+		    			
+		    			<span> | </span>
 
 		    			<?php }?>
 		      				
-		    			<span> | </span>
 
 		    			<span><a href="2d1-betform.php">2D S1</a></span>
 		    		
@@ -1675,6 +1676,14 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 		    			<span> | </span>
 
 		    			<span><a href="reports.php">Reports</a></span>
+
+		    			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    			<span> | </span>
+
+		    			<span><a href="disable.php">Disable check boxes</a></span>
+
+		    			<?php }?>
 		    			
 		    	</div>
 
@@ -2156,7 +2165,7 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 
  			level++;
 
- 			 $('.radio').remove();
+ 			 $('.radio').css('display', 'none');
 
 		});
 
@@ -2164,9 +2173,17 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 
  			event.preventDefault();
 
-              $(this).parent().remove();
+ 			if(level == 2){
 
- 			level++;
+ 			$('.radio').css('display', 'block');
+            
+ 			}
+
+            $(this).parent().remove();
+
+ 			level--;
+
+ 			console.log(level);
 
 		});
 

@@ -462,17 +462,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		    			<span><a href="reports.php">Reports</a></span>
 		    			
+		    			<?php if($_SESSION['userlevel'] == "A1"){?>
+
 		    			<span> | </span>
 
-		      			<?php if(isset($_SESSION['userid'])){?>
-		      				
-			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
-		      			
-		      			<?php }else{?>
+		    			<span><a href="disable.php">Disable check boxes</a></span>
 
-			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+		    			<?php }?>
 
-		      			<?php }?>
 	    			
 		    	</div>
 

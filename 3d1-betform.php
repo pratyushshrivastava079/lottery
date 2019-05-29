@@ -1851,6 +1851,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 
+	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	  <style type="text/css">
 	  	
 	  		.form-group{
@@ -1994,15 +1996,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
   				
   			<div class="container">
     			
-	    		<div class="navbar-header">
+	    		<div class="navbar-header left">
 	      				
-	    			<a class="navbars-brand" href="login.php">Home</a>
+	    			<a href="login.php"><i class="fa fa-home" aria-hidden="true"></i></a>
 				
 	    		</div>
 					
-				<div class="caps navbars-brand">
+				<div class="caps middle">
 
-					<span><?php $today = date("M / d / Y h:i:s A"); echo $today; ?></span>
+					<span><?php $today = date("d / m / Y h:i:s A"); echo $today; ?></span>
+
+		    	</div>
+
+		    	<div class="right-account">
+		    		
+		      			<?php if(isset($_SESSION['userid'])){?>
+		      				
+			      			<span><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></span>
+		      			
+		      			<?php }else{?>
+
+			      			<span><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></span>
+
+		      			<?php }?>
+
 
 		    	</div>
 		  	
@@ -2122,10 +2139,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="add-users.php">Add Users</a></span>
+		    			
+		    			<span> | </span>
 
 		    			<?php }?>
 		      				
-		    			<span> | </span>
 
 		    			<span><a href="2d1-betform.php">2D S1</a></span>
 		    		
@@ -2148,6 +2166,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span> | </span>
 
 		    			<span><a href="reports.php">Reports</a></span>
+
+		    			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    			<span> | </span>
+
+		    			<span><a href="disable.php">Disable check boxes</a></span>
+
+		    			<?php }?>
 		    			
 		    	</div>
 
@@ -2638,7 +2664,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
               $('.first-line').append('<div class="fields"><span class="btn btn-primary minus-sign">-</span><div class="form-group"> <input type="text" id="3d1" class="form-control 2d" name="txt3d[]" placeholder="3D value"> </div><div class="form-group"> <input type="text" id="khr1" class="form-control khr" name="khr[]" placeholder="KHR"> </div><div class="form-group"> <input type="text" id="usd1" class="form-control usd" name="usd[]" placeholder="USD"> </div></div>');
 
-              $('.radio').remove();
+             $('.radio').css('display', 'none');
 
  			level++;
 
@@ -2648,9 +2674,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  			event.preventDefault();
 
-              $(this).parent().remove();
+ 			if(level == 2){
 
- 			level++;
+ 			$('.radio').css('display', 'block');
+            
+ 			}
+
+            $(this).parent().remove();
+
+ 			level--;
+
+ 			console.log(level);
+
 
 		});
 

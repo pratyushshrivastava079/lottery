@@ -821,10 +821,11 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			<span> | </span>
 
 		    			<span><a href="add-users.php">Add Users</a></span>
+		    			
+		    			<span> | </span>
 
 		    			<?php }?>
 		      				
-		    			<span> | </span>
 
 		    			<span><a href="2d1-betform.php">2D S1</a></span>
 		    		
@@ -847,6 +848,16 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			<span> | </span>
 
 		    			<span><a href="reports.php">Reports</a></span>
+
+		    			<?php if($_SESSION['userlevel'] == "A1"){?>
+
+		    			<span> | </span>
+
+		    			<span><a href="disable.php">Disable check boxes</a></span>
+
+		    			<?php }?>
+
+
 		    			
 		    	</div>
 
