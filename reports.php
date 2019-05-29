@@ -881,30 +881,32 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 						    	<td>
 
-					    			<select class="username-filter" onchange="javascript:handleSelect(this)">
+					    			<!-- <select class="username-filter" onchange="javascript:handleSelect(this)"> -->
 
-					    				<option selected="true">-- Choose User --</option>
+					    				<!-- <option selected="true">-- Choose User --</option> -->
 					    				<?php foreach ($finalusers as $key => $value) {?>
 					    				
-					    				<option value="<?php echo $value['id'];?>" ><a href="reports.php?userid=<?php echo $value['id'];?>"><?php echo $value['username'];?></a></option>
+					    				<input type="checkbox" value="<?php echo $value['id'];?>" onclick="javascript:handleCheckbox(this)">
+
+					    						<?php echo $value['username'];?>
+					    						
+					    					<!-- </a> -->
 
 					    				<?php }?>
 
-					    			</select>
+					    			<!-- </select> -->
 
 					    		</td>
 
 					    		<td>
 
-					    			<select onchange="javascript:handleSelectstage(this)">
-					    			
-					    				<option selected="true">-- Choose Stage --</option>
-					    				<option value="1, <?php echo $_SESSION['subuserid'];?>">2D Stage 1</option>
-					    				<option value="2, <?php echo $_SESSION['subuserid'];?>">2D Stage 2</option>
-					    				<option value="3, <?php echo $_SESSION['subuserid'];?>">3D Stage 1</option>
-					    				<option value="4, <?php echo $_SESSION['subuserid'];?>">3D Stage 2</option>
+					    			<input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1
 
-					    			</select>
+					    			<input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2
+
+					    			<input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1
+
+					    			<input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2
 
 
 					    		</td>
@@ -1227,6 +1229,13 @@ function handleSelectdate(elm)
 {
 window.location = "reports.php?date="+elm.value;
 }
+
+function handleCheckbox(elm)
+{
+window.location = "reports.php?userid="+elm.value;
+}
+
+
 </script>
 
 </body>
