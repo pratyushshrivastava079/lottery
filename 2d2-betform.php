@@ -6,7 +6,7 @@ include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-	$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
+	$chck_status = "SELECT * FROM `checkbox_status` WHERE `type` = '2dbetform' AND `stage` = '2'";
 			    
 	$chck_result = mysqli_query($conn, $chck_status);
 
@@ -1245,41 +1245,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$id = $_SESSION['userid'];
 
-	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
-			        
-			        $result = mysqli_query($conn, $sql);
+	$sql = "SELECT * FROM `checkbox_status` WHERE `type` = '2dbetform' AND `stage` = '2'";
+	
+	$result = mysqli_query($conn, $sql);
 
-			        if (mysqli_num_rows($result) > 0) {
+	if (mysqli_num_rows($result) > 0) {
 
-		            	while($row = mysqli_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 		            	
-				        	// $_SESSION['userid'] = $row['id'];
+		$chck_users[] = $row;
 
-				        	// print_r($row);
-
-		            
-		            	}
-
-
-		            }
-
-
-$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
-			    
-	$chck_result = mysqli_query($conn, $chck_status);
-
-	if (mysqli_num_rows($chck_result) > 0) {
-
-		while($row = mysqli_fetch_assoc($chck_result)) {
-		            	
-			$chck_users[] = $row;
-		
 		}
 
-
-		// print_r($chck_users);
-
 	}
+
 	}else{
 
 		header("Location: login.php");
@@ -1617,7 +1596,7 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="reports.php">Reports</a></span>
+		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1">Reports</a></span>
 
 		    			<?php if($_SESSION['userlevel'] == "A1"){?>
 

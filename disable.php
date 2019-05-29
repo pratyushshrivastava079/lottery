@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	$sql = "SELECT * FROM `checkbox_status` WHERE 1";
+	$sql = "SELECT * FROM `checkbox_status` WHERE `type` = '2dbetform' AND `stage` = '1'";
 			    
 	$result = mysqli_query($conn, $sql);
 
@@ -18,12 +18,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		while($row = mysqli_fetch_assoc($result)) {
 		            	
-			$users[] = $row;
+			$users1[] = $row;
 		
 		}
 
+	}
 
-		// print_r($users);
+	$sql = "SELECT * FROM `checkbox_status`  WHERE `type` = '2dbetform' AND `stage` = '2'";;
+			    
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
+		            	
+			$users2[] = $row;
+		
+		}
+
+	}
+
+	$sql = "SELECT * FROM `checkbox_status`  WHERE `type` = '3dbetform' AND `stage` = '1'";
+			    
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
+		            	
+			$users3[] = $row;
+		
+		}
+
+	}
+
+	$sql = "SELECT * FROM `checkbox_status`  WHERE `type` = '3dbetform' AND `stage` = '2'";
+			    
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
+		            	
+			$users4[] = $row;
+		
+		}
 
 	}
 
@@ -48,13 +87,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	  crossorigin="anonymous"></script>
 	
-	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -64,7 +100,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	 	.navbar-nav{
 
 	 		width: 100%!important;
-	 		/*text-align: center;*/
 	 	}
 
 	 	.navbar-header{
@@ -336,57 +371,96 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			<span><a href="disable.php">Disable check boxes</a></span>
 	    			
 		    	</div>
-				 
-				<div class="table-responsive">
-				 
-					<table class="table table-striped">
-					  
-					    <thead>
-					  
-					      <tr>
-					  
-					        <th>User</th>
-					  
-					        <th>Actions</th>
-					  
-					      </tr>
-					  
-					    </thead>
-					  
-					    <tbody>
 
+		    	<div class="row">
 
-					    	<?php foreach ($users as $key => $value) {
+		    		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+				
+		    			<label class="text-center">2D Betform Stage 1</label>
 
-					    		if($value['status'] == 1){
+		    			<hr/>
 
-					    			$value['status'] = "Enabled";
+						<?php foreach ($users1 as $key => $value) {
 
-					    			$class = "btn btn-primary";
-					    		
-					    		}elseif($value['status'] == 0){
+							if($value['status'] == 1){?>
 
-					    			$value['status'] = "Disabled";
+								<p><input type="checkbox" class="enable" data-stage="1" data-type="2dbetform" value="<?php echo $value['checkbox'];?>" checked><?php echo $value['checkbox'];?></p>
+							    		
+							<?php }elseif($value['status'] == 0){?>
 
-					    			$class = "btn btn-danger";
+								<p><input type="checkbox" class="enable" data-stage="1" data-type="2dbetform" value="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></p>
 
-					    		}
+							<?php }?>
 
-					    	?>
+						<?php }?>
 
-					   		<tr>
-					      		
-					      		<td><?php echo $value['checkbox'];?></td>
-					      	
-					      		<td class="enable" data-value="<?php echo $value['checkbox'];?>"><button class="<?php echo $class;?>"><?php echo $value['status'];?></button></td>
+					</div>
 
-					      	</tr>
+		    		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+				
+		    			<label class="text-center">2D Betform Stage 2</label>
 
-					    	<?php }?>
+		    			<hr/>
 
-					    </tbody>
-					
-					</table>
+						<?php foreach ($users2 as $key => $value) {
+
+							if($value['status'] == 1){?>
+
+								<p><input type="checkbox" class="enable" data-stage="2" data-type="2dbetform" value="<?php echo $value['checkbox'];?>" checked><?php echo $value['checkbox'];?></p>
+							    		
+							<?php }elseif($value['status'] == 0){?>
+
+								<p><input type="checkbox" class="enable" data-stage="2" data-type="2dbetform" value="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></p>
+
+							<?php }?>
+
+						<?php }?>
+
+					</div>
+
+		    		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+
+		    			<label class="text-center">3D Betform Stage 1</label>
+
+		    			<hr/>
+				
+						<?php foreach ($users3 as $key => $value) {
+
+							if($value['status'] == 1){?>
+
+								<p><input type="checkbox" class="enable" data-stage="1" data-type="3dbetform" value="<?php echo $value['checkbox'];?>" checked><?php echo $value['checkbox'];?></p>
+							    		
+							<?php }elseif($value['status'] == 0){?>
+
+								<p><input type="checkbox" class="enable" data-stage="1" data-type="3dbetform" value="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></p>
+
+							<?php }?>
+
+						<?php }?>
+
+					</div>
+
+		    		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+		    			
+		    			<label class="text-center">3D Betform Stage 2</label>
+
+		    			<hr/>
+				
+						<?php foreach ($users4 as $key => $value) {
+
+							if($value['status'] == 1){?>
+
+								<p><input type="checkbox" class="enable" data-stage="2" data-type="3dbetform" value="<?php echo $value['checkbox'];?>" checked><?php echo $value['checkbox'];?></p>
+							    		
+							<?php }elseif($value['status'] == 0){?>
+
+								<p><input type="checkbox" class="enable" data-stage="2" data-type="3dbetform" value="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></p>
+
+							<?php }?>
+
+						<?php }?>
+
+					</div>					
 
 				</div>
 			
@@ -400,9 +474,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		
 		$(document).on('click', '.enable', function(){
 
-			var value = $(this).data('value');
+			var value = $(this).val();
+			var type = $(this).data('type');
+			var stage = $(this).data('stage');
 
 			console.log(value);
+			console.log(type);
+			console.log(stage);
 
 			$.ajax({
 
@@ -410,50 +488,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				method: 'POST',
 
-				data: { 'id': value },
+				data: { 'id': value, 'type': type, 'stage': stage },
 
 				success: function(response){
 
-					var resp = JSON.parse(response);
+					// console.log(response);
 
-					console.log(resp);
-
-					// if(resp.status == 'disabled'){
-
-						// $(this).html(resp.status);
-						window.location.reload();
-
-					// 	var user = resp.users[0];
-
-					// 	var username = user.username;
-						
-					// 	var level = user.userlevel;
-						
-					// 	var percent = user.userpercent;
-
-					// 	console.log(resp.users[0]);
-
-					// 	console.log(username);
-						
-					// 	console.log(level);
-						
-					// 	console.log(percent);
-
-					// 	$('#username-modal').val(username);
-
-					// 	$("#level-modal").val(level);
-
-					// 	$('#percent-modal').val(percent);
-
-					// 	$('#submit-modal').data('id', id);						
-
-					// 	$('#myModal').modal('show');
-
-					// }else if(resp.status == 'error'){
-
-					// 	console.log('user not found');
-
-					// }
+					window.location.reload();
 				}
 
 			});

@@ -425,11 +425,11 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 			        	// print_r($users);
 
 
-	        }elseif(isset($_GET['date']) && isset($_GET['uid'])){
+	        }elseif(isset($_GET['date']) && isset($_GET['userid'])){
 
-	        	if(isset($_GET['uid'])){
+	        	if(isset($_GET['userid'])){
 
-	        		$userid = $_GET['uid'];
+	        		$userid = $_GET['userid'];
 	        	
 	        	}else{
 
@@ -688,6 +688,17 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		
 		}
 
+		.check{
+
+			width: 32%;
+			display: inline-block;
+		}
+
+		.checks{
+
+			width: 49%;
+			display: inline-block;
+		}
 	  </style>
 
 </head>
@@ -847,7 +858,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="reports.php">Reports</a></span>
+		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1">Reports</a></span>
 
 		    			<?php if($_SESSION['userlevel'] == "A1"){?>
 
@@ -861,69 +872,115 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			
 		    	</div>
 
-		    	<div class="table-responsive">
-				 
-					<table class="table table-striped">
-					  
-					    <thead>
-					  
-					      	<tr>
+		    	<div class="row">
 
-					      		<td>&nbsp;</td>
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 
-					      		<td>&nbsp;</td>
+						<p class="text-center"><strong>Users</strong></p>
+						<hr/>
 
-					      		<td>&nbsp;</td>
+						<?php 
+						
+						if($_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == 'A2' ){
 
-					      		<td>&nbsp;</td>
+						foreach ($finalusers as $key => $value) {?>
+						
+							<?php if(isset($_GET['userid'])){
 
-					      		<td>&nbsp;</td>
+								if($value['id'] == $_GET['userid']){?>
 
-						    	<td>
+								<p class="check"><input type="checkbox" value="<?php echo $value['id'];?>" checked onclick="javascript:handleCheckbox(this)"><span><?php echo $value['username'];?></span></p>
 
-					    			<!-- <select class="username-filter" onchange="javascript:handleSelect(this)"> -->
+								<?php }else{?>
 
-					    				<!-- <option selected="true">-- Choose User --</option> -->
-					    				<?php foreach ($finalusers as $key => $value) {?>
-					    				
-					    				<input type="checkbox" value="<?php echo $value['id'];?>" onclick="javascript:handleCheckbox(this)">
+								<p class="check"><input type="checkbox" value="<?php echo $value['id'];?>" onclick="javascript:handleCheckbox(this)"><span><?php echo $value['username'];?></span></p>
 
-					    						<?php echo $value['username'];?>
-					    						
-					    					<!-- </a> -->
+								<?php }
+								    						
+							}
 
-					    				<?php }?>
+						}?>
+						
+						<?php }?>
+					
+					</div>
 
-					    			<!-- </select> -->
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 
-					    		</td>
+						<p class="text-center"><strong>Stages</strong></p>
+						<hr/>
 
-					    		<td>
+						<?php if(isset($_GET['stage'])){
 
-					    			<input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1
+						if($_GET['stage'] == 1){?>
+						    		
+							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
 
-					    			<input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2
+							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
 
-					    			<input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1
+							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
 
-					    			<input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2
+							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
+
+						<?php }elseif($_GET['stage'] == 2){?>
+
+							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
+
+							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>							
 
 
-					    		</td>
+						<?php }elseif($_GET['stage'] == 3){?>
 
-					    		<td>
+							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
 
-					    			<input type="text" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">					    			
+							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
 
-					    		</td>
+							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
 
-		    				</tr>
+							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
 
-		    			</thead>
 
-					</table>
+						<?php }elseif($_GET['stage'] == 4){?>
 
-		    	</div>
+							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
+
+							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
+
+
+						<?php }}else{?>
+
+							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
+
+							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
+
+							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
+
+						<?php }?>
+
+					</div>
+
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+						<p class="text-center"><strong>Datepicker</strong></p>
+						<hr/>
+						<p class="text-center">
+						<input type="button" name="prev" data-id="<?php echo $_SESSION['subuserid'];?>" value="Previous" id="prev">
+						<input type="text" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">
+						<input type="button" name="next" data-id="<?php echo $_SESSION['subuserid'];?>" value="Next" id="next"></p>
+
+					</div>					    			
+
+			    </div>
 
 
 		    	<div class="table-responsive">
@@ -1093,22 +1150,6 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 					    	</tr>
 
-					    	<tr>
-					    		
-					    		<td>Total</td>
-					    		<td></td>
-					    		<td></td>
-					    		<td></td>
-					    		<?php $totalusd = $totalusd * $percent ;
-
-							    $finaltotalkhr = $totalkhr * $percent ;?>
-					    		
-					    		<td><?php echo $totalusd;?></td>
-					    		<td><?php echo $finaltotalkhr;?></td>
-					    		<td></td>
-
-					    	</tr>
-
 					    	<?php }else{?>
 
 					    		<tr>
@@ -1192,11 +1233,82 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		
 		$(document).ready(function() {
 
+				// var todayTime = new Date();
+				// var month = todayTime . getMonth() + 1;
+				// var monthnext = todayTime . getMonth() + 2;
+				// var day = todayTime . getDate() - 1;
+				// var year = todayTime . getFullYear();
+				// var dd =  month + "/" + day + "/" + year ;
+				// var mm =  monthnext + "/" + day + "/" + year ;
+
+				// $('#prev').data('dateval', dd);
+				// $('#next').data('dateval', mm);
+
+			$(document).on('click', '#prev', function(){
+
+				var datee = $('#datepicker').val();
+
+				if(datee == ""){
+
+					console.log('cannot be clicked');
+					$(this).attr("disabled", true);
+
+				}else{					
+
+					$(this).attr("disabled", false);
+					var dateprev = datee.split('/');
+					var dd = parseInt(dateprev[1])-1;
+										var todayTime = new Date();
+					// console.log(todayTime);
+
+					// console.log(dd);
+					var todayTime = new Date();
+					var month = todayTime . getMonth() + 1;
+					var day = todayTime . getDate() - 1;
+					var year = todayTime . getFullYear();
+					var prevdate =  month + "/" + dd + "/" + year ;
+					var userid = $(this).data('id');
+
+					// window.location = "reports.php?date="+prevdate+"&userid="+userid;
+				}
+
+			});
+
+
+			$(document).on('click', '#next', function(){
+
+				var datee = $('#datepicker').val();
+
+				if(datee == ""){
+
+					console.log('cannot be clicked');
+					$(this).attr("disabled", true);
+
+				}else{					
+
+					$(this).attr("disabled", false);
+					var dateprev = datee.split('/');
+					var dd = parseInt(dateprev[1])+1;
+
+					console.log(dd);
+					var todayTime = new Date();
+					// console.log(todayTime);
+					var month = todayTime . getMonth() + 1;
+					var day = todayTime . getDate() - 1;
+					var year = todayTime . getFullYear();
+					var prevdate =  month + "/" + dd + "/" + year ;
+					var userid = $(this).data('id');
+
+					window.location = "reports.php?date="+prevdate+"&userid="+userid;
+				}
+
+			});
+
 			$(document).on('change', '#datepicker', function(){
 
 				var id = $(this).data('id');
 
-				window.location = "reports.php?date="+this.value+"&uid="+id;
+				window.location = "reports.php?date="+this.value+"&userid="+id;
 
 			});
 
