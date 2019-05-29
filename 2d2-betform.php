@@ -135,84 +135,98 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				$incrementval = 0;
 
+				$newval = str_split($txt2d);
+
+
 				if($radio == '5OD'){
 
-					for($i = 0 ; $i < 5 ; $i++){
+	                for($i = 0 ; $i < 5 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(2*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 2;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 5; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-						// echo $txt2d;
-					}
+	                        	}
+	                        }
+	                    }
+
+	                	$incrementval = 5;
+
+	                }
+
+	                $txt2d = $newtxt2d;
 
 				}elseif($radio == '5S'){
 
-					for($i = 0 ; $i < 5 ; $i++){
+					 for($i = 0 ; $i < 5 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(1*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 1;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 5; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-					}
+	                        	}
+	                        }
+	                    }
+
+	                	$incrementval = 5;
+
+	                }
+
+	                $txt2d = $newtxt2d;
 
 				}elseif($radio == '10S'){
 
 					for($i = 0 ; $i < 10 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(1*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 1;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 10; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-						// $newtxt2d[$i] = $txt2d + 1;
+	                        	}
+	                        }
+	                    }
 
-						// $txt2d = $newtxt2d[$i]; 
+	                	$incrementval = 10;
 
-						// $incrementval = 10; 
+	                }
 
-					}
+	                $txt2d = $newtxt2d;
 
 				}
 
@@ -2053,12 +2067,12 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 
 								continue;
 
-			                }
+					                }
 			            	?>
 	                
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="<?php echo $value['checkbox'];?>" name="checkbox[]" id="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></label>
 
-			                <?php }else{ continue; }?>
+			                <?php }else{ continue; }}?>
 	                
 			               <!--  <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
 			                
