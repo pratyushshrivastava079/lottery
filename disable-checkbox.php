@@ -25,11 +25,11 @@ include('database.php');
 
 					$update = "UPDATE `checkbox_status` SET `STATUS` = 0 WHERE `checkbox` = '$id'";
 
-					echo $update;
+					// echo $update;
 
 					if ($conn->query($update) === TRUE) {				
 
-						echo json_encode(array('status'=> 'success', 'users' => $users));
+						echo json_encode(array('status'=> 'disabled', 'users' => $users));
 					
 					}else{
 
@@ -39,10 +39,10 @@ include('database.php');
 				}elseif($row['status'] == '0'){
 
 					$update = "UPDATE `checkbox_status` SET `STATUS` = 1 WHERE `checkbox` = '$id'";
-
-					if ($conn->query($query) === TRUE) {
+					// echo $update;
+					if ($conn->query($update) === TRUE) {
 						
-						echo json_encode(array('status'=> 'success', 'users' => $users));
+						echo json_encode(array('status'=> 'enabled', 'users' => $users));
 
 					}else{
 

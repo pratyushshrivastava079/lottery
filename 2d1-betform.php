@@ -6,11 +6,30 @@ include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+	$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
+			    
+	$chck_result = mysqli_query($conn, $chck_status);
+
+	if (mysqli_num_rows($chck_result) > 0) {
+
+		while($row = mysqli_fetch_assoc($chck_result)) {
+		            	
+			$chck_users[] = $row;
+		
+		}
+
+
+		// print_r($chck_users);
+
+	}
+
 	$counttxt2d = count($_POST['txt2d']);
 
 	$countusd = count($_POST['usd']);
 
 	$countkhr = count($_POST['khr']);
+
+	// print_r($_POST['txt2d']);
 
 	// checks if one row or more than one row of a form has been posted //
 
@@ -119,84 +138,99 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 				
 				$incrementval = 0;
 
+				$newval = str_split($txt2d);
+
+				// print_r($newval);
+
 				if($radio == '5OD'){
 
-					for($i = 0 ; $i < 5 ; $i++){
+	                for($i = 0 ; $i < 5 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(2*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 2;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 5; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-						// echo $txt2d;
-					}
+	                        	}
+	                        }
+	                    }
+
+	                	$incrementval = 5;
+
+	                }
+
+	                $txt2d = $newtxt2d;
 
 				}elseif($radio == '5S'){
 
-					for($i = 0 ; $i < 5 ; $i++){
+					 for($i = 0 ; $i < 5 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(1*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 1;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 5; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-					}
+	                        	}
+	                        }
+	                    }
+
+	                	$incrementval = 5;
+
+	                }
+
+	                $txt2d = $newtxt2d;
 
 				}elseif($radio == '10S'){
 
 					for($i = 0 ; $i < 10 ; $i++){
 
-						if($i == 0){
+	                	array_push($newtxt2d, implode('',$newval));
 
-							// echo $txt2d;
+	                    $newtxt2d[$i] = $newtxt2d[$i]+(1*$i);
 
-							// $txt2d = $txt2d;
+	                    if($newtxt2d[$i] > 99){
 
-							$newtxt2d[$i] = $txt2d;
+	                    	$newtxt2d[$i] = $newtxt2d[$i] % 10;
 
-						}else{
+	                        if(count(str_split($newtxt2d[$i])) < 2){
 
-							$newtxt2d[$i] = $txt2d + 1;
+	                        	$newtxt2d[$i] = "0".$newtxt2d[$i];
 
-							$txt2d = $newtxt2d[$i]; 
-							
-							$incrementval = 10; 
+	                        	if(count(str_split($newtxt2d[$i])) < 2){
 
-						}
+	                        		$newtxt2d[$i] = $newtxt2d[$i]."0";
 
-						// $newtxt2d[$i] = $txt2d + 1;
+	                        	}
+	                        }
+	                    }
 
-						// $txt2d = $newtxt2d[$i]; 
+	                	$incrementval = 10;
 
-						// $incrementval = 10; 
+	                }
 
-					}
+	                $txt2d = $newtxt2d;
 
 				}
 
@@ -663,7 +697,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		// $finalvalueusd = 0;
 
-						// $finalvaluekhr = 0;
+		// $finalvaluekhr = 0;
 
 		$txt2d = array();
 
@@ -673,15 +707,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		for( $i = 0 ; $i < $counttxt2d ; $i++){
 
-			if($_POST['txt2d'][$i] == ""){
+			if($_POST['txt2d'][$i] == "" && $_POST['usd'][$i] == "" && $_POST['khr'][$i] == ""){
 
-				$error['txt2d'] = "txt2d value row is empty.";
+				// $error['txt2d'] = "txt2d, khr and usd row is empty.";
 
-				header("Location: 2d1-betform.php?error=txt2d value row is empty.");
+				// header("Location: 2d1-betform.php?error=txt2d, khr and usd row is empty.");
+
+				continue;
 			
 			}elseif($_POST['txt2d'][$i] != ""){
 
 				$txt2d[$i] = mysqli_real_escape_string( $conn, $_POST['txt2d'][$i] );
+				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
+				$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
 				
 			}else{
 
@@ -692,46 +730,41 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 
 
-		for( $i = 0 ; $i < $countusd ; $i++){
+		// for( $i = 0 ; $i < $countusd ; $i++){
 
-			if($_POST['usd'][$i] == ""){
+		// 	if($_POST['usd'][$i] == ""){
 
-				$error['usd'] = "usd row is empty.";
+		// 		$error['usd'] = "usd row is empty.";
 
-				header("Location: 2d1-betform.php?error=usd row is empty.");
+		// 	}elseif($_POST['usd'][$i] != ""){
 
-			}elseif($_POST['usd'][$i] != ""){
-
-				$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
+		// 		$usd[$i] = mysqli_real_escape_string( $conn, $_POST['usd'][$i] );
 				
-			}else{
+		// 	}else{
 
-				$error['usd'] = "Something unexpected occured in usd value.";
+		// 		$error['usd'] = "Something unexpected occured in usd value.";
 
-			}
+		// 	}
 
-		}
+		// }
 
+		// for( $i = 0 ; $i < $countkhr ; $i++){
 
-		for( $i = 0 ; $i < $countkhr ; $i++){
+		// 	if($_POST['khr'][$i] == ""){
 
-			if($_POST['khr'][$i] == ""){
+		// 		$error['khr'] = "khr row is empty.";
 
-				$error['khr'] = "khr row is empty.";
+		// 	}elseif($_POST['khr'][$i] != ""){
 
-				header("Location: 2d1-betform.php?error=khr row is empty.");
-
-			}elseif($_POST['khr'][$i] != ""){
-
-				$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
+		// 		$khr[$i] = mysqli_real_escape_string( $conn, $_POST['khr'][$i] );
 				
-			}else{
+		// 	}else{
 
-				$error['khr'] = "Something unexpected occured in khr value.";
+		// 		$error['khr'] = "Something unexpected occured in khr value.";
 
-			}
+		// 	}
 
-		}
+		// }
 
 		// $usd_empty = in_array("", $usd, true);
 		
@@ -751,7 +784,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$countcheck = count($_POST['checkbox']);
 
+		// print_r($countcheck);
+
 		$stagecheck = count($_POST['Stage_checkbox']);
+
+		// print_r($stagecheck);
 
 		$arra = array();
 
@@ -761,9 +798,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			}elseif($countcheck > 0 || $stagecheck > 0){
 
-				if( $countcheck == 1){
+				if( $countcheck == 1 || $stagecheck == 0){
 
-					$checkboxlevel = mysqli_real_escape_string( $conn, $_POST['checkbox'][0] );
+					for( $j = 0; $j < $countcheck ; $j++ ){
+
+						$checkboxlevel[$j] = mysqli_real_escape_string( $conn, $_POST['checkbox'][$j] );
+
+						$arra[] = $checkboxlevel[$j];
+
+					}
 
 				}elseif($countcheck > 1 && $stagecheck == 1){
 
@@ -839,15 +882,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				for($j = 0 ; $j < $counttxt2d; $j++ ){
 
-					// if($usd[$j] == ""){
+					if($usd[$j] == "" && $khr[$j] == "" && $txt2d[$j] == ""){
 
-					// 	$usd[$j] = 0;
-					// }
+						continue;
+					
+					}elseif($txt2d[$j] != "" && $khr[$j] == "" && $usd[$j] == ""){
 
-					// if($khr[$j] == ""){
+						header("Location:2d1-betform.php?error=Both khr and usd value is null");
 
-					// 	$khr[$j] = 0;
-					// }
+					}else{
 
 						$users[$j] = array(
 
@@ -868,6 +911,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 							);
 
+						// print_r($checkboxlevel);
+
 							$query= "INSERT INTO 2dbetform( `user_id`, `order_id`, `2dtxt`, `usd`, `khr`, `radiobox`, `checklevel`, `stage`, `type` ) VALUES( '$userid', '$order_id', '$txt2d[$j]', '$usd[$j]', '$khr[$j]', '$radio', '$checkboxlevel', '1', '2dbetform' )";
 							// print_r($query);
 							// die();
@@ -885,7 +930,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 													
 							}
 
-						// }
+						}
 
 				}
 
@@ -1282,21 +1327,36 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 			        
-			        $result = mysqli_query($conn, $sql);
+	$result = mysqli_query($conn, $sql);
 
-			        if (mysqli_num_rows($result) > 0) {
+	if (mysqli_num_rows($result) > 0) {
 
-		            	while($row = mysqli_fetch_assoc($result)) {
+		while($row = mysqli_fetch_assoc($result)) {
 		            	
-				        	// $_SESSION['userid'] = $row['id'];
+		// $_SESSION['userid'] = $row['id'];
 
-				        	// print_r($row);
+		// print_r($row);
 
-		            
-		            	}
+		}
+
+	}
+
+	$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
+			    
+	$chck_result = mysqli_query($conn, $chck_status);
+
+	if (mysqli_num_rows($chck_result) > 0) {
+
+		while($row = mysqli_fetch_assoc($chck_result)) {
+		            	
+			$chck_users[] = $row;
+		
+		}
 
 
-		            }
+		// print_r($chck_users);
+
+	}
 
 	}else{
 
@@ -2018,10 +2078,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			            </div>
 
 			            <div class="checkbox">
+
+			            	<?php foreach ($chck_users as $key => $value) {
+
+			            		if($value['status'] == 1){
+
+			            			if($value['checkbox'] == 'K' || $value['checkbox'] == 'O'){
+
+								continue;
+
+			                }
+			            	?>
 	                
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="<?php echo $value['checkbox'];?>" name="checkbox[]" id="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></label>
+
+			                <?php }else{ continue; }?>
 			                
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]" id="B">B</label>
+							<!--<label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]" id="B">B</label>
 			                
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="C" name="checkbox[]" id="C">C</label>
 
@@ -2031,8 +2104,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]" id="I">I</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label> -->
 
+			            	<?php }?>
+	
 	         		    </div>
 
 	               			<input type="hidden" value="" id="checkbox-val">
@@ -2047,9 +2122,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			                
 			                <label class="checkbox-inline"><input type="checkbox" id="L29" value="L 29" class="checkStage" name="Stage_checkbox[]">L 29</label>
 
-			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
+			                <?php foreach ($chck_users as $key => $value) {
 
-			                <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
+			            		if($value['status'] == 1){
+
+			            			if($value['checkbox'] == 'A' || $value['checkbox'] == 'B' || $value['checkbox'] == 'C' || $value['checkbox'] == 'D' || $value['checkbox'] == 'H' || $value['checkbox'] == 'I' || $value['checkbox'] == 'N'){
+
+										continue;
+
+			                		}
+			            	?>
+	                
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="<?php echo $value['checkbox'];?>" name="checkbox[]" id="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></label>
+
+			                <?php }else{ continue; }}?>
+
+			                <!-- <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label> -->
+
+			                <!-- <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label> -->
 			                
 			            </div>
 

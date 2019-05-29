@@ -10,68 +10,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
 
-	if(isset($_GET['msg'])){
+	$sql = "SELECT * FROM `checkbox_status` WHERE 1";
+			    
+	$result = mysqli_query($conn, $sql);
 
-		$error['error'] = $_GET['msg'];
-	
-	// }else{
+	if (mysqli_num_rows($result) > 0) {
 
-		// echo "no message";
-	}
+		while($row = mysqli_fetch_assoc($result)) {
+		            	
+			$users[] = $row;
+		
+		}
 
-	$users = array();
 
-	if(isset($_SESSION['userid']) && ( $_SESSION['userlevel'] == 'A1')){
-
-		$id = $_SESSION['userid'];
-
-		$level = $_SESSION['userlevel'];
-	
-		$username = $_SESSION['username'];
-
-		if( $_SESSION['userlevel'] == "A2"){
-
-			$sql = "SELECT * FROM `users` WHERE `userlevel` = 'A3' AND `added_by` = '$username'";
-		    
-		    $result = mysqli_query($conn, $sql);
-
-		        if (mysqli_num_rows($result) > 0) {
-
-	            	while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$users[] = $row;
-
-			        	// print_r($row);
-
-	            	}
-
-	            }		
-
-		}elseif($_SESSION['userlevel'] == "A1"){
-
-		$sql = "SELECT * FROM `users`";
-		        
-		    $result = mysqli_query($conn, $sql);
-
-		        if (mysqli_num_rows($result) > 0) {
-
-	            	while($row = mysqli_fetch_assoc($result)) {
-	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$users[] = $row;
-
-			        	// print_r($row);
-
-	            	}
-
-	            }
-
-	        }
-
-	}else{
-
-		header("Location: 2d1-betform.php");
+		// print_r($users);
 
 	}
 
@@ -403,63 +355,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					  
 					    <tbody>
 
+
+					    	<?php foreach ($users as $key => $value) {
+
+					    		if($value['status'] == 1){
+
+					    			$value['status'] = "Enabled";
+
+					    			$class = "btn btn-primary";
+					    		
+					    		}elseif($value['status'] == 0){
+
+					    			$value['status'] = "Disabled";
+
+					    			$class = "btn btn-danger";
+
+					    		}
+
+					    	?>
+
 					   		<tr>
 					      		
-					      		<td>A</td>
-					      		<td class="enable" data-value="A">Enabled</td>
+					      		<td><?php echo $value['checkbox'];?></td>
+					      	
+					      		<td class="enable" data-value="<?php echo $value['checkbox'];?>"><button class="<?php echo $class;?>"><?php echo $value['status'];?></button></td>
 
 					      	</tr>
 
-					      	<tr>
-					      		<td>B</td>
-					      		<td class="enable" data-value="B">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-					      		<td>C</td>
-					      		<td class="enable" data-value="C">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-
-					      		<td>D</td>
-					      		<td class="enable" data-value="D">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-
-					      		<td>H</td>
-					      		<td class="enable" data-value="H">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-
-					      		<td>I</td>
-					      		<td class="enable" data-value="I">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-					      		<td>N</td>
-					      		<td class="enable" data-value="N">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-					      		<td>K</td>
-					      		<td class="enable" data-value="K">Enabled</td>
-
-					      	</tr>
-
-					      	<tr>
-					      		<td>O</td>
-					      		<td class="enable" data-value="O">Enabled</td>
-
-							</tr>  
+					    	<?php }?>
 
 					    </tbody>
 					
@@ -491,11 +414,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				success: function(response){
 
-					// var resp = JSON.parse(response);
+					var resp = JSON.parse(response);
 
-					// console.log(response);
+					console.log(resp);
 
-					// if(resp.status == 'success'){
+					// if(resp.status == 'disabled'){
+
+						// $(this).html(resp.status);
+						window.location.reload();
 
 					// 	var user = resp.users[0];
 
