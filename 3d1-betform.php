@@ -1313,8 +1313,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 				// $usdval[] = $usdval[0];
 				// $khrval[] = $khrval[0];
-				print_r($usdval[0]);
-				print_r($khrval[0]);
+				// print_r($usdval[0]);
+				// print_r($khrval[0]);
 
 				$checkorder = count($checkboxlevel);
 
@@ -2610,6 +2610,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		            </div>
 
               		<button type="submit" class="btn btn-default">Submit</button>
+              		<button type="button" class="btn btn-default"><a href="3d1-betform.php">Reset</a></button>              		
             
            		</form>            
 

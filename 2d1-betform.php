@@ -2144,6 +2144,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			            </div>
 
 			            <button type="submit" class="btn btn-primary">Submit</button>
+	              		<button type="button" class="btn btn-default"><a href="2d1-betform.php">Reset</a></button>			            
 	            
 	            	</div>
 

@@ -2123,6 +2123,7 @@ $chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
 			            </div>
 
 			            <button type="submit" class="btn btn-primary">Submit</button>
+			            <button type="button" class="btn btn-default"><a href="2d2-betform.php">Reset</a></button>
 	            
 	            	</div>
 
