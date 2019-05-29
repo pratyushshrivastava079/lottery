@@ -24,6 +24,23 @@ include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+	$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
+			    
+	$chck_result = mysqli_query($conn, $chck_status);
+
+	if (mysqli_num_rows($chck_result) > 0) {
+
+		while($row = mysqli_fetch_assoc($chck_result)) {
+		            	
+			$chck_users[] = $row;
+		
+		}
+
+
+		// print_r($chck_users);
+
+	}
+
 	$counttxt3d = count($_POST['txt3d']);
 
 	$countusd = count($_POST['usd']);
@@ -1764,6 +1781,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	$id = $_SESSION['userid'];
 
+	$chck_status = "SELECT * FROM `checkbox_status` WHERE 1";
+			    
+	$chck_result = mysqli_query($conn, $chck_status);
+
+	if (mysqli_num_rows($chck_result) > 0) {
+
+		while($row = mysqli_fetch_assoc($chck_result)) {
+		            	
+			$chck_users[] = $row;
+		
+		}
+
+
+		// print_r($chck_users);
+
+	}
+
 	$sql = "SELECT * FROM `users` WHERE `id` = '$id'";
 			        
 			        $result = mysqli_query($conn, $sql);
@@ -2513,7 +2547,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
  		            <div class="checkbox upper">
  	               
-    		            <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
+    		            <!-- <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="A" name="checkbox[]" id="A">A</label>
 
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="B" name="checkbox[]" id="B">B</label>
 
@@ -2525,7 +2559,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="I" name="checkbox[]" id="I">I</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label>
+		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="N" name="checkbox[]" id="N">N</label> -->
+		                 <?php foreach ($chck_users as $key => $value) {
+
+			            		if($value['status'] == 1){
+
+			            			if($value['checkbox'] == 'K' || $value['checkbox'] == 'O'){
+
+								continue;
+
+			                }
+			            	?>
+	                
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="<?php echo $value['checkbox'];?>" name="checkbox[]" id="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></label>
+
+			                <?php }else{ continue; }}?>
 
 		            </div>
 
@@ -2541,9 +2589,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="L 22" class="checkStage" name="Stage_checkbox[]">L 22</label>
 
-		                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
+		                <!-- <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
-			            <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label>
+			            <label class="checkbox-inline last-checkbox"><input type="checkbox" class="singleCheckbox" value="O" name="checkbox[]" id="0">O</label> -->
+
+			             <?php foreach ($chck_users as $key => $value) {
+
+			            		if($value['status'] == 1){
+
+			            			if($value['checkbox'] == 'A' || $value['checkbox'] == 'B' || $value['checkbox'] == 'C' || $value['checkbox'] == 'D' || $value['checkbox'] == 'H' || $value['checkbox'] == 'I' || $value['checkbox'] == 'N'){
+
+										continue;
+
+			                		}
+			            	?>
+	                
+			                <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="<?php echo $value['checkbox'];?>" name="checkbox[]" id="<?php echo $value['checkbox'];?>"><?php echo $value['checkbox'];?></label>
+
+			                <?php }else{ continue; }}?>
 		                
 		            </div>
 
@@ -2993,11 +3056,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
           
             var result = textVal + val;
 
-            if (result < 0 || result > 99) {
+            // if (result < 0 || result > 99) {
           
-               event.preventDefault();
+            //    event.preventDefault();
           
-            }
+            // }
        
        }
        
