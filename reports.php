@@ -425,8 +425,8 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 			        	// print_r($users);
 
 
-	        }elseif(isset($_GET['date']) && isset($_GET['userid'])){
-
+	        }elseif(isset($_GET['date']) && isset($_GET['userid']) && isset($_GET['stage'])){
+	        	
 	        	if(isset($_GET['userid'])){
 
 	        		$userid = $_GET['userid'];
@@ -436,7 +436,16 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 	        		$userid = $_SESSION['userid'];
 	        	}
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid'";
+	        	if(isset($_GET['stage'])){
+
+	        		$stage = $_GET['stage'];
+	        	
+	        	}else{
+
+	        		$stage = $_SESSION['stage'];
+	        	}
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid' AND `stage` = '$stage'";
 
 	// echo $sql;
 		    
@@ -858,7 +867,9 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1">Reports</a></span>
+		    			<?php $today = date("m/d/Y");?>
+
+		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1&date=<?php echo $today;?>">Reports</a></span>
 
 		    			<?php if($_SESSION['userlevel'] == "A1"){?>
 
@@ -1308,7 +1319,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 				var id = $(this).data('id');
 
-				window.location = "reports.php?date="+this.value+"&userid="+id;
+				window.location = "reports.php?date="+this.value+"&uid="+id;
 
 			});
 
@@ -1334,7 +1345,7 @@ function handleSelectstage(elm)
 
 	var userid = str[1].trim();
 
-	window.location = "reports.php?stage="+str[0]+"&userid="+userid;
+	window.location = "reports.php?stage="+str[0]+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
 }
 
 function handleSelectdate(elm)

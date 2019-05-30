@@ -2569,7 +2569,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			            		if($value['status'] == 1){
 
-			            			if($value['checkbox'] == 'K' || $value['checkbox'] == 'O'){
+			            			if($value['checkbox'] == 'K' || $value['checkbox'] == 'O' || $value['checkbox'] == 'L 19' || $value['checkbox'] == 'L 20' || $value['checkbox'] == 'L 21' || $value['checkbox'] == 'L 22'){
 
 								continue;
 
@@ -2585,14 +2585,50 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			            <input type="hidden" value="" id="checkbox-val">
 
 		            <div class="checkbox lower">
+
+		            	<?php foreach ($chck_users as $key => $value) {
+
+			            		if($value['status'] == 1){
+
+			            			if($value['checkbox'] == 'A' || $value['checkbox'] == 'B' || $value['checkbox'] == 'C' || $value['checkbox'] == 'D' || $value['checkbox'] == 'H' || $value['checkbox'] == 'I' || $value['checkbox'] == 'N' || $value['checkbox'] == 'K' || $value['checkbox'] == 'O'  ){
+
+			            				continue;
+
+			            			}else{
+
+				            			if($value['checkbox'] == 'L 19'){
+
+				            				$id = 'l19';
+				            			
+				            			}elseif($value['checkbox'] == 'L 20'){
+
+				            				$id = 'l20';
+
+				            			}elseif($value['checkbox'] == 'L 21'){
+
+				            				$id = 'l21';
+				            			
+				            			}elseif($value['checkbox'] == 'L 22'){
+
+				            				$id = 'l22';
+
+				            			}
+
+
+
+			            	?>
+	                
+		                <label class="checkbox-inline"><input type="checkbox"  id="<?php echo $id;?>" value="<?php echo $value['checkbox'];?>" class="checkStage" name="Stage_checkbox[]"><?php echo $value['checkbox'];?></label>
+
+			                <?php }}else{ continue; }}?>
                 
-		                <label class="checkbox-inline"><input type="checkbox" id="l19" value="L 19" class="checkStage" name="Stage_checkbox[]">L 19</label>
+		                <!-- <label class="checkbox-inline"><input type="checkbox" id="l19" value="L 19" class="checkStage" name="Stage_checkbox[]">L 19</label> -->
 		                
-		                <label class="checkbox-inline"><input type="checkbox" id="l20" value="L 20" class="checkStage" name="Stage_checkbox[]">L 20</label>
+		                <!-- <label class="checkbox-inline"><input type="checkbox" id="l20" value="L 20" class="checkStage" name="Stage_checkbox[]">L 20</label> -->
 
-		                <label class="checkbox-inline"><input type="checkbox" id="l21" value="L 21" class="checkStage" name="Stage_checkbox[]">L 21</label>
+		                <!-- <label class="checkbox-inline"><input type="checkbox" id="l21" value="L 21" class="checkStage" name="Stage_checkbox[]">L 21</label> -->
 
-		                <label class="checkbox-inline"><input type="checkbox" id="l22" value="L 22" class="checkStage" name="Stage_checkbox[]">L 22</label>
+		                <!-- <label class="checkbox-inline"><input type="checkbox" id="l22" value="L 22" class="checkStage" name="Stage_checkbox[]">L 22</label> -->
 
 		                <!-- <label class="checkbox-inline"><input type="checkbox" class="singleCheckbox" value="K" name="checkbox[]" id="K">K</label>
 
@@ -2601,7 +2637,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			            		if($value['status'] == 1){
 
-			            			if($value['checkbox'] == 'A' || $value['checkbox'] == 'B' || $value['checkbox'] == 'C' || $value['checkbox'] == 'D' || $value['checkbox'] == 'H' || $value['checkbox'] == 'I' || $value['checkbox'] == 'N'){
+			            			if($value['checkbox'] == 'A' || $value['checkbox'] == 'B' || $value['checkbox'] == 'C' || $value['checkbox'] == 'D' || $value['checkbox'] == 'H' || $value['checkbox'] == 'I' || $value['checkbox'] == 'N' || $value['checkbox'] == 'L 19' || $value['checkbox'] == 'L 20' || $value['checkbox'] == 'L 21' || $value['checkbox'] == 'L 22'){
 
 										continue;
 
