@@ -6,12 +6,7 @@ include('database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-
-}elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
-
 	$_SESSION['subuserid'] = $_SESSION['userid'];
-
-	// echo $_SESSION['subuserid'];
 
 	if(isset($_GET['userid'])){
 	
@@ -19,7 +14,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		$_SESSION['subuserid'] = $id;
 
-		// echo $_SESSION['subuserid'];
 
 	}else{
 
@@ -29,82 +23,590 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			
 		}else{
 
-			// header("Location: logout.php");
 		}
 
 	}
 
-	if(isset($_GET['stage']) && isset($_GET['userid'])){
-	
-		$stagelevel = $_GET['stage'];
-
-		if($stagelevel == 1){
-
-			$stage = 1;
-
-			$type = '2dbetform';
-
-		}elseif($stagelevel == 2){
-
-			$stage = 2;
-
-			$type = '2dbetform';			
-
-		}elseif($stagelevel == 3){
-
-			$stage = 1;
-
-			$type = '3dbetform';			
-
-		}elseif($stagelevel == 4){
-
-			$stage = 2;
-
-			$type = '3dbetform';			
-
-		}
-
-	}else{
-
-		if($_SESSION['userlevel'] == 'A1'){
-
-			$stagelevel = 1;
-			
-		}else{
-
-			// header("Location: logout.php");
-		}
-
-	}
-
-
-	if(isset($_GET['date'])){
-	
-		$date = $_GET['date'];
-
-		$date = date("Y-m-d H:i:s",strtotime($date));
-
-	}else{
-
-		if($_SESSION['userlevel'] == 'A1'){
-
-			$date = 1;
-			
-		}else{
-
-			// header("Location: logout.php");
-		}
-
-	}
-
-	// echo $stage;
-	// echo $date;
-
-	// echo $id;
 
 	$userid = $_SESSION['userid'];
 
-	// echo "user id is " . $userid;
+	// echo $_SESSION['userlevel'];
+
+	// echo $id;
+
+	$countusername = count($_POST['username']);
+	
+	$stage = count($_POST['stage']);
+	
+	$datepicker = count($_POST['datepicker']);
+
+	$username = mysqli_real_escape_string( $conn, $_POST['username'] );
+	
+	$date = mysqli_real_escape_string( $conn, $_POST['datepicker'] );
+
+	// echo $username."<br/>";
+
+	// echo $stage."<br/>";
+
+	echo $date."<br/>";
+
+	$stageArray = array();
+	// echo $stage;
+	// if($stage > 0){
+
+		for($i = 0; $i < 4; $i++){
+
+			if($i < $stage){
+
+				if($i+1 == $_POST['stage'][$i]){
+
+					$stageArray[$i+1] = mysqli_real_escape_string( $conn, $_POST['stage'][$i] );
+
+				}else{
+					// echo $i;
+					$stageArray[$_POST['stage'][$i]] = $_POST['stage'][$i];
+
+				}
+
+			}
+		}
+
+	// }else{
+
+			// $stageArray[0] = mysqli_real_escape_string( $conn, $_POST['stage'][0] );
+
+	// }
+
+			print_r($stageArray);
+
+	// die();
+	$_SESSION['posteduser'] = $username;
+
+	// echo $username;
+
+	// echo $date;
+
+	// print_r($stageArray);
+
+	$arrstage = array();
+
+	// $date =  date("m / d / Y");
+
+	// echo $date;
+
+	if($_SESSION['userlevel'] == "A1"){
+
+		for($i = 1; $i <= count($stageArray); $i++ ){
+
+			if(count($stageArray) == 1){
+
+				// echo "sas";
+
+				header("Location: reports.php?userid=".$username."&stage1=".$stageArray[1]."&stage2=".$stageArray[2]."&stage3=".$stageArray[3]."&stage4=".$stageArray[4]."&date=".$date."");
+			
+			}elseif(count($stageArray) == 2){
+
+				header("Location: reports.php?userid=".$username."&stage1=".$stageArray[1]."&stage2=".$stageArray[2]."&stage3=".$stageArray[3]."&stage4=".$stageArray[4]."&date=".$date."");
+
+			}elseif(count($stageArray) == 3){
+
+				header("Location: reports.php?userid=".$username."&stage1=".$stageArray[1]."&stage2=".$stageArray[2]."&stage3=".$stageArray[3]."&stage4=".$stageArray[4]."&date=".$date."");				
+
+			}elseif(count($stageArray) == 4){
+
+				header("Location: reports.php?userid=".$username."&stage1=".$stageArray[1]."&stage2=".$stageArray[2]."&stage3=".$stageArray[3]."&stage4=".$stageArray[4]."&date=".$date."");				
+
+			}
+
+
+		}
+
+		// $usersql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$username'";
+
+		// $userresult = mysqli_query($conn, $usersql);
+
+		// if (mysqli_num_rows($userresult) > 0) {
+
+		// 	while($userrow = mysqli_fetch_assoc($userresult)) {
+		            	
+		// 		$users[] = $userrow;
+
+		// 	}
+
+
+  //       }
+
+        // print_r($finalusers);
+
+		// $iduser = $userrow['username'];
+			
+		// $subusersql = "SELECT * FROM `users` WHERE `added_by` = '$iduser'";
+		    
+		// $subuserresult = mysqli_query($conn, $subusersql);
+
+		// if (mysqli_num_rows($subuserresult) > 0) {
+
+	 //    	while($subuserrow = mysqli_fetch_assoc($subuserresult)) {
+	            	
+		// 		$finalusers[] = $subuserrow;
+
+
+	 //        }
+
+		// }
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// for( $i = 0; $i < count($stageArray); $i++){
+
+	// 	if(count($stageArray) == 1){
+
+	// 		$stage = $stageArray[$i];
+
+	// 		if($stage == 1){
+
+	// 			$type = "2dbetform";
+
+	// 			$stage = 1;
+			
+	// 		}elseif($stage == 2){
+
+	// 			$type = "2dbetform";
+
+	// 			$stage = 2;
+			
+	// 		}elseif($stage == 3){
+
+	// 			$type = "3dbetform";
+
+	// 			$stage = 1;
+			
+	// 		}elseif($stage == 4){
+
+	// 			$type = "3dbetform";
+
+	// 			$stage = 2;
+	// 		}
+		
+	// 	}elseif(count($stageArray) == 2){
+
+	// 		if($stageArray[$i] == 1){
+
+	// 			$type = "2dbetform";
+
+	// 			$stage = 1;
+
+	// 			array_push($arrstage, $stage);
+
+	// 		}elseif($stageArray[$i] == 2){
+
+	// 			$type = "2dbetform";
+
+	// 			$stage = 2;
+
+	// 			array_push($arrstage, $stage);
+				
+	// 		}elseif($stageArray[$i] == 3){
+
+	// 			$type = "3dbetform";
+
+	// 			$stage = 3;
+				
+	// 			array_push($arrstage, $stage);
+			
+	// 		}elseif($stageArray[$i] == 4){
+
+	// 			$type = "3dbetform";
+
+	// 			$stage = 4;
+
+	// 			array_push($arrstage, $stage);
+	// 		}
+	// 	}
+	// }
+
+	// echo $type;
+
+	// echo $stage;
+
+	// print_r($arrstage);
+
+		// if(count($stageArray) == 1){
+
+		// 	if($stageArray[0] == 1){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 1;
+			
+		// 	}elseif($stageArray[0] == 2){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 2;
+			
+		// 	}elseif($stageArray[0] == 3){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 1;
+			
+		// 	}elseif($stageArray[0] == 4){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 2;
+		// 	}
+
+		// }elseif(count($stageArray) == 2){
+
+		// 	if($stageArray[0] == 1){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 1;
+
+		// 	}elseif($stageArray[0] == 2){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 2;
+			
+		// 	}elseif($stageArray[0] == 3){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 3;
+			
+		// 	}elseif($stageArray[0] == 4){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 4;
+
+		// 	}elseif($stageArray[1] == 1){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 1;
+
+		// 	}elseif($stageArray[1] == 2){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 2;
+
+		// 	}elseif($stageArray[1] == 3){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 3;
+			
+		// 	}elseif($stageArray[1] == 4){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 4;
+		// 	}
+
+		// }elseif(count($stageArray) == 3){
+
+		// 	if($stageArray[0] == 1){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 1;
+
+		// 	}elseif($stageArray[0] == 2){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 2;
+			
+		// 	}elseif($stageArray[0] == 3){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 3;
+			
+		// 	}elseif($stageArray[0] == 4){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 4;
+
+		// 	}elseif($stageArray[1] == 1){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 1;
+
+		// 	}elseif($stageArray[1] == 2){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 2;
+
+		// 	}elseif($stageArray[1] == 3){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 3;
+			
+		// 	}elseif($stageArray[1] == 4){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 4;
+		// 	}
+
+		// }elseif(count($stageArray) == 4){
+
+		// 	if($stageArray[0] == 1){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 1;
+
+		// 	}elseif($stageArray[0] == 2){
+
+		// 		$type = "2dbetform";
+
+		// 		$stage = 2;
+			
+		// 	}elseif($stageArray[0] == 3){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 3;
+			
+		// 	}elseif($stageArray[0] == 4){
+
+		// 		$type = "3dbetform";
+
+		// 		$stage = 4;
+
+		// 	}elseif($stageArray[1] == 1){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 1;
+
+		// 	}elseif($stageArray[1] == 2){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 2;
+
+		// 	}elseif($stageArray[1] == 3){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 3;
+			
+		// 	}elseif($stageArray[1] == 4){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 4;
+
+		// 	}elseif($stageArray[1] == 1){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 1;
+
+		// 	}elseif($stageArray[1] == 2){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 2;
+
+		// 	}elseif($stageArray[1] == 3){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 3;
+			
+		// 	}elseif($stageArray[1] == 4){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 4;
+		// 	}elseif($stageArray[1] == 1){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 1;
+
+		// 	}elseif($stageArray[1] == 2){
+
+		// 		$type2 = "2dbetform";
+
+		// 		$stage2 = 2;
+
+		// 	}elseif($stageArray[1] == 3){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 3;
+			
+		// 	}elseif($stageArray[1] == 4){
+
+		// 		$type2 = "3dbetform";
+
+		// 		$stage2 = 4;
+		// 	}
+
+		// }
+
+		// var_dump($type);
+		// var_dump($type2);
+
+		// echo $stage."<br/>";
+		// echo $stage2."<br/>";
+		
+		// echo $_SESSION['posteduser'];
+		// print_r($stageArray);
+		// echo $datepicker;
+
+}elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+	// $_SESSION['subuserid'] = $_SESSION['userid'];
+
+	// if(isset($_GET['userid'])){
+	
+	// 	$id = $_GET['userid'];
+
+	// 	$_SESSION['subuserid'] = $id;
+
+	// }else{
+
+	// 	if($_SESSION['userlevel'] == 'A1'){
+
+	// 		$id = 1;
+			
+	// 	}else{
+
+	// 	}
+
+	// }
+
+	// if(isset($_GET['stage']) && isset($_GET['userid'])){
+	
+	// 	$stagelevel = $_GET['stage'];
+
+	// 	if($stagelevel == 1){
+
+	// 		$stage = 1;
+
+	// 		$type = '2dbetform';
+
+	// 	}elseif($stagelevel == 2){
+
+	// 		$stage = 2;
+
+	// 		$type = '2dbetform';			
+
+	// 	}elseif($stagelevel == 3){
+
+	// 		$stage = 1;
+
+	// 		$type = '3dbetform';			
+
+	// 	}elseif($stagelevel == 4){
+
+	// 		$stage = 2;
+
+	// 		$type = '3dbetform';			
+
+	// 	}
+
+	// }else{
+
+	// 	if($_SESSION['userlevel'] == 'A1'){
+
+	// 		$stagelevel = 1;
+			
+	// 	}else{
+
+	// 	}
+
+	// }
+
+
+	// if(isset($_GET['date'])){
+	
+	// 	$date = $_GET['date'];
+
+	// 	$date = date("Y-m-d H:i:s",strtotime($date));
+
+	// }else{
+
+	// 	if($_SESSION['userlevel'] == 'A1'){
+
+	// 		$date = 1;
+			
+	// 	}else{
+
+	// 	}
+
+	// }
+
+	$userid = $_SESSION['userid'];
 
 	if($_SESSION['userlevel'] == "A1"){
 
@@ -116,13 +618,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	            	while($userrow = mysqli_fetch_assoc($userresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
 			        	$finalusers[] = $userrow;
 
 
 	            	}
-
-	            	// print_r($finalusers)
 
 	            }		
 
@@ -156,373 +655,796 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 	            	}
 
-
-
-	            	// print_r($finalusers);
-
 	            }
 	}
 
 
+	// $_SESSION['subuserid'] = $_SESSION['userid'];
+
+	// if(isset($_GET['userid'])){
+	
+	// 	$id = $_GET['userid'];
+
+	// 	$_SESSION['subuserid'] = $id;
+
+	// }else{
+
+	// 	if($_SESSION['userlevel'] == 'A1'){
+
+	// 		$id = 1;
+			
+	// 	}else{
+
+	// 	}
+
+	// }
 
 
-if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 
+if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !isset($_GET['stage2']) && !isset($_GET['stage3']) && !isset($_GET['stage4'])){
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid'";
-		    
-		    $result = mysqli_query($conn, $sql);
+	$stagelevel = $_GET['stage1'];
 
-		        if (mysqli_num_rows($result) > 0) {
+	$userid = $_GET['userid'];
 
-	            	while($row = mysqli_fetch_assoc($result)) {
+	if($stagelevel == 1){
+
+		$stage = 1;
+
+		$type = '2dbetform';
+
+	}elseif($stagelevel == 2){
+
+		$stage = 2;
+
+		$type = '2dbetform';			
+
+	}elseif($stagelevel == 3){
+
+		$stage = 1;
+
+		$type = '3dbetform';			
+
+	}elseif($stagelevel == 4){
+
+		$stage = 2;
+
+		$type = '3dbetform';			
+
+	}
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage'";
+		
+	// echo $sql;
+
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
 	            	
-			        	$users[] = $row;
+			$users[] = $row;
 
 
-	            	}
+	    }
 
-	            }
-
+	}
 
 	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-		    $sumresult = mysqli_query($conn, $sumsql);
+	$sumresult = mysqli_query($conn, $sumsql);
 
-		        if (mysqli_num_rows($sumresult) > 0) {
+	if (mysqli_num_rows($sumresult) > 0) {
 
-	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+		while($sumrow = mysqli_fetch_assoc($sumresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$sumusers[] = $sumrow;
+			$sumusers[] = $sumrow;
 
 
-	            	}
+	    }
 
-	            }
+	}
 
-	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
 
+	$totalusd = $ar[0];
 
-	            $totalusd = $ar[0];
-	            // $totalusd = $totalusd * 100;
+	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-	            // print_r($totalusd);
+	$khrresult = mysqli_query($conn, $khrsql);
 
+	if (mysqli_num_rows($khrresult) > 0) {
 
-	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-		    $khrresult = mysqli_query($conn, $khrsql);
-
-		        if (mysqli_num_rows($khrresult) > 0) {
-
-	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+		while($khrrow = mysqli_fetch_assoc($khrresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$khrusers[] = $khrrow;
+			$khrusers[] = $khrrow;
+
+		}
+
+	}
+
+	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	            	}
+	$totalkhr = $khr[0] * 100;
 
-	            }
+}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['date']) && !isset($_GET['stage3']) && !isset($_GET['stage4'])){
 
-	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+	$stagelevel = $_GET['stage1'];
+	
+	$stagelevel2 = $_GET['stage2'];
 
+	$userid = $_GET['userid'];
 
-	            $totalkhr = $khr[0] * 100;
-	            // $finaltotalkhr = $totalkhr * 100;
+	// echo $userid;
 
-	            // print_r($totalkhr);
+	if($stagelevel == 1){
 
-	            // echo count($users);
+		$stage = 1;
 
-			        	// print_r($users);
+		$type = '2dbetform';
 
+	}elseif($stagelevel == 2){
 
+		$stage = 2;
 
+		$type = '2dbetform';			
 
+	}elseif($stagelevel == 3){
 
+		$stage = 1;
 
+		$type = '3dbetform';			
 
+	}elseif($stagelevel == 4){
 
+		$stage = 2;
 
+		$type = '3dbetform';			
 
+	}
 
+	// echo $stagelevel2;
 
+	if($stagelevel2 == 1){
 
+		$stage2 = 1;
 
+		$type2 = '2dbetform';
 
+	}elseif($stagelevel2 == 2){
 
-}elseif(isset($_GET['userid']) && !isset($_GET['stage'])){
+		$stage2 = 2;
 
-	$id = $_SESSION['subuserid'];
+		$type2 = '2dbetform';			
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
+	}elseif($stagelevel2 == 3){
 
+		$stage2 = 1;
+
+		$type2 = '3dbetform';			
+
+	}elseif($stagelevel2 == 4){
+
+		$stage2 = 2;
+
+		$type2 = '3dbetform';			
+
+	}
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2'";
+		
 	// echo $sql;
-		    
-		    $result = mysqli_query($conn, $sql);
 
-		        if (mysqli_num_rows($result) > 0) {
+	$result = mysqli_query($conn, $sql);
 
-	            	while($row = mysqli_fetch_assoc($result)) {
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$users[] = $row;
+			$users[] = $row;
 
 
-	            	}
+	    }
 
-	            }
+	}
 
-	            // var_dump($users);
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-	            // die();
+	$sumresult = mysqli_query($conn, $sumsql);
 
+	if (mysqli_num_rows($sumresult) > 0) {
 
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
-
-		    $sumresult = mysqli_query($conn, $sumsql);
-
-		        if (mysqli_num_rows($sumresult) > 0) {
-
-	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+		while($sumrow = mysqli_fetch_assoc($sumresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$sumusers[] = $sumrow;
+			$sumusers[] = $sumrow;
 
 
-	            	}
+	    }
 
-	            }
+	}
 
-	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
 
+	$totalusd = $ar[0];
 
-	            $totalusd = $ar[0];
-	            // $totalusd = $totalusd * 100;
+	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-	            // print_r($totalusd);
+	$khrresult = mysqli_query($conn, $khrsql);
 
+	if (mysqli_num_rows($khrresult) > 0) {
 
-	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
-
-		    $khrresult = mysqli_query($conn, $khrsql);
-
-		        if (mysqli_num_rows($khrresult) > 0) {
-
-	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+		while($khrrow = mysqli_fetch_assoc($khrresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$khrusers[] = $khrrow;
+			$khrusers[] = $khrrow;
+
+		}
+
+	}
+
+	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	            	}
+	$totalkhr = $khr[0] * 100;
 
-	            }
+}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['date']) && !isset($_GET['stage4'])){
 
-	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+	$stagelevel = $_GET['stage1'];
+	$stagelevel2 = $_GET['stage2'];
+	$stagelevel3 = $_GET['stage3'];
 
+	$userid = $_GET['userid'];
 
-	            $totalkhr = $khr[0] * 100;
-	            // $finaltotalkhr = $totalkhr * 100;
+	if($stagelevel == 1){
 
-	            // print_r($totalkhr);
+		$stage = 1;
 
-	            // echo count($users);
+		$type = '2dbetform';
 
-			        	// print_r($users);
+	}elseif($stagelevel == 2){
 
+		$stage = 2;
 
-	        }
+		$type = '2dbetform';			
 
+	}elseif($stagelevel == 3){
 
-	        elseif(isset($_GET['stage']) && isset($_GET['userid'])){
+		$stage = 1;
 
-	        	if(isset($_GET['userid'])){
+		$type = '3dbetform';			
 
-	        		$userid = $_GET['userid'];
-	        	
-	        	}
+	}elseif($stagelevel == 4){
 
-	        	// echo $userid;
+		$stage = 2;
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type' AND `user_id` = '$userid'";
+		$type = '3dbetform';			
 
+	}
+
+	if($stagelevel2 == 1){
+
+		$stage2 = 1;
+
+		$type2 = '2dbetform';
+
+	}elseif($stagelevel2 == 2){
+
+		$stage2 = 2;
+
+		$type2 = '2dbetform';			
+
+	}elseif($stagelevel2 == 3){
+
+		$stage2 = 1;
+
+		$type2 = '3dbetform';			
+
+	}elseif($stagelevel2 == 4){
+
+		$stage2 = 2;
+
+		$type2 = '3dbetform';			
+
+	}
+
+	if($stagelevel3 == 1){
+
+		$stage3 = 1;
+
+		$type3 = '2dbetform';
+
+	}elseif($stagelevel3 == 2){
+
+		$stage3 = 2;
+
+		$type3 = '2dbetform';			
+
+	}elseif($stagelevel3 == 3){
+
+		$stage3 = 1;
+
+		$type3 = '3dbetform';			
+
+	}elseif($stagelevel3 == 4){
+
+		$stage3 = 2;
+
+		$type3 = '3dbetform';			
+
+	}
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3'";
+		
 	// echo $sql;
-		    
-		    $result = mysqli_query($conn, $sql);
 
-		        if (mysqli_num_rows($result) > 0) {
+	$result = mysqli_query($conn, $sql);
 
-	            	while($row = mysqli_fetch_assoc($result)) {
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$users[] = $row;
+			$users[] = $row;
 
 
-	            	}
+	    }
 
-	            }
+	}
 
-	            // var_dump($users);
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-	            // die();
+	$sumresult = mysqli_query($conn, $sumsql);
 
+	if (mysqli_num_rows($sumresult) > 0) {
 
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
-
-		    $sumresult = mysqli_query($conn, $sumsql);
-
-		        if (mysqli_num_rows($sumresult) > 0) {
-
-	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+		while($sumrow = mysqli_fetch_assoc($sumresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$sumusers[] = $sumrow;
+			$sumusers[] = $sumrow;
 
 
-	            	}
+	    }
 
-	            }
+	}
 
-	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
 
+	$totalusd = $ar[0];
 
-	            $totalusd = $ar[0];
-	            // $totalusd = $totalusd * 100;
+	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
 
-	            // print_r($totalusd);
+	$khrresult = mysqli_query($conn, $khrsql);
 
+	if (mysqli_num_rows($khrresult) > 0) {
 
-	        $khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
-
-		    $khrresult = mysqli_query($conn, $khrsql);
-
-		        if (mysqli_num_rows($khrresult) > 0) {
-
-	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+		while($khrrow = mysqli_fetch_assoc($khrresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$khrusers[] = $khrrow;
+			$khrusers[] = $khrrow;
+
+		}
+
+	}
+
+	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	            	}
+	$totalkhr = $khr[0] * 100;
 
-	            }
+}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['stage4']) && isset($_GET['date'])){
 
-	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+	$stagelevel = $_GET['stage1'];
+	$stagelevel2 = $_GET['stage2'];
+	$stagelevel3 = $_GET['stage3'];
+	$stagelevel4 = $_GET['stage4'];
+	$date = $_GET['date'];
+	$date=date("Y-m-d h:i:s",strtotime($date));
 
+	$userid = $_GET['userid'];
 
-	            $totalkhr = $khr[0] * 100;
-	            // $finaltotalkhr = $totalkhr * 100;
+	if($stagelevel == 1){
 
-	            // print_r($totalkhr);
+		$stage = 1;
 
-	            // echo count($users);
+		$type = '2dbetform';
 
-			        	// print_r($users);
+	}elseif($stagelevel == 2){
 
+		$stage = 2;
 
-	        }elseif(isset($_GET['date']) && isset($_GET['userid']) && isset($_GET['stage'])){
-	        	
-	        	if(isset($_GET['userid'])){
+		$type = '2dbetform';			
 
-	        		$userid = $_GET['userid'];
-	        	
-	        	}else{
+	}elseif($stagelevel == 3){
 
-	        		$userid = $_SESSION['userid'];
-	        	}
+		$stage = 1;
 
-	        	if(isset($_GET['stage'])){
+		$type = '3dbetform';			
 
-	        		$stage = $_GET['stage'];
-	        	
-	        	}else{
+	}elseif($stagelevel == 4){
 
-	        		$stage = $_SESSION['stage'];
-	        	}
+		$stage = 2;
 
-	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid' AND `stage` = '$stage'";
+		$type = '3dbetform';			
 
+	}
+
+	if($stagelevel2 == 1){
+
+		$stage2 = 1;
+
+		$type2 = '2dbetform';
+
+	}elseif($stagelevel2 == 2){
+
+		$stage2 = 2;
+
+		$type2 = '2dbetform';			
+
+	}elseif($stagelevel2 == 3){
+
+		$stage2 = 1;
+
+		$type2 = '3dbetform';			
+
+	}elseif($stagelevel2 == 4){
+
+		$stage2 = 2;
+
+		$type2 = '3dbetform';			
+
+	}
+
+	if($stagelevel3 == 1){
+
+		$stage3 = 1;
+
+		$type3 = '2dbetform';
+
+	}elseif($stagelevel3 == 2){
+
+		$stage3 = 2;
+
+		$type3 = '2dbetform';			
+
+	}elseif($stagelevel3 == 3){
+
+		$stage3 = 1;
+
+		$type3 = '3dbetform';			
+
+	}elseif($stagelevel3 == 4){
+
+		$stage3 = 2;
+
+		$type3 = '3dbetform';			
+
+	}
+
+	if($stagelevel4 == 1){
+
+		$stage4 = 1;
+
+		$type4 = '2dbetform';
+
+	}elseif($stagelevel3 == 2){
+
+		$stage4 = 2;
+
+		$type4 = '2dbetform';			
+
+	}elseif($stagelevel4 == 3){
+
+		$stage4 = 1;
+
+		$type4 = '3dbetform';			
+
+	}elseif($stagelevel4 == 4){
+
+		$stage4 = 2;
+
+		$type4 = '3dbetform';			
+
+	}
+
+	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type4' AND `stage` = '$stage4' AND `created_at` >= '$date'";
+		
 	// echo $sql;
+
+	$result = mysqli_query($conn, $sql);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		while($row = mysqli_fetch_assoc($result)) {
+	            	
+			$users[] = $row;
+
+
+	    }
+
+	}
+
+	// echo "<pre>";
+
+	// print_r($users);
+
+	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
+
+	$sumresult = mysqli_query($conn, $sumsql);
+
+	if (mysqli_num_rows($sumresult) > 0) {
+
+		while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+			$sumusers[] = $sumrow;
+
+
+	    }
+
+	}
+
+    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+	$totalusd = $ar[0];
+
+	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
+
+	$khrresult = mysqli_query($conn, $khrsql);
+
+	if (mysqli_num_rows($khrresult) > 0) {
+
+		while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+			$khrusers[] = $khrrow;
+
+		}
+
+	}
+
+	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+	$totalkhr = $khr[0] * 100;
+
+}
+
+
+
+
+
+
+// }elseif(isset($_GET['userid']) && !isset($_GET['stage'])){
+
+// 	$id = $_SESSION['subuserid'];
+
+// 	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$id'";
+
+// 		    $result = mysqli_query($conn, $sql);
+
+// 		        if (mysqli_num_rows($result) > 0) {
+
+// 	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+// 			        	// $_SESSION['userdetails'] = $row;
+// 			        	$users[] = $row;
+
+
+// 	            	}
+
+// 	            }
+
+
+// 	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+// 		    $sumresult = mysqli_query($conn, $sumsql);
+
+// 		        if (mysqli_num_rows($sumresult) > 0) {
+
+// 	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+// 			        	$sumusers[] = $sumrow;
+
+
+// 	            	}
+
+// 	            }
+
+// 	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+// 	            $totalusd = $ar[0];
+
+// 	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+// 		    $khrresult = mysqli_query($conn, $khrsql);
+
+// 		        if (mysqli_num_rows($khrresult) > 0) {
+
+// 	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+// 			        	$khrusers[] = $khrrow;
+
+
+// 	            	}
+
+// 	            }
+
+// 	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+// 	            $totalkhr = $khr[0] * 100;
+
+// 	        }
+
+
+// 	        elseif(isset($_GET['stage']) && isset($_GET['userid'])){
+
+// 	        	if(isset($_GET['userid'])){
+
+// 	        		$userid = $_GET['userid'];
+	        	
+// 	        	}
+
+// 	$sql = "SELECT * FROM `2dbetform` WHERE `stage` = '$stage' AND `type` = '$type' AND `user_id` = '$userid'";
+
 		    
-		    $result = mysqli_query($conn, $sql);
+// 		    $result = mysqli_query($conn, $sql);
 
-		        if (mysqli_num_rows($result) > 0) {
+// 		        if (mysqli_num_rows($result) > 0) {
 
-	            	while($row = mysqli_fetch_assoc($result)) {
+// 	            	while($row = mysqli_fetch_assoc($result)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$users[] = $row;
+// 			        	$users[] = $row;
 
 
-	            	}
+// 	            	}
 
-	            }
-
-	            // var_dump($users);
-
-	            // die();
+// 	            }
 
 
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+// 	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
 
-		    $sumresult = mysqli_query($conn, $sumsql);
+// 		    $sumresult = mysqli_query($conn, $sumsql);
 
-		        if (mysqli_num_rows($sumresult) > 0) {
+// 		        if (mysqli_num_rows($sumresult) > 0) {
 
-	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+// 	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$sumusers[] = $sumrow;
+// 			        	$sumusers[] = $sumrow;
 
 
-	            	}
+// 	            	}
 
-	            }
+// 	            }
 
-	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
-
-
-	            $totalusd = $ar[0];
-	            // $totalusd = $totalusd * 100;
-
-	            // print_r($totalusd);
+// 	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
 
 
-	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+// 	            $totalusd = $ar[0];
 
-		    $khrresult = mysqli_query($conn, $khrsql);
+// 	        $khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
 
-		        if (mysqli_num_rows($khrresult) > 0) {
+// 		    $khrresult = mysqli_query($conn, $khrsql);
 
-	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+// 		        if (mysqli_num_rows($khrresult) > 0) {
+
+// 	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
 	            	
-			        	// $_SESSION['userdetails'] = $row;
-			        	$khrusers[] = $khrrow;
+// 			        	$khrusers[] = $khrrow;
 
 
-	            	}
+// 	            	}
 
-	            }
+// 	            }
 
-	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
-
-
-	            $totalkhr = $khr[0] * 100;
-	            // $finaltotalkhr = $totalkhr * 100;
-
-	            // print_r($totalkhr);
-
-	            // echo count($users);
-
-			        	// print_r($users);
+// 	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
 
 
-	        }
+// 	            $totalkhr = $khr[0] * 100;
+
+
+// 	        }elseif(isset($_GET['date']) && isset($_GET['userid']) && isset($_GET['stage']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['stage4'])){
+
+// 	        	if(isset($_GET['userid'])){
+
+// 	        		$userid = $_GET['userid'];
+	        	
+// 	        	}else{
+
+// 	        		$userid = $_SESSION['userid'];
+// 	        	}
+
+// 	        	if(isset($_GET['stage'])){
+
+// 	        		$stage = $_GET['stage'];
+	        	
+// 	        	}else{
+
+// 	        		$stage = $_SESSION['stage'];
+// 	        	}
+
+// 	        	if(isset($_GET['stage2'])){
+
+// 	        		$stage = $_GET['stage2'];
+	        	
+// 	        	}else{
+
+// 	        		$stage = $_SESSION['stage2'];
+// 	        	}
+
+// 	        	if(isset($_GET['stage3'])){
+
+// 	        		$stage = $_GET['stage3'];
+	        	
+// 	        	}else{
+
+// 	        		$stage = $_SESSION['stage3'];
+// 	        	}
+
+// 	        	if(isset($_GET['stage4'])){
+
+// 	        		$stage = $_GET['stage4'];
+	        	
+// 	        	}else{
+
+// 	        		$stage = $_SESSION['stage4'];
+// 	        	}
+
+// 	$sql = "SELECT * FROM `2dbetform` WHERE `created_at` >= '$date' AND `user_id` = '$userid' AND `stage` = '$stage'";
+
+// 		    $result = mysqli_query($conn, $sql);
+
+// 		        if (mysqli_num_rows($result) > 0) {
+
+// 	            	while($row = mysqli_fetch_assoc($result)) {
+	            	
+// 			        	$users[] = $row;
+
+
+// 	            	}
+
+// 	            }
+
+
+// 	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+// 		    $sumresult = mysqli_query($conn, $sumsql);
+
+// 		        if (mysqli_num_rows($sumresult) > 0) {
+
+// 	            	while($sumrow = mysqli_fetch_assoc($sumresult)) {
+	            	
+// 			        	$sumusers[] = $sumrow;
+
+
+// 	            	}
+
+// 	            }
+
+// 	            $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+
+
+// 	            $totalusd = $ar[0];
+
+// 	            	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$id'";
+
+// 		    $khrresult = mysqli_query($conn, $khrsql);
+
+// 		        if (mysqli_num_rows($khrresult) > 0) {
+
+// 	            	while($khrrow = mysqli_fetch_assoc($khrresult)) {
+	            	
+// 			        	$khrusers[] = $khrrow;
+
+
+// 	            	}
+
+// 	            }
+
+// 	            $khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+
+
+// 	            $totalkhr = $khr[0] * 100;
+
+
+// 	        }
 
 }else{
 
@@ -869,7 +1791,7 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 		    			<?php $today = date("m/d/Y");?>
 
-		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1&date=<?php echo $today;?>">Reports</a></span>
+		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage1=1&stage2=&stage3=&stage4=&date=<?php echo $today;?>">Reports</a></span>
 
 		    			<?php if($_SESSION['userlevel'] == "A1"){?>
 
@@ -885,7 +1807,9 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 
 		    	<div class="row">
 
-					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		    		<form action="reports.php" method="POST">
+
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 username-class">
 
 						<p class="text-center"><strong>Users</strong></p>
 						<hr/>
@@ -895,24 +1819,40 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 						if($_SESSION['userlevel'] == 'A1' || $_SESSION['userlevel'] == 'A2' ){
 
 						foreach ($finalusers as $key => $value) {?>
-						
+							
 							<?php if(isset($_GET['userid'])){
 
 								if($value['id'] == $_GET['userid']){?>
 
-								<p class="check"><input type="checkbox" value="<?php echo $value['id'];?>" checked onclick="javascript:handleCheckbox(this)"><span><?php echo $value['username'];?></span></p>
+								<p class="check"><input type="radio" value="<?php echo $value['id'];?>" checked name="username"><span><?php echo $value['username'];?></span></p>
 
 								<?php }else{?>
 
-								<p class="check"><input type="checkbox" value="<?php echo $value['id'];?>" onclick="javascript:handleCheckbox(this)"><span><?php echo $value['username'];?></span></p>
+								<p class="check"><input type="radio" value="<?php echo $value['id'];?>" name="username"><span><?php echo $value['username'];?></span></p>
 
 								<?php }
 								    						
-							}
+							}else{
 
-						}?>
-						
+								if($value['id'] == $_SESSION['posteduser']){?>
+
+								<p class="check"><input type="radio" value="<?php echo $value['id'];?>" checked name="username"><span><?php echo $value['username'];?></span></p>
+
+
+								<?php }else{?>
+
+								<p class="check"><input type="radio" value="<?php echo $value['id'];?>" name="username"><span><?php echo $value['username'];?></span></p>
+
+
+
+									<?php }
+
+								?>
+
+
 						<?php }?>
+						
+						<?php }}?>
 					
 					</div>
 
@@ -921,62 +1861,47 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 						<p class="text-center"><strong>Stages</strong></p>
 						<hr/>
 
-						<?php if(isset($_GET['stage'])){
+						<?php if(isset($_GET['stage1']) && !empty($_GET['stage1'])){?>
 
-						if($_GET['stage'] == 1){?>
-						    		
-							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick2d1" data-id="1" data-subuserid="<?php echo $_SESSION['subuserid'];?>" checked name="stage[]" value="1"> 2D Stage 1</p>
 
-							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
+						<?php }else{?>
 
-							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
-
-						<?php }elseif($_GET['stage'] == 2){?>
-
-							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
-
-							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>							
-
-
-						<?php }elseif($_GET['stage'] == 3){?>
-
-							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
-
-							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
-
-
-						<?php }elseif($_GET['stage'] == 4){?>
-
-							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
-
-							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
-
-
-						<?php }}else{?>
-
-							<p class="checks"><input type="checkbox" value="1, <?php echo $_SESSION['subuserid'];?>" checked onclick="javascript:handleSelectstage(this)"> 2D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="2, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 2D Stage 2</p>
-
-							<p class="checks"><input type="checkbox" value="3, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 1</p>
-
-							<p class="checks"><input type="checkbox" value="4, <?php echo $_SESSION['subuserid'];?>" onclick="javascript:handleSelectstage(this)"> 3D Stage 2</p>
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick2d1" data-id="1" data-subuserid="<?php echo $_SESSION['subuserid'];?>" checked name="stage[]" value="1"> 2D Stage 1</p>
 
 						<?php }?>
+
+						<?php if(isset($_GET['stage2']) && !empty($_GET['stage2'])){?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick2d2" data-id="2" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" checked value="2"> 2D Stage 2</p>
+
+						<?php }else{?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick2d2" data-id="2" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" value="2"> 2D Stage 2</p>
+
+						<?php }?>
+
+						<?php if(isset($_GET['stage3']) && !empty($_GET['stage3'])){?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick3d1" data-id="3" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" checked value="3"> 3D Stage 1</p>
+
+						<?php }else{?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick3d1" data-id="3" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" value="3"> 3D Stage 1</p>
+
+						<?php }?>
+
+						<?php if(isset($_GET['stage4']) && !empty($_GET['stage4'])){?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" checked id="checkbox-tick3d2" data-id="4" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" value="4"> 3D Stage 2</p>
+
+						<?php }else{?>
+
+							<p class="checks"><input type="checkbox" class="checkbox-tick" id="checkbox-tick3d2" data-id="4" data-subuserid="<?php echo $_SESSION['subuserid'];?>" name="stage[]" value="4"> 3D Stage 2</p>
+
+						<?php }?>
+
+						<input type="submit" value="Filter" id="filter-btn">
 
 					</div>
 
@@ -986,13 +1911,23 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 						<hr/>
 						<p class="text-center">
 						<input type="button" name="prev" data-id="<?php echo $_SESSION['subuserid'];?>" value="Previous" id="prev">
-						<input type="text" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">
-						<input type="button" name="next" data-id="<?php echo $_SESSION['subuserid'];?>" value="Next" id="next"></p>
+
+						<?php if(isset($_GET['date'])){?>
+
+							<input type="text" name="datepicker" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo $_GET['date'];?>">
+							<input type="button" name="next" data-id="<?php echo $_SESSION['subuserid'];?>" value="Next" id="next"></p>
+
+						<?php }else{?>
+
+								<input type="text" name="datepicker" id="datepicker" data-id="<?php echo $_SESSION['subuserid'];?>" placeholder="DatePicker" value="<?php echo date("d / m / Y");?>">
+							<input type="button" name="next" data-id="<?php echo $_SESSION['subuserid'];?>" value="Next" id="next"></p>
+
+						<?php }?>
 
 					</div>					    			
 
 			    </div>
-
+			</form>
 
 		    	<div class="table-responsive">
 				 
@@ -1190,6 +2125,13 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		
 		$(document).ready(function() {
 
+
+			$(document).on('click', '.check > input', function(){
+
+				console.log('clicked');
+
+			});
+
 			$(document).on('change', '.username-filters', function(){
 
 				var userid = $(this).val();
@@ -1244,83 +2186,105 @@ if(!isset($_GET['userid']) && !isset($_GET['stage']) && !isset($_GET['date'])){
 		
 		$(document).ready(function() {
 
-				// var todayTime = new Date();
-				// var month = todayTime . getMonth() + 1;
-				// var monthnext = todayTime . getMonth() + 2;
-				// var day = todayTime . getDate() - 1;
-				// var year = todayTime . getFullYear();
-				// var dd =  month + "/" + day + "/" + year ;
-				// var mm =  monthnext + "/" + day + "/" + year ;
+			$(document).on('click', '#filter-btns', function(){
 
-				// $('#prev').data('dateval', dd);
-				// $('#next').data('dateval', mm);
+				var stage1status = $('#checkbox-tick2d1').prop("checked") ;
 
-			$(document).on('click', '#prev', function(){
+				var stage2status = $('#checkbox-tick2d2').prop("checked") ;
+				
+				var stage3status = $('#checkbox-tick3d1').prop("checked") ;
 
-				var datee = $('#datepicker').val();
+				var stage4status = $('#checkbox-tick3d2').prop("checked") ;
 
-				if(datee == ""){
+				console.log(stage1);
 
-					console.log('cannot be clicked');
-					$(this).attr("disabled", true);
+				console.log(stage2);
 
-				}else{					
+				console.log(stage3);
 
-					$(this).attr("disabled", false);
-					var dateprev = datee.split('/');
-					var dd = parseInt(dateprev[1])-1;
-										var todayTime = new Date();
-					// console.log(todayTime);
+				console.log(stage4);
 
-					// console.log(dd);
-					var todayTime = new Date();
-					var month = todayTime . getMonth() + 1;
-					var day = todayTime . getDate() - 1;
-					var year = todayTime . getFullYear();
-					var prevdate =  month + "/" + dd + "/" + year ;
-					var userid = $(this).data('id');
+				if(stage1status == true){
 
-					// window.location = "reports.php?date="+prevdate+"&userid="+userid;
+					var id = $('#checkbox-tick2d1').val();
+
+					window.location = "reports.php?stage="+id+"&userid="+<?php echo $_SESSION['subuserid'];?>+"&date=<?php echo date("m/d/Y");?>";
+					
+				}
+
+				if(stage2 == true){
+
+					window.location = "reports.php?stage="+stage2+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+					
+				}
+
+
+				if(stage3 == true){
+
+					window.location = "reports.php?stage="+stage3+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+					
+				}
+
+
+				if(stage4 == true){
+
+					window.location = "reports.php?stage="+stage4+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+					
+				}												
+
+				if(stage1 == true && stage2 == true){
+
+					window.location = "reports.php?stage1="+stage1+"&stage2="+stage2+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+					
+				}else if(stage1 == true && stage3 == true){
+
+					window.location = "reports.php?stage1="+stage1+"&stage3="+stage3+"&stage="+stage3+"&stage4="+stage4+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+
+				}else if(stage1 == true && stage4 == true){
+
+					window.location = "reports.php?stage1="+stage1+"&stage4="+stage4+"&userid="+userid+"&date=<?php echo date("m/d/Y");?>";
+
+				}else if(stage2 == true && stage3 == true){
+
+
+				}else if(stage2 == true && stage4 == true){				
+
+
+				}else if(stage3 == true && stage4 == true){				
+
+
+				}else if(stage1 == true && stage3 == true){				
+
+
+				}else if(stage1 == true && stage3 == true){									
+
+
+				}else if(stage1 == true && stage3 == true){				
+
+
+
 				}
 
 			});
 
-
-			$(document).on('click', '#next', function(){
-
-				var datee = $('#datepicker').val();
-
-				if(datee == ""){
-
-					console.log('cannot be clicked');
-					$(this).attr("disabled", true);
-
-				}else{					
-
-					$(this).attr("disabled", false);
-					var dateprev = datee.split('/');
-					var dd = parseInt(dateprev[1])+1;
-
-					console.log(dd);
-					var todayTime = new Date();
-					// console.log(todayTime);
-					var month = todayTime . getMonth() + 1;
-					var day = todayTime . getDate() - 1;
-					var year = todayTime . getFullYear();
-					var prevdate =  month + "/" + dd + "/" + year ;
-					var userid = $(this).data('id');
-
-					window.location = "reports.php?date="+prevdate+"&userid="+userid;
-				}
-
+			$('#next').on("click", function () {
+			   
+			    var date = $('#datepicker').datepicker('getDate');
+			   
+			    date.setTime(date.getTime() + (1000*60*60*24))
+			
+			    $('#datepicker').datepicker("setDate", date);
+			
 			});
 
-			$(document).on('change', '#datepicker', function(){
-
-				var id = $(this).data('id');
-
-				window.location = "reports.php?date="+this.value+"&uid="+id;
-
+			$('#prev').on("click", function () {
+			
+			    var date = $('#datepicker').datepicker('getDate');
+			
+			    date.setTime(date.getTime() - (1000*60*60*24))
+			
+			    $('#datepicker').datepicker("setDate", date);
+		
 			});
 
 		});
