@@ -682,354 +682,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 
-if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !isset($_GET['stage2']) && !isset($_GET['stage3']) && !isset($_GET['stage4'])){
-
-	$stagelevel = $_GET['stage1'];
-
-	$userid = $_GET['userid'];
-
-	if($stagelevel == 1){
-
-		$stage = 1;
-
-		$type = '2dbetform';
-
-	}elseif($stagelevel == 2){
-
-		$stage = 2;
-
-		$type = '2dbetform';			
-
-	}elseif($stagelevel == 3){
-
-		$stage = 1;
-
-		$type = '3dbetform';			
-
-	}elseif($stagelevel == 4){
-
-		$stage = 2;
-
-		$type = '3dbetform';			
-
-	}
-
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage'";
-		
-	// echo $sql;
-
-	$result = mysqli_query($conn, $sql);
-
-	if (mysqli_num_rows($result) > 0) {
-
-		while($row = mysqli_fetch_assoc($result)) {
-	            	
-			$users[] = $row;
-
-
-	    }
-
-	}
-
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$sumresult = mysqli_query($conn, $sumsql);
-
-	if (mysqli_num_rows($sumresult) > 0) {
-
-		while($sumrow = mysqli_fetch_assoc($sumresult)) {
-	            	
-			$sumusers[] = $sumrow;
-
-
-	    }
-
-	}
-
-    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
-
-	$totalusd = $ar[0];
-
-	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$khrresult = mysqli_query($conn, $khrsql);
-
-	if (mysqli_num_rows($khrresult) > 0) {
-
-		while($khrrow = mysqli_fetch_assoc($khrresult)) {
-	            	
-			$khrusers[] = $khrrow;
-
-		}
-
-	}
-
-	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
-
-
-	$totalkhr = $khr[0] * 100;
-
-}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['date']) && !isset($_GET['stage3']) && !isset($_GET['stage4'])){
-
-	$stagelevel = $_GET['stage1'];
-	
-	$stagelevel2 = $_GET['stage2'];
-
-	$userid = $_GET['userid'];
-
-	// echo $userid;
-
-	if($stagelevel == 1){
-
-		$stage = 1;
-
-		$type = '2dbetform';
-
-	}elseif($stagelevel == 2){
-
-		$stage = 2;
-
-		$type = '2dbetform';			
-
-	}elseif($stagelevel == 3){
-
-		$stage = 1;
-
-		$type = '3dbetform';			
-
-	}elseif($stagelevel == 4){
-
-		$stage = 2;
-
-		$type = '3dbetform';			
-
-	}
-
-	// echo $stagelevel2;
-
-	if($stagelevel2 == 1){
-
-		$stage2 = 1;
-
-		$type2 = '2dbetform';
-
-	}elseif($stagelevel2 == 2){
-
-		$stage2 = 2;
-
-		$type2 = '2dbetform';			
-
-	}elseif($stagelevel2 == 3){
-
-		$stage2 = 1;
-
-		$type2 = '3dbetform';			
-
-	}elseif($stagelevel2 == 4){
-
-		$stage2 = 2;
-
-		$type2 = '3dbetform';			
-
-	}
-
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2'";
-		
-	// echo $sql;
-
-	$result = mysqli_query($conn, $sql);
-
-	if (mysqli_num_rows($result) > 0) {
-
-		while($row = mysqli_fetch_assoc($result)) {
-	            	
-			$users[] = $row;
-
-
-	    }
-
-	}
-
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$sumresult = mysqli_query($conn, $sumsql);
-
-	if (mysqli_num_rows($sumresult) > 0) {
-
-		while($sumrow = mysqli_fetch_assoc($sumresult)) {
-	            	
-			$sumusers[] = $sumrow;
-
-
-	    }
-
-	}
-
-    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
-
-	$totalusd = $ar[0];
-
-	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$khrresult = mysqli_query($conn, $khrsql);
-
-	if (mysqli_num_rows($khrresult) > 0) {
-
-		while($khrrow = mysqli_fetch_assoc($khrresult)) {
-	            	
-			$khrusers[] = $khrrow;
-
-		}
-
-	}
-
-	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
-
-
-	$totalkhr = $khr[0] * 100;
-
-}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['date']) && !isset($_GET['stage4'])){
-
-	$stagelevel = $_GET['stage1'];
-	$stagelevel2 = $_GET['stage2'];
-	$stagelevel3 = $_GET['stage3'];
-
-	$userid = $_GET['userid'];
-
-	if($stagelevel == 1){
-
-		$stage = 1;
-
-		$type = '2dbetform';
-
-	}elseif($stagelevel == 2){
-
-		$stage = 2;
-
-		$type = '2dbetform';			
-
-	}elseif($stagelevel == 3){
-
-		$stage = 1;
-
-		$type = '3dbetform';			
-
-	}elseif($stagelevel == 4){
-
-		$stage = 2;
-
-		$type = '3dbetform';			
-
-	}
-
-	if($stagelevel2 == 1){
-
-		$stage2 = 1;
-
-		$type2 = '2dbetform';
-
-	}elseif($stagelevel2 == 2){
-
-		$stage2 = 2;
-
-		$type2 = '2dbetform';			
-
-	}elseif($stagelevel2 == 3){
-
-		$stage2 = 1;
-
-		$type2 = '3dbetform';			
-
-	}elseif($stagelevel2 == 4){
-
-		$stage2 = 2;
-
-		$type2 = '3dbetform';			
-
-	}
-
-	if($stagelevel3 == 1){
-
-		$stage3 = 1;
-
-		$type3 = '2dbetform';
-
-	}elseif($stagelevel3 == 2){
-
-		$stage3 = 2;
-
-		$type3 = '2dbetform';			
-
-	}elseif($stagelevel3 == 3){
-
-		$stage3 = 1;
-
-		$type3 = '3dbetform';			
-
-	}elseif($stagelevel3 == 4){
-
-		$stage3 = 2;
-
-		$type3 = '3dbetform';			
-
-	}
-
-	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3'";
-		
-	// echo $sql;
-
-	$result = mysqli_query($conn, $sql);
-
-	if (mysqli_num_rows($result) > 0) {
-
-		while($row = mysqli_fetch_assoc($result)) {
-	            	
-			$users[] = $row;
-
-
-	    }
-
-	}
-
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$sumresult = mysqli_query($conn, $sumsql);
-
-	if (mysqli_num_rows($sumresult) > 0) {
-
-		while($sumrow = mysqli_fetch_assoc($sumresult)) {
-	            	
-			$sumusers[] = $sumrow;
-
-
-	    }
-
-	}
-
-    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
-
-	$totalusd = $ar[0];
-
-	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
-
-	$khrresult = mysqli_query($conn, $khrsql);
-
-	if (mysqli_num_rows($khrresult) > 0) {
-
-		while($khrrow = mysqli_fetch_assoc($khrresult)) {
-	            	
-			$khrusers[] = $khrrow;
-
-		}
-
-	}
-
-	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
-
-
-	$totalkhr = $khr[0] * 100;
-
-}elseif(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['stage4']) && isset($_GET['date'])){
+if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['stage2']) && isset($_GET['stage3']) && isset($_GET['stage4']) && isset($_GET['date'])){
 
 	$stagelevel = $_GET['stage1'];
 	$stagelevel2 = $_GET['stage2'];
@@ -1145,7 +798,7 @@ if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !
 	}
 
 	$sql = "SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3' AND `created_at` >= '$date' UNION SELECT * FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type4' AND `stage` = '$stage4' AND `created_at` >= '$date'";
-		
+
 	// echo $sql;
 
 	$result = mysqli_query($conn, $sql);
@@ -1161,11 +814,8 @@ if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !
 
 	}
 
-	// echo "<pre>";
-
-	// print_r($users);
-
-	$sumsql = "SELECT SUM(`totalusd`) FROM `2dbetform` WHERE `user_id` = '$userid'";
+	$sumsql = "SELECT SUM(`usd`) FROM ( SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type4' AND `stage` = '$stage4' AND `created_at` >= '$date') as usd GROUP BY 'id'";
+	// echo $sumsql;
 
 	$sumresult = mysqli_query($conn, $sumsql);
 
@@ -1180,11 +830,13 @@ if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !
 
 	}
 
-    $ar[] = $sumusers[0]['SUM(`totalusd`)'];
+	// print_r($sumusers[0]);
+
+    $ar[] = $sumusers[0]['SUM(`usd`)'];
 
 	$totalusd = $ar[0];
 
-	$khrsql = "SELECT SUM(`totalkhr`) FROM `2dbetform` WHERE `user_id` = '$userid'";
+	$khrsql = "SELECT SUM(`khr`) FROM ( SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type' AND `stage` = '$stage' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type2' AND `stage` = '$stage2' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type3' AND `stage` = '$stage3' AND `created_at` >= '$date' UNION SELECT totalusd as usd, totalkhr as khr FROM `2dbetform` WHERE `user_id` = '$userid' AND `type` = '$type4' AND `stage` = '$stage4' AND `created_at` >= '$date') as usd GROUP BY 'id'";
 
 	$khrresult = mysqli_query($conn, $khrsql);
 
@@ -1198,7 +850,7 @@ if(isset($_GET['userid']) && isset($_GET['stage1']) && isset($_GET['date']) && !
 
 	}
 
-	$khr[] = $khrusers[0]['SUM(`totalkhr`)'];
+	$khr[] = $khrusers[0]['SUM(`khr`)'];
 
 
 	$totalkhr = $khr[0] * 100;
