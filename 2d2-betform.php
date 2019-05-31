@@ -1596,7 +1596,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    			
 		    			<span> | </span>
 
-		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage=1">Reports</a></span>
+		    			<?php $today = date("m/d/Y");?>
+		    			
+		    			<span><a href="reports.php?userid=<?php echo $_SESSION['userid'];?>&stage1=1&stage2=&stage3=&stage4=&date=<?php echo $today;?>">Reports</a></span>
 
 		    			<?php if($_SESSION['userlevel'] == "A1"){?>
 
